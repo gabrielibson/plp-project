@@ -7,6 +7,7 @@ import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
 import li2.plp.imperative1.memory.ContextoExecucaoImperativa;
 import li2.plp.imperative1.memory.ListaValor;
 import li2.plp.imperative2.declaration.DefProcedimento;
+import li2.plp.imperative2.declaration.DefStruct;
 
 public class ContextoExecucaoImperativa2 extends ContextoExecucaoImperativa
 		implements AmbienteExecucaoImperativa2 {
@@ -16,6 +17,7 @@ public class ContextoExecucaoImperativa2 extends ContextoExecucaoImperativa
 	 * armazena apenas procedimentos.
 	 */
 	private Contexto<DefProcedimento> contextoProcedimentos;
+	private Contexto<DefStruct> contextoStructs;
 
 	/**
 	 * Construtor da classe.
@@ -23,18 +25,21 @@ public class ContextoExecucaoImperativa2 extends ContextoExecucaoImperativa
 	public ContextoExecucaoImperativa2(ListaValor entrada) {
 		super(entrada);
 		contextoProcedimentos = new Contexto<DefProcedimento>();
+		contextoStructs = new Contexto<DefStruct>();
 	}
 
 	@Override
 	public void incrementa() {
 		super.incrementa();
 		this.contextoProcedimentos.incrementa();
+		this.contextoStructs.incrementa();
 	}
 
 	@Override
 	public void restaura() {
 		super.restaura();
 		this.contextoProcedimentos.restaura();
+		this.contextoStructs.restaura();
 	}
 
 	/**
@@ -54,6 +59,22 @@ public class ContextoExecucaoImperativa2 extends ContextoExecucaoImperativa
 	}
 
 	/**
+	 * Mapeia o id na struct dada.
+	 * 
+	 * @exception StuctJaDeclaradaException
+	 *                se j� existir uma struct do identificador nesta tabela.
+	 */
+	public void mapProcedimento(Id idArg, DefStruct structId)
+			throws StructJaDeclaradaException {
+		try {
+			this.contextoStructs.map(idArg, structId);
+		} catch (VariavelJaDeclaradaException e) {
+			throw new StructJaDeclaradaException(idArg);
+		}
+
+	}
+	
+	/**
 	 * Retorna o procedimento mapeado ao id dado.
 	 * 
 	 * @exception ProcedimentoNaoDeclaradoException
@@ -68,5 +89,17 @@ public class ContextoExecucaoImperativa2 extends ContextoExecucaoImperativa
 			throw new ProcedimentoNaoDeclaradoException(idArg);
 		}
 
+	}
+
+	@Override
+	public void mapStruct(Id idArg, DefStruct structId) throws StructJaDeclaradaException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public DefStruct getStruct(Id idArg) throws StructNaoDeclaradaException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

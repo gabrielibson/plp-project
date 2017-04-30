@@ -1,0 +1,6 @@
+{
+	struct aluno {
+		var nome = "Gabriel",
+		var situacao = "lascado"
+	}
+}

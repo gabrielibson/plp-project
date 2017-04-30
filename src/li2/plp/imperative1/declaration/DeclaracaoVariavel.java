@@ -1,15 +1,19 @@
 package li2.plp.imperative1.declaration;
 
+import li2.plp.expressions1.util.Tipo;
 import li2.plp.expressions2.expression.Expressao;
 import li2.plp.expressions2.expression.Id;
 import li2.plp.expressions2.memory.IdentificadorJaDeclaradoException;
 import li2.plp.expressions2.memory.IdentificadorNaoDeclaradoException;
+import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
+import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
 import li2.plp.imperative1.memory.AmbienteCompilacaoImperativa;
 import li2.plp.imperative1.memory.AmbienteExecucaoImperativa;
 
 public class DeclaracaoVariavel extends Declaracao {
 
 	private Id id;
+	private Tipo tipo;
 	private Expressao expressao;
 
 	public DeclaracaoVariavel(Id id, Expressao expressao) {
@@ -34,6 +38,13 @@ public class DeclaracaoVariavel extends Declaracao {
 			throws IdentificadorJaDeclaradoException,
 			IdentificadorNaoDeclaradoException {
 		ambiente.map(getId(), getExpressao().avaliar(ambiente));
+		return ambiente;
+	}
+	
+	public AmbienteCompilacaoImperativa elabora(
+			AmbienteCompilacaoImperativa ambiente)
+			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
+		ambiente.map(id, tipo);
 		return ambiente;
 	}
 

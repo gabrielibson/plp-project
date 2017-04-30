@@ -132,6 +132,7 @@ TOKEN : /* TOKENS DE IMPERATIVA 2 */
 {
   < PROC: "proc" >
 | < CALL: "call" >
+| < STRUCT: "struct" >
 }
 
 TOKEN : /* TOKENS DOS POSS�VEIS TIPOS */
@@ -685,9 +686,12 @@ Declaracao PDeclaracao():
 		  LOOKAHEAD(PDeclaracaoVariavel() <COMMA>)
            retorno = PDeclaracaoComposta()
           |LOOKAHEAD(PDeclaracaoProcedimento() <COMMA>)
-           retorno = PDeclaracaoComposta() 
+           retorno = PDeclaracaoComposta()
+          |LOOKAHEAD(PDeclaracaoStruct() <COMMA>)
+           retorno = PDeclaracaoComposta()
 		  | retorno = PDeclaracaoVariavel()
 		  | retorno = PDeclaracaoProcedimento()
+		  | retorno = PDeclaracaoStruct()
           | <LPAREN> retorno = PDeclaracao() <RPAREN>   		 
 		  
 	)
@@ -705,6 +709,9 @@ DeclaracaoComposta PDeclaracaoComposta():
 	 
 	 |  LOOKAHEAD(PDeclaracaoProcedimento() <COMMA>)
 	 d1 = PDeclaracaoProcedimento() <COMMA> d2 = PDeclaracao()
+
+	|	LOOKAHEAD(PDeclaracaoStruct()< COMMA >)
+		d1 = PDeclaracaoStruct() < COMMA > d2 = PDeclaracao() 
 	)
 	
 	{return new DeclaracaoComposta(d1, d2);}
@@ -746,6 +753,40 @@ DefProcedimento PDefProcedimento():
 	
 }
 
+DeclaracaoStruct PDeclaracaoStruct():
+{
+	Id nome;
+	DefStruct defStruct;
+}
+{
+    (
+        LOOKAHEAD(<STRUCT> PId() <LBRACE> <RBRACE>)
+    	<STRUCT> nome = PId() <LBRACE> <RBRACE> defStruct = PDefStruct()
+    	|
+    	<STRUCT> nome = PId() <LBRACE> defStruct = PDefStruct()
+    )
+	{
+	    return new DeclaracaoStruct (nome, defStruct);
+	}
+}
+
+DefStruct PDefStruct():
+{
+	ListaDeclaracaoVariavel listaVar = null;
+}
+{
+    (
+		listaVar = PListaDeclaracaoVariavel() <RBRACE>
+    )
+	{
+	    if(listaVar == null) {
+	        listaVar = new ListaDeclaracaoVariavel();
+	    }
+	    return new DefStruct(listaVar);
+	}
+	
+}
+
 Tipo PTipo():
 {
 	Tipo tipo;
@@ -780,6 +821,27 @@ ListaDeclaracaoParametro PListaDeclaracaoParametro():
 	{
 		if (lista == null) {
 			lista = new ListaDeclaracaoParametro();
+		}	
+		return lista;
+	}
+}
+
+ListaDeclaracaoVariavel PListaDeclaracaoVariavel():
+{
+  	DeclaracaoVariavel decVar;
+	ListaDeclaracaoVariavel lista = null;
+}
+{
+	[
+		decVar = PDeclaracaoVariavel() { lista = new ListaDeclaracaoVariavel(decVar); }
+	] 
+	( < SEMICOLON >  
+	  	decVar = PDeclaracaoVariavel() { lista = new ListaDeclaracaoVariavel(decVar, lista); } 
+	)*
+	
+	{
+		if (lista == null) {
+			lista = new ListaDeclaracaoVariavel();
 		}	
 		return lista;
 	}
