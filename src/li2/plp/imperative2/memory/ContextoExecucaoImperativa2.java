@@ -64,7 +64,7 @@ public class ContextoExecucaoImperativa2 extends ContextoExecucaoImperativa
 	 * @exception StuctJaDeclaradaException
 	 *                se j� existir uma struct do identificador nesta tabela.
 	 */
-	public void mapProcedimento(Id idArg, DefStruct structId)
+	public void mapStruct(Id idArg, DefStruct structId)
 			throws StructJaDeclaradaException {
 		try {
 			this.contextoStructs.map(idArg, structId);
@@ -91,15 +91,11 @@ public class ContextoExecucaoImperativa2 extends ContextoExecucaoImperativa
 
 	}
 
-	@Override
-	public void mapStruct(Id idArg, DefStruct structId) throws StructJaDeclaradaException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public DefStruct getStruct(Id idArg) throws StructNaoDeclaradaException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return this.contextoStructs.get(idArg);
+		} catch (VariavelNaoDeclaradaException e) {
+			throw new ProcedimentoNaoDeclaradoException(idArg);
+		}
 	}
 }
