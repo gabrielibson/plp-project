@@ -55,9 +55,13 @@ Declaracao ::= DeclaracaoVariavel
 
 | DeclaracaoComposta
 
-| DeclaracaoStruct
+| DefStruct
 
-DeclaracaoVariavel ::= Tipo Id "=" Expressao 
+| InstanciaStruct
+
+DeclaracaoVariavel ::= "var" Id "=" Expressao
+
+DecVariavelStruct ::= Tipo Id
 
 DeclaracaoComposta ::= Declaracao "," Declaracao 
 
@@ -65,9 +69,13 @@ DeclaracaoProcedimento ::= "proc" Id "(" [ ListaDeclaracaoParametro ] ")" "{" Co
 
 ListaDeclaracaoParametro ::= Tipo Id | Tipo Id "," ListaDeclaracaoParametro
 
-DeclaracaoStruct ::= "struct" Id "{" DeclaracaoChave ";" DeclaracacaoVariavel ";" "}"
+ListaDecVariavelStruct ::= DecVariavelStruct | DecVariavelStruct ";" ListaDecVariavelStruct
 
-DeclaracaoChave ::= "key" "int" Id "=" ValorInteiro | "key" "string" Id "=" ValorString
+DefStruct ::= "struct" Id "{" DeclaracaoChave ";" ListaDecVariavelStruct "}"
+
+InstanciaStruct ::= Tipo Id "=" "[" ListaExpressao "]" 
+
+DeclaracaoChave ::= "int" Id
 
 Tipo ::= TipoStruct | TipoPrimitivo
 
@@ -81,10 +89,26 @@ IfThenElse ::= "if" Expressao "then" Comando "else" Comando
 
 IO ::= "write" "(" Expressao ")" | "read" "(" Id ")" 
                    | "writeFile" "(" Id "," File ")"
-                   | "readFile" "(" Id ":" ValorInteiro "," File | Id ":" ValorString "," File ")"
+                   | "readFile" "(" Id ":" ValorInteiro "," File ")"
 
 File ::= Id ".txt"
 
 ChamadaProcedimento ::= "call" Id "(" [ ListaExpressao ] ")" 
 
 ListaExpressao ::= Expressao | Expressao, ListaExpressao
+
+
+
+
+
+{
+ struct aluno{
+  int id;
+  string nome;
+  string matricula;
+},
+  aluno a1 = [1,"fulano","12"];
+  
+  writeFile(a1,File);
+}
+
