@@ -81,7 +81,7 @@ IfThenElse ::= "if" Expressao "then" Comando "else" Comando
 
 IO ::= "write" "(" Expressao ")" | "read" "(" Id ")" 
                    | "writeFile" "(" Id "," File ")"
-                   | "readFile" "(" Id ":" ValorInteiro | Id ":" ValorString "," File ")"
+                   | "readFile" "(" Id ":" ValorInteiro "," File | Id ":" ValorString "," File ")"
 
 File ::= Id ".txt"
 
