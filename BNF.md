@@ -21,7 +21,7 @@ Comando ::= Atribuicao
 
 Skip ::=
 
-Atribuicao ::= Id ":=" Expressao
+Atribuicao ::= LeftExpression ":=" Expressao
 
 Expressao ::= Valor | ExpUnaria | ExpBinaria | Id
 
@@ -43,6 +43,10 @@ ExpBinaria ::= Expressao "+" Expressao
 
 | Expressao "++" Expressao
 
+LeftExpression ::= Id | AcessoAtributo
+
+AcessoAtributo ::= LeftExpression.Id
+
 ComandoDeclaracao :: = "{" Declaracao ";" Comando "}"
 
 Declaracao ::= DeclaracaoVariavel
@@ -51,21 +55,35 @@ Declaracao ::= DeclaracaoVariavel
 
 | DeclaracaoComposta
 
-DeclaracaoVariavel ::= "var" Id "=" Expressao 
+| DeclaracaoStruct
 
-DeclaracaoComposta ::= Declaracao "," Declaracao
+DeclaracaoVariavel ::= Tipo Id "=" Expressao 
+
+DeclaracaoComposta ::= Declaracao "," Declaracao 
 
 DeclaracaoProcedimento ::= "proc" Id "(" [ ListaDeclaracaoParametro ] ")" "{" Comando "}"
 
 ListaDeclaracaoParametro ::= Tipo Id | Tipo Id "," ListaDeclaracaoParametro
 
-Tipo ::= "string" | "int" | "boolean"
+DeclaracaStruct ::= "struct" Id "{" DeclaracaoChave ";" DeclaracacaoVariavel ";" "}"
+
+DeclaracaoChave ::= "key" "int" Id "=" ValorInteiro | "key" "string" Id "=" ValorString
+
+Tipo ::= TipoStruct | TipoPrimitivo
+
+TipoStruct ::= Id
+
+TipoPrimitivo ::= "string" | "int" | "boolean"
 
 While ::= "while" Expressao "do" Comando
 
 IfThenElse ::= "if" Expressao "then" Comando "else" Comando
 
-IO ::= "write" "(" Expressao ")" | "read" "(" Id ")"
+IO ::= "write" "(" Expressao ")" | "read" "(" Id ")" 
+                   | "writeFile" "(" Id "," File ")"
+                   | "readFile" "(" Id ":" ValorInteiro | Id ":" ValorString "," File ")"
+
+File ::= Id ".txt"
 
 ChamadaProcedimento ::= "call" Id "(" [ ListaExpressao ] ")" 
 
