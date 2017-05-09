@@ -65,7 +65,7 @@ DeclaracaoProcedimento ::= "proc" Id "(" [ ListaDeclaracaoParametro ] ")" "{" Co
 
 ListaDeclaracaoParametro ::= Tipo Id | Tipo Id "," ListaDeclaracaoParametro
 
-DeclaracaStruct ::= "struct" Id "{" DeclaracaoChave ";" DeclaracacaoVariavel ";" "}"
+DeclaracaoStruct ::= "struct" Id "{" DeclaracaoChave ";" DeclaracacaoVariavel ";" "}"
 
 DeclaracaoChave ::= "key" "int" Id "=" ValorInteiro | "key" "string" Id "=" ValorString
 
