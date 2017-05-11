@@ -59,6 +59,7 @@ Declaracao ::= DeclaracaoVariavel
 
 | InstanciaStruct
 
+
 DeclaracaoVariavel ::= "var" Id "=" Expressao
 
 DecVariavelStruct ::= Tipo Id
@@ -73,7 +74,9 @@ ListaDecVariavelStruct ::= DecVariavelStruct | DecVariavelStruct ";" ListaDecVar
 
 DefStruct ::= "struct" Id "{" DeclaracaoChave ";" ListaDecVariavelStruct "}"
 
-InstanciaStruct ::= Tipo Id "=" "[" ListaExpressao "]" 
+InstanciaStruct ::= Tipo Id "=" "[" ListaExpressao "]" | Tipo Id "=" "readFile" "(" Key "," File ")"
+
+Key ::= ValorInteiro
 
 DeclaracaoChave ::= "int" Id
 
@@ -89,9 +92,10 @@ IfThenElse ::= "if" Expressao "then" Comando "else" Comando
 
 IO ::= "write" "(" Expressao ")" | "read" "(" Id ")" 
                    | "writeFile" "(" Id "," File ")"
-                   | "readFile" "(" Id ":" ValorInteiro "," File ")"
+                   | Id "=" "readFile" "(" Key "," File ")"
+                   
 
-File ::= Id ".txt"
+File ::= ValorString
 
 ChamadaProcedimento ::= "call" Id "(" [ ListaExpressao ] ")" 
 
@@ -111,4 +115,7 @@ ListaExpressao ::= Expressao | Expressao, ListaExpressao
   
   writeFile(a1,File);
 }
+
+OBS: Os arquivos terão a primeira linha com o tipo do struct
+
 
