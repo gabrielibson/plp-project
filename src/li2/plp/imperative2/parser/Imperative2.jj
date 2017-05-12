@@ -123,15 +123,19 @@ TOKEN : /* TOKENS DE IMPERATIVA 1 */
 | < DO: "do" >
 | < READ: "read" >
 | < WRITE: "write" >
+| < WRITE_REGISTER: "writeRegister" >
+| < READ_REGISTER: "readRegister" >
 | < IF: "if" >
 | < THEN: "then" >
 | < ELSE: "else" >
+
 }
 
 TOKEN : /* TOKENS DE IMPERATIVA 2 */
 {
   < PROC: "proc" >
 | < CALL: "call" >
+| < STRUCT: "struct" >
 }
 
 TOKEN : /* TOKENS DOS POSS�VEIS TIPOS */
@@ -310,6 +314,8 @@ IO PIO() :
 	(
 		  retorno = PRead()
 		| retorno = PWrite()
+		| retorno = PWriteRegister()
+		| retorno = PReadRegister()
 	)
 	{return retorno;}
 }
@@ -336,6 +342,34 @@ Write PWrite() :
 	{return new Write(exp);}
 }
 
+WriteRegister PWriteRegister() :
+{
+  Expressao exp;
+}
+{
+  <WRITE_REGISTER> <LPAREN>
+  exp = PExpressao()
+  <RPAREN>
+  {return new WriteRegister(exp);}
+}
+
+ReadRegister PReadRegister() :
+{
+  Id id;
+  Expressao exp;
+  File file;
+}
+{
+  <READ_REGISTER> <LPAREN>
+  id = PId()
+  < COMMA > exp = PValorInteiro() < SEMICOLON >
+  file = PFile();
+  <RPAREN>
+  
+  {return new ReadRegister(id, exp, file); }
+
+}
+  
 IfThenElse PIfThenElse() :
 {
 	Expressao expressao;
@@ -688,10 +722,46 @@ Declaracao PDeclaracao():
            retorno = PDeclaracaoComposta() 
 		  | retorno = PDeclaracaoVariavel()
 		  | retorno = PDeclaracaoProcedimento()
-          | <LPAREN> retorno = PDeclaracao() <RPAREN>   		 
+          | <LPAREN> retorno = PDeclaracao() <RPAREN>
+          | retorno = PDefStruct()   		 
 		  
 	)
 	{return retorno;}
+}
+
+DefStruct PDefStruct():
+{
+
+ Id id;
+ Declaracaochave chave; 
+ ListaDeclaracaoStruct listadecstruct;
+}
+{
+  <STRUCT> id = PId() <LBRACE> chave = PDeclaracaochave() <SEMICOLON>
+  listadecstruct = PListaDeclaracaoStruct() <RBRACE>
+  {
+    return new DefStruct(id, exp, listadecstruct);
+  }
+}
+
+DeclaracaoChave PDeclaracaochave():
+{
+  Valor valor;
+}
+  {
+    <INT>
+    valor = PValorInteiro()
+    { 
+      return new DecChave(valor);
+  }
+  }
+
+
+ListaDeclaracaoStruct PListaDeclaracaoStruct():
+{
+
+}
+{
 }
 
 DeclaracaoComposta PDeclaracaoComposta():
@@ -813,3 +883,4 @@ DeclaracaoVariavel PDeclaracaoVariavel() :
 		return retorno;
 	}
 }
+
