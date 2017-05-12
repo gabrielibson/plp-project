@@ -74,7 +74,11 @@ ListaDecVariavelStruct ::= DecVariavelStruct | DecVariavelStruct ";" ListaDecVar
 
 DefStruct ::= "struct" Id "{" DeclaracaoChave ";" ListaDecVariavelStruct "}"
 
-InstanciaStruct ::= Tipo Id "=" "[" ListaExpressao "]" | Tipo Id "=" "readFile" "(" Key "," File ")"
+InstanciaStruct ::= InstanciaValoresStruct | InstanciaLeituraStruct
+
+InstanciaValoresStruct ::= Tipo Id "=" "[" ListaExpressao "]"
+
+InstanciaLeituraStruct ::= Tipo Id "=" "readFile" "(" Key "," File ")"
 
 Key ::= ValorInteiro
 
