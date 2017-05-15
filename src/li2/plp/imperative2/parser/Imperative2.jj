@@ -728,7 +728,8 @@ Declaracao PDeclaracao():
 	)
 	{return retorno;}
 }
-
+/** Add PLP
+**/
 DefStruct PDefStruct():
 {
 
@@ -743,7 +744,8 @@ DefStruct PDefStruct():
     return new DefStruct(id, exp, listadecstruct);
   }
 }
-
+/** Add PLP
+**/
 DeclaracaoChave PDeclaracaochave():
 {
   Valor valor;
@@ -756,12 +758,36 @@ DeclaracaoChave PDeclaracaochave():
   }
   }
 
-
+/**
+* Producao da Lista de declaracao de variaveis do struct
+**/
+/** Add PLP
+**/
 ListaDeclaracaoStruct PListaDeclaracaoStruct():
 {
-
+  DeclaracaoVariavelStruct decvarstruct;
+  ListaDeclaracaoStruct listadecstruct;
 }
 {
+  decvarstruct = PDecVariavelStruct();
+  listadecstruct = PListaDeclaracaoStruct();
+  {
+    return new ListaDeclaracaoStruct(decvarstruct, listadecstruct);
+  }
+}
+/** Add PLP
+**/
+DeclaracaoVariavelStruct PDeclaracaoVariavelStruct():
+{
+  Tipo tipo;
+  Id id;
+}
+{
+  tipo = PTipo();
+  id = PId();
+  {
+    return DeclacaoVariavelStruct(tipo, id);
+  }
 }
 
 DeclaracaoComposta PDeclaracaoComposta():
@@ -816,6 +842,10 @@ DefProcedimento PDefProcedimento():
 	
 }
 
+/**
+Dividimos Tipo em 2 categorias: TipoPrimitivo e TipoStruct.
+Qualquer coisa apagar produção de PTipo, PTipoPrimitivo e PTipoStruct e descomentar essa parte.
+**
 Tipo PTipo():
 {
 	Tipo tipo;
@@ -830,6 +860,53 @@ Tipo PTipo():
 		return tipo;
 	}
 }
+**/
+
+/** Add PLP
+**/
+Tipo PTipo():
+{
+	Tipo retorno;
+}
+{
+	retorno = PTipoPrimitivo() |
+	retorno = PTipoStruct()
+	{
+	  //aqui temos que ver como seria o retorno.
+		return new Tipo(retorno);
+	}
+}
+/** Add PLP
+**/
+Tipo PTipoPrimitivo():
+{
+  Tipo tipo;
+}
+{
+	(
+	<INT> {tipo = TipoPrimitivo.INTEIRO;} |
+	<BOOLEAN> {tipo = TipoPrimitivo.BOOLEANO;} |
+	<STRING> {tipo = TipoPrimitivo.STRING;}
+	)
+	{
+		return tipo;
+	}
+}
+/** Add PLP
+**/
+Tipo PTipoStruct():
+{
+  Tipo tipo;
+}
+{
+  (
+	<STRUCT> {tipo = TipoStruct.STRUCT;} |
+	)
+	{
+		return tipo;
+	}
+}
+  
 
 ListaDeclaracaoParametro PListaDeclaracaoParametro():
 {
