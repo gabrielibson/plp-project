@@ -362,7 +362,7 @@ ReadRegister PReadRegister() :
 {
   <READ_REGISTER> <LPAREN>
   id = PId()
-  < COMMA > exp = PValorInteiro() < SEMICOLON >
+  <COMMA> exp = PValorInteiro() <SEMICOLON>
   file = PFile();
   <RPAREN>
   
@@ -723,7 +723,8 @@ Declaracao PDeclaracao():
 		  | retorno = PDeclaracaoVariavel()
 		  | retorno = PDeclaracaoProcedimento()
           | <LPAREN> retorno = PDeclaracao() <RPAREN>
-          | retorno = PDefStruct()   		 
+          | retorno = PDefStruct()
+          | retorno = PInstanciaStruct()   		 
 		  
 	)
 	{return retorno;}
@@ -788,6 +789,55 @@ DeclaracaoVariavelStruct PDeclaracaoVariavelStruct():
   {
     return DeclacaoVariavelStruct(tipo, id);
   }
+}
+/** Add PLP
+**/
+InstanciaStruct PInstanciaStruct():
+{
+  InstanciaStruct instanciaStruct;
+}
+{
+  instanciaStruct = PInstanciaValoresStruct();
+  instanciaStruct = PInstanciaLeituraStruct();
+  {
+    return instanciaStruct;
+  }
+}
+/** Add PLP
+**/
+InstanciaValoresStruct PInstanciaValoresStruct():
+{
+  Tipo tipo;
+  Id id;
+  ListaExpressao listaexp;
+}
+{
+  tipo = PTipo()
+  id = PId()
+  <ASSIGN> <LBRACKET> listaexp = PListaExpressao() <RBRACKET>
+  {
+    return new InstanciaValoresStruct(tipo, id, listaexp);
+  }
+}
+/** Add PLP
+**/
+InstanciaLeituraStruct PInstanciaLeituraStruct():
+{
+  Tipo tipo;
+  Id id;
+  Key key;
+  File file;
+}
+{
+  tipo = PTipo()
+  id = PId()
+  <ASSIGN> <READFILE> <LPAREN>
+  key = ValorInteiro()
+  <COMMA>
+  file = ValorString()
+  {
+    return new InstanciaLeituraStruc(tipo, id, key, file);
+  } 
 }
 
 DeclaracaoComposta PDeclaracaoComposta():
