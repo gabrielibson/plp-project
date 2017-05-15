@@ -1,7 +1,7 @@
 package li2.plp.imperative1.command;
 
 import li2.plp.expressions2.expression.Expressao;
-import li2.plp.expressions2.expression.ValorBooleano;
+import li2.plp.expressions2.expression.valor.ValorBooleano;
 import li2.plp.expressions2.memory.IdentificadorJaDeclaradoException;
 import li2.plp.expressions2.memory.IdentificadorNaoDeclaradoException;
 import li2.plp.imperative1.memory.AmbienteCompilacaoImperativa;

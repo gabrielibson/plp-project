@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Stack;
 
 import li2.plp.expressions2.expression.Id;
-import li2.plp.expressions2.expression.Valor;
+import li2.plp.expressions2.expression.valor.Valor;
 import li2.plp.expressions2.memory.ContextoExecucao;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
 

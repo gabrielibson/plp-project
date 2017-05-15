@@ -476,7 +476,7 @@ AcessoAtributoId PAcessoAtributoId() :
 }
 {
   (
-    av = PLeftExpression() < DOT > id = PId()
+    av = PLeftExpression() 
   )
   {
     return new AcessoAtributoId(av, id);
@@ -802,7 +802,7 @@ Declaracao PDeclaracao() :
   | LOOKAHEAD(PDeclaracaoProcedimento() < COMMA >)
     retorno = PDeclaracaoComposta()
   | retorno = PDeclaracaoVariavel()
-  | retorno = PDecProcedimento()
+  | retorno = PDeclaracaoProcedimento()
   | < LPAREN > retorno = PDeclaracao() < RPAREN >		
   )
   {
@@ -819,192 +819,103 @@ DeclaracaoComposta PDeclaracaoComposta() :
   (
     LOOKAHEAD(PDeclaracaoVariavel() < COMMA >)
     d1 = PDeclaracaoVariavel() < COMMA > d2 = PDeclaracao()
-  | LOOKAHEAD(PDecProcedimento() < COMMA >)
-    d1 = PDecProcedimento() < COMMA > d2 = PDeclaracao()
+  | LOOKAHEAD(PDeclaracaoProcedimento() < COMMA >)
+    d1 = PDeclaracaoProcedimento() < COMMA > d2 = PDeclaracao()
   )
   {
     return new DeclaracaoComposta(d1, d2);
   }
 }
 
-/**
- * DecProcedimento ::= "proc" Id "("")" "{"Comando"}"
- *                   | "proc" Id "(" ListaDeclaracaoParametro ")" "{"Comando"}"
- *                   | DecProcedimento "," DecProcedimento
- **/
-DecProcedimento PDecProcedimento() :
+DeclaracaoProcedimento PDeclaracaoProcedimento() :
 {
-  DecProcedimento retorno;
+  Id nome;
+  DefProcedimento defProcedimento;
 }
 {
   (
-    LOOKAHEAD(PDecProcedimentoSimples() < COMMA >)
-    retorno = PDecProcedimentoComposta()
-  | retorno = PDecProcedimentoSimples()
+    LOOKAHEAD(< PROC > PId() < LPAREN > < RPAREN >)
+    < PROC > nome = PId() < LPAREN > < RPAREN > defProcedimento = PDefProcedimento()
+  | 
+    < PROC > nome = PId() < LPAREN > defProcedimento = PDefProcedimento()
   )
   {
-    return retorno;
+    return new DeclaracaoProcedimento(nome, defProcedimento);
   }
 }
 
-/**
- * ... DecProcedimento "," DecProcedimento
- **/
-DecProcedimentoComposta PDecProcedimentoComposta() :
+DefProcedimento PDefProcedimento() :
 {
-  DecProcedimento d1;
-  DecProcedimento d2;
-}
-{
-  d1 = PDecProcedimentoSimples() < COMMA > d2 = PDecProcedimento()
-  {
-    return new DecProcedimentoComposta(d1, d2);
-  }
-}
-
-/**
- * ... "proc" Id "("")" "{"Comando"}"|"proc" Id "(" ListaDeclaracaoParametro ")" "{"Comando"}"
- **/
-DecProcedimento PDecProcedimentoSimples() :
-{
-  Id nome;
   ListaDeclaracaoParametro listaPar = null;
   Comando comando;
 }
 {
   (
-    LOOKAHEAD(< PROC > PId() < LPAREN > < RPAREN >)
-    < PROC > nome = PId() < LPAREN > < RPAREN > < LBRACE > comando = PComando() < RBRACE >
-  | < PROC > nome = PId() < LPAREN > listaPar = PListaDeclaracaoParametro() < RPAREN > < LBRACE > comando = PComando() < RBRACE >
+    < LBRACE > comando = PComando() < RBRACE >
+  | listaPar = PListaDeclaracaoParametro() < RPAREN > < LBRACE > comando = PComando() < RBRACE >
   )
   {
     if (listaPar == null)
     {
       listaPar = new ListaDeclaracaoParametro();
     }
-    return new DecProcedimentoSimples(nome, listaPar, comando);
+    return new DefProcedimento(listaPar, comando);
   }
 }
 
-/**
- * ListaDeclaracaoParametro ::= Tipo Id | Tipo Id "," ListaDeclaracaoParametro
- **/
-ListaDeclaracaoParametro PListaDeclaracaoParametro() :
-{
-  ListaDeclaracaoParametro retorno;
-  DecParametro decPar;
-}
-{
-  (
-    LOOKAHEAD(PDecParametroAtomico() < COMMA >)
-    retorno = PDecParametroComposto()
-  | decPar = PDecParametroAtomico()
-    {
-      retorno = new ListaDeclaracaoParametro(decPar);
-    }
-  )
-  {
-    return retorno;
-  }
-}
-
-/**
- * ... Tipo Id "," ListaDeclaracaoParametro
- **/
-ListaDeclaracaoParametro PDecParametroComposto() :
-{
-  DecParametro d1;
-  ListaDeclaracaoParametro d2;
-}
-{
-  d1 = PDecParametroAtomico() < COMMA > d2 = PListaDeclaracaoParametro()
-  {
-    return new ListaDeclaracaoParametro(d1, d2);
-  }
-}
-
-/**
- * ...Tipo Id
- **/
-DecParametro PDecParametroAtomico() :
-{
-  DecParametro retorno;
-  Tipo tipo;
-  Id id;
-}
-{
-  tipo = PTipo() id = PId()
-  {
-    return new DecParametro(id, tipo);
-  }
-}
-
-/**
- * Tipo ::= TipoStruct | TipoPrimitivo
- **/
 Tipo PTipo() :
 {
   Tipo tipo;
 }
 {
   (
-    LOOKAHEAD(< STRING >
-  | < INT >
-  | < BOOLEAN >)
-    tipo = PTipoPrimitivo()
-  | tipo = PTipoStruct()
+    < INT >
+    {
+      tipo = TipoPrimitivo.INTEIRO;
+    }
+  | 
+    < BOOLEAN >
+    {
+      tipo = TipoPrimitivo.BOOLEANO;
+    }
+  | 
+    < STRING >
+    {
+      tipo = TipoPrimitivo.STRING;
+    }
   )
   {
     return tipo;
   }
 }
 
-/**
- * TipoPrimitivo ::= "string" | "int" | "boolean"
- **/
-Tipo PTipoPrimitivo() :
+ListaDeclaracaoParametro PListaDeclaracaoParametro() :
 {
-  Tipo retorno;
-}
-{
-  (
-    LOOKAHEAD(< INT >)
-    < INT >
-    {
-      retorno = TipoPrimitivo.TIPO_INTEIRO;
-    }
-  | LOOKAHEAD(< BOOLEAN >)
-    < BOOLEAN >
-    {
-      retorno = TipoPrimitivo.TIPO_BOOLEANO;
-    }
-  | < STRING >
-    {
-      retorno = TipoPrimitivo.TIPO_STRING;
-    }
-  )
-  {
-    return retorno;
-  }
-}
-
-/**
- * TipoStruct ::= Id
- **/
-Tipo PTipoStruct() :
-{
-  Tipo retorno;
   Id id;
+  Tipo tipo;
+  ListaDeclaracaoParametro lista = null;
 }
 {
-  (
+  [
+    tipo = PTipo() 
     id = PId()
     {
-      retorno = new TipoStruct(id);
+      lista = new ListaDeclaracaoParametro(new DeclaracaoParametro(id, tipo));
     }
-  )
+  ]
+  (
+    < COMMA > 
+    tipo = PTipo() id = PId()
+    {
+      lista = new ListaDeclaracaoParametro(new DeclaracaoParametro(id, tipo), lista);
+    }
+  )*
   {
-    return retorno;
+    if (lista == null)
+    {
+      lista = new ListaDeclaracaoParametro();
+    }	
+    return lista;
   }
 }
 

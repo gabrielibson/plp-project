@@ -1,7 +1,7 @@
 package li2.plp.imperative1.memory;
 
 import li2.plp.expressions2.expression.Id;
-import li2.plp.expressions2.expression.Valor;
+import li2.plp.expressions2.expression.valor.Valor;
 import li2.plp.expressions2.memory.AmbienteExecucao;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
 

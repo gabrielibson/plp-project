@@ -1,6 +1,7 @@
 package li2.plp.expressions2.expression;
 
 import li2.plp.expressions1.util.Tipo;
+import li2.plp.expressions2.expression.valor.Valor;
 import li2.plp.expressions2.memory.AmbienteCompilacao;
 import li2.plp.expressions2.memory.AmbienteExecucao;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;

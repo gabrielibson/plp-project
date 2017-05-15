@@ -5,7 +5,7 @@ import java.util.Stack;
 import java.util.Map.Entry;
 
 import li2.plp.expressions2.expression.Id;
-import li2.plp.expressions2.expression.Valor;
+import li2.plp.expressions2.expression.valor.Valor;
 
 
 public class ContextoExecucao extends Contexto<Valor>
