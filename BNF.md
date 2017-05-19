@@ -62,17 +62,15 @@ Declaracao ::= DeclaracaoVariavel
 
 DeclaracaoVariavel ::= "var" Id "=" Expressao
 
-DecVariavelStruct ::= Tipo Id
-
 DeclaracaoComposta ::= Declaracao "," Declaracao 
 
 DeclaracaoProcedimento ::= "proc" Id "(" [ ListaDeclaracaoParametro ] ")" "{" Comando "}"
 
 ListaDeclaracaoParametro ::= Tipo Id | Tipo Id "," ListaDeclaracaoParametro
 
-ListaDecVariavelStruct ::= DecVariavelStruct | DecVariavelStruct ";" ListaDecVariavelStruct
+ListaDecAtributoStruct ::= Tipo Id | Tipo Id ";" ListaDecAtributoStruct
 
-DefStruct ::= "struct" Id "{" DeclaracaoChave ";" ListaDecVariavelStruct "}"
+DefStruct ::= "struct" Id "{" DeclaracaoChave ";" ListaDecAtributoStruct "}"
 
 InstanciaStruct ::= InstanciaValoresStruct | InstanciaLeituraStruct
 
