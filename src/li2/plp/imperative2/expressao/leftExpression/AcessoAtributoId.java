@@ -69,14 +69,14 @@ public class AcessoAtributoId extends AcessoAtributo{
         if(av.checaTipo(ambiente)) {
             try{
                 Tipo t = av.getTipo(ambiente);
-                DefStruct defClasse = ambiente.getDefStruct(((TipoStruct)t).getTipo());
-                defClasse.getTipoAtributo(super.getId());
+                DefStruct defStruct = ambiente.getDefStruct(((TipoStruct)t).getTipo());
+                defStruct.getTipoAtributo(super.getId());
                 resposta = true;
             }
             catch(VariavelNaoDeclaradaException atrib){
                 resposta = false;
             }
-            catch(StructNaoDeclaradaException clas){
+            catch(StructNaoDeclaradaException struct){
                 resposta = false;
             }
 
