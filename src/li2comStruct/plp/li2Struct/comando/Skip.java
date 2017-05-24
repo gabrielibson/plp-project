@@ -1,4 +1,4 @@
-package li2comStruct.plp.imperative1.command;
+package li2comStruct.plp.li2Struct.comando;
 
 import li2comStruct.plp.imperative1.memory.AmbienteCompilacaoImperativa;
 import li2comStruct.plp.imperative1.memory.AmbienteExecucaoImperativa;

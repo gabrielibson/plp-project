@@ -2,12 +2,12 @@ package li2comStruct.plp.li2Struct;
 
 import li2comStruct.plp.expressions2.memory.IdentificadorJaDeclaradoException;
 import li2comStruct.plp.expressions2.memory.IdentificadorNaoDeclaradoException;
-import li2comStruct.plp.imperative1.command.Comando;
 import li2comStruct.plp.imperative1.memory.AmbienteCompilacaoImperativa;
 import li2comStruct.plp.imperative1.memory.AmbienteExecucaoImperativa;
 import li2comStruct.plp.imperative1.memory.EntradaVaziaException;
 import li2comStruct.plp.imperative1.memory.ErroTipoEntradaException;
 import li2comStruct.plp.imperative1.memory.ListaValor;
+import li2comStruct.plp.li2Struct.comando.Comando;
 import li2comStruct.plp.li2Struct.excecao.declaracao.ClasseJaDeclaradaException;
 import li2comStruct.plp.li2Struct.excecao.declaracao.ClasseNaoDeclaradaException;
 import li2comStruct.plp.li2Struct.excecao.declaracao.ObjetoJaDeclaradoException;

@@ -1,4 +1,4 @@
-package li2comStruct.plp.imperative1.command;
+package li2comStruct.plp.li2Struct.comando;
 
 import li2comStruct.plp.expressions2.expression.Expressao;
 import li2comStruct.plp.expressions2.memory.VariavelJaDeclaradaException;

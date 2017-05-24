@@ -5,6 +5,7 @@ import li2comStruct.plp.expressions2.memory.IdentificadorNaoDeclaradoException;
 import li2comStruct.plp.imperative1.memory.AmbienteCompilacaoImperativa;
 import li2comStruct.plp.imperative1.memory.AmbienteExecucaoImperativa;
 import li2comStruct.plp.imperative1.memory.EntradaVaziaException;
+import li2comStruct.plp.li2Struct.excecao.declaracao.ClasseNaoDeclaradaException;
 
 public abstract class Declaracao {
 
@@ -15,5 +16,5 @@ public abstract class Declaracao {
 
 	public abstract boolean checaTipo(AmbienteCompilacaoImperativa ambiente)
 			throws IdentificadorJaDeclaradoException,
-			IdentificadorNaoDeclaradoException, EntradaVaziaException;
+			IdentificadorNaoDeclaradoException, EntradaVaziaException, ClasseNaoDeclaradaException;
 }

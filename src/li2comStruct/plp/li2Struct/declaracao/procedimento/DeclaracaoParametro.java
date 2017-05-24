@@ -1,10 +1,11 @@
 package li2comStruct.plp.li2Struct.declaracao.procedimento;
 
-import li2comStruct.plp.expressions1.util.Tipo;
 import li2comStruct.plp.expressions2.expression.Id;
 import li2comStruct.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2comStruct.plp.expressions2.memory.VariavelNaoDeclaradaException;
 import li2comStruct.plp.imperative1.memory.AmbienteCompilacaoImperativa;
+import li2comStruct.plp.li2Struct.excecao.declaracao.ClasseNaoDeclaradaException;
+import li2comStruct.plp.li2Struct.util.Tipo;
 
 public class DeclaracaoParametro {
 
@@ -25,8 +26,8 @@ public class DeclaracaoParametro {
 		return tipo;
 	}
 
-	public boolean checaTipo(AmbienteCompilacaoImperativa ambiente) {
-		return tipo.eValido();
+	public boolean checaTipo(AmbienteCompilacaoImperativa ambiente) throws ClasseNaoDeclaradaException {
+		return tipo.eValido(ambiente);
 	}
 
 	/**
@@ -42,7 +43,7 @@ public class DeclaracaoParametro {
 	public AmbienteCompilacaoImperativa elabora(
 			AmbienteCompilacaoImperativa ambiente)
 			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
-		ambiente.map(id, tipo);
+		ambiente.map(id, (li2comStruct.plp.expressions1.util.Tipo) tipo);
 		return ambiente;
 	}
 

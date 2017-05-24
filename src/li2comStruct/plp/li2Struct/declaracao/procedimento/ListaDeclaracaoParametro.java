@@ -8,6 +8,7 @@ import li2comStruct.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2comStruct.plp.expressions2.memory.VariavelNaoDeclaradaException;
 import li2comStruct.plp.imperative1.memory.AmbienteCompilacaoImperativa;
 import li2comStruct.plp.imperative1.util.Lista;
+import li2comStruct.plp.li2Struct.excecao.declaracao.ClasseNaoDeclaradaException;
 
 public class ListaDeclaracaoParametro extends Lista<DeclaracaoParametro> {
 
@@ -24,7 +25,7 @@ public class ListaDeclaracaoParametro extends Lista<DeclaracaoParametro> {
 	}
 
 	public boolean checaTipo(AmbienteCompilacaoImperativa ambiente)
-			throws VariavelNaoDeclaradaException {
+			throws VariavelNaoDeclaradaException, ClasseNaoDeclaradaException {
 		boolean resposta;
 		if (getHead() != null) {
 			if (getTail() != null) {

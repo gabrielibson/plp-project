@@ -540,9 +540,9 @@ public class ContextoExecucaoImperativa2 implements AmbienteExecucaoImperativa2 
 		return null;
 	}
 
-	public AmbienteExecucaoImperativa2 write(li2comStruct.plp.expressions2.expression.Valor v) {
+	public void write(li2comStruct.plp.expressions2.expression.Valor v) {
 		// TODO Auto-generated method stub
-		return null;
+		//return null;
 	}
 
 	public AmbienteExecucao clone() {

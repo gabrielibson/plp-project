@@ -4,7 +4,6 @@ import li2comStruct.plp.expressions2.memory.IdentificadorJaDeclaradoException;
 import li2comStruct.plp.expressions2.memory.IdentificadorNaoDeclaradoException;
 import li2comStruct.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2comStruct.plp.expressions2.memory.VariavelNaoDeclaradaException;
-import li2comStruct.plp.imperative1.command.IO;
 import li2comStruct.plp.imperative1.memory.AmbienteCompilacaoImperativa;
 import li2comStruct.plp.imperative1.memory.AmbienteExecucaoImperativa;
 import li2comStruct.plp.imperative1.memory.EntradaVaziaException;

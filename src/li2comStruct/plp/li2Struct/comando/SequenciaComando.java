@@ -1,7 +1,5 @@
-package li2comStruct.plp.imperative1.command;
+package li2comStruct.plp.li2Struct.comando;
 
-import li2comStruct.plp.expressions2.expression.Expressao;
-import li2comStruct.plp.expressions2.expression.ValorBooleano;
 import li2comStruct.plp.expressions2.memory.IdentificadorJaDeclaradoException;
 import li2comStruct.plp.expressions2.memory.IdentificadorNaoDeclaradoException;
 import li2comStruct.plp.imperative1.memory.AmbienteCompilacaoImperativa;
@@ -9,25 +7,23 @@ import li2comStruct.plp.imperative1.memory.AmbienteExecucaoImperativa;
 import li2comStruct.plp.imperative1.memory.EntradaVaziaException;
 import li2comStruct.plp.imperative1.memory.ErroTipoEntradaException;
 
-public class While implements Comando {
+public class SequenciaComando implements Comando {
 
-	private Expressao expressao;
+	private Comando comando1;
+	private Comando comando2;
 
-	private Comando comando;
-
-	public While(Expressao expressao, Comando comando) {
-		this.expressao = expressao;
-		this.comando = comando;
+	public SequenciaComando(Comando comando1, Comando comando2) {
+		this.comando1 = comando1;
+		this.comando2 = comando2;
 	}
 
 	/**
-	 * Implementa o comando <code>while</code>.
+	 * Executa os comandos sequencialmente.
 	 * 
 	 * @param ambiente
 	 *            o ambiente de execu��o.
 	 * 
-	 * @return o ambiente depois de modificado pela execu��o do comando
-	 *         <code>while</code>.
+	 * @return o ambiente depois de modificado pela execu��o dos comandos.
 	 * @throws ErroTipoEntradaException 
 	 * 
 	 */
@@ -35,27 +31,20 @@ public class While implements Comando {
 			AmbienteExecucaoImperativa ambiente)
 			throws IdentificadorJaDeclaradoException,
 			IdentificadorNaoDeclaradoException, EntradaVaziaException, ErroTipoEntradaException {
-		while (((ValorBooleano) expressao.avaliar(ambiente)).valor()) {
-			ambiente = comando.executar(ambiente);
-		}
-		return ambiente;
+		return comando2.executar(comando1.executar(ambiente));
 	}
 
 	/**
-	 * Realiza a verificacao de tipos da express�o e dos comandos do comando
-	 * <code>while</code>
+	 * Realiza a verificacao de tipos dos comandos
 	 * 
 	 * @param ambiente
 	 *            o ambiente de compila��o.
-	 * @return <code>true</code> se os comando s�o bem tipados;
+	 * @return <code>true</code> se os comandos s�o bem tipados;
 	 *         <code>false</code> caso contrario.
 	 */
 	public boolean checaTipo(AmbienteCompilacaoImperativa ambiente)
 			throws IdentificadorJaDeclaradoException,
 			IdentificadorNaoDeclaradoException, EntradaVaziaException {
-		return expressao.checaTipo(ambiente)
-				&& expressao.getTipo(ambiente).eBooleano()
-				&& comando.checaTipo(ambiente);
+		return comando1.checaTipo(ambiente) && comando2.checaTipo(ambiente);
 	}
-
 }

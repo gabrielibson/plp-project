@@ -1,4 +1,4 @@
-package li2comStruct.plp.imperative1.command;
+package li2comStruct.plp.li2Struct.comando;
 
 import li2comStruct.plp.expressions2.memory.IdentificadorJaDeclaradoException;
 import li2comStruct.plp.expressions2.memory.IdentificadorNaoDeclaradoException;
@@ -7,6 +7,7 @@ import li2comStruct.plp.imperative1.memory.AmbienteCompilacaoImperativa;
 import li2comStruct.plp.imperative1.memory.AmbienteExecucaoImperativa;
 import li2comStruct.plp.imperative1.memory.EntradaVaziaException;
 import li2comStruct.plp.imperative1.memory.ErroTipoEntradaException;
+import li2comStruct.plp.li2Struct.excecao.declaracao.ClasseNaoDeclaradaException;
 import li2comStruct.plp.li2Struct.memoria.AmbienteExecucaoImperativa2;
 
 public class ComandoDeclaracao implements Comando {
@@ -48,10 +49,15 @@ public class ComandoDeclaracao implements Comando {
 	public boolean checaTipo(AmbienteCompilacaoImperativa ambiente)
 			throws IdentificadorJaDeclaradoException,
 			IdentificadorNaoDeclaradoException, EntradaVaziaException {
-		boolean resposta;
+		boolean resposta = false;
 		ambiente.incrementa();
-		resposta = declaracao.checaTipo(ambiente)
-				&& comando.checaTipo(ambiente);
+		try {
+			resposta = declaracao.checaTipo(ambiente)
+					&& comando.checaTipo(ambiente);
+		} catch (ClasseNaoDeclaradaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ambiente.restaura();
 		return resposta;
 	}

@@ -5,6 +5,7 @@ import li2comStruct.plp.expressions2.memory.IdentificadorNaoDeclaradoException;
 import li2comStruct.plp.imperative1.memory.AmbienteCompilacaoImperativa;
 import li2comStruct.plp.imperative1.memory.AmbienteExecucaoImperativa;
 import li2comStruct.plp.imperative1.memory.EntradaVaziaException;
+import li2comStruct.plp.li2Struct.excecao.declaracao.ClasseNaoDeclaradaException;
 
 public class DeclaracaoComposta extends Declaracao {
 
@@ -28,7 +29,7 @@ public class DeclaracaoComposta extends Declaracao {
 	@Override
 	public boolean checaTipo(AmbienteCompilacaoImperativa ambiente)
 			throws IdentificadorJaDeclaradoException,
-			IdentificadorNaoDeclaradoException, EntradaVaziaException {
+			IdentificadorNaoDeclaradoException, EntradaVaziaException, ClasseNaoDeclaradaException {
 		return declaracao1.checaTipo(ambiente)
 				&& declaracao2.checaTipo(ambiente);
 	}

@@ -1,4 +1,4 @@
-package li2comStruct.plp.imperative1.command;
+package li2comStruct.plp.li2Struct.comando;
 
 import li2comStruct.plp.expressions2.expression.Expressao;
 import li2comStruct.plp.expressions2.expression.ValorBooleano;
@@ -9,29 +9,25 @@ import li2comStruct.plp.imperative1.memory.AmbienteExecucaoImperativa;
 import li2comStruct.plp.imperative1.memory.EntradaVaziaException;
 import li2comStruct.plp.imperative1.memory.ErroTipoEntradaException;
 
-public class IfThenElse implements Comando {
+public class While implements Comando {
 
 	private Expressao expressao;
 
-	private Comando comandoThen;
+	private Comando comando;
 
-	private Comando comandoElse;
-
-	public IfThenElse(Expressao expressao, Comando comandoThen,
-			Comando comandoElse) {
+	public While(Expressao expressao, Comando comando) {
 		this.expressao = expressao;
-		this.comandoThen = comandoThen;
-		this.comandoElse = comandoElse;
+		this.comando = comando;
 	}
 
 	/**
-	 * Implementa o comando <code>if then else</code>.
+	 * Implementa o comando <code>while</code>.
 	 * 
 	 * @param ambiente
 	 *            o ambiente de execu��o.
 	 * 
 	 * @return o ambiente depois de modificado pela execu��o do comando
-	 *         <code>if then else</code>.
+	 *         <code>while</code>.
 	 * @throws ErroTipoEntradaException 
 	 * 
 	 */
@@ -39,19 +35,19 @@ public class IfThenElse implements Comando {
 			AmbienteExecucaoImperativa ambiente)
 			throws IdentificadorJaDeclaradoException,
 			IdentificadorNaoDeclaradoException, EntradaVaziaException, ErroTipoEntradaException {
-		if (((ValorBooleano) expressao.avaliar(ambiente)).valor())
-			return comandoThen.executar(ambiente);
-		else
-			return comandoElse.executar(ambiente);
+		while (((ValorBooleano) expressao.avaliar(ambiente)).valor()) {
+			ambiente = comando.executar(ambiente);
+		}
+		return ambiente;
 	}
 
 	/**
 	 * Realiza a verificacao de tipos da express�o e dos comandos do comando
-	 * <code>if then else</code>
+	 * <code>while</code>
 	 * 
 	 * @param ambiente
 	 *            o ambiente de compila��o.
-	 * @return <code>true</code> se a express�o e os comando s�o bem tipados;
+	 * @return <code>true</code> se os comando s�o bem tipados;
 	 *         <code>false</code> caso contrario.
 	 */
 	public boolean checaTipo(AmbienteCompilacaoImperativa ambiente)
@@ -59,8 +55,7 @@ public class IfThenElse implements Comando {
 			IdentificadorNaoDeclaradoException, EntradaVaziaException {
 		return expressao.checaTipo(ambiente)
 				&& expressao.getTipo(ambiente).eBooleano()
-				&& comandoThen.checaTipo(ambiente)
-				&& comandoElse.checaTipo(ambiente);
+				&& comando.checaTipo(ambiente);
 	}
 
 }

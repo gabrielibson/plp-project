@@ -1,7 +1,7 @@
 package li2comStruct.plp.li2Struct.declaracao.procedimento;
 
 import li2comStruct.plp.expressions1.util.Tipo;
-import li2comStruct.plp.imperative1.command.Comando;
+import li2comStruct.plp.li2Struct.comando.Comando;
 
 /**
  * Uma defini�ao de procedimento � uma declara�ao de comando e parametrosFormais

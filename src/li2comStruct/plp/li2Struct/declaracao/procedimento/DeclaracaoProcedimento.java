@@ -7,6 +7,7 @@ import li2comStruct.plp.imperative1.declaration.Declaracao;
 import li2comStruct.plp.imperative1.memory.AmbienteCompilacaoImperativa;
 import li2comStruct.plp.imperative1.memory.AmbienteExecucaoImperativa;
 import li2comStruct.plp.imperative1.memory.EntradaVaziaException;
+import li2comStruct.plp.li2Struct.excecao.declaracao.ClasseNaoDeclaradaException;
 import li2comStruct.plp.li2Struct.excecao.declaracao.ProcedimentoJaDeclaradoException;
 import li2comStruct.plp.li2Struct.memoria.AmbienteExecucaoImperativa2;
 
@@ -43,7 +44,7 @@ public class DeclaracaoProcedimento extends Declaracao {
 	@Override
 	public boolean checaTipo(AmbienteCompilacaoImperativa ambiente)
 			throws IdentificadorJaDeclaradoException,
-			IdentificadorNaoDeclaradoException, EntradaVaziaException {
+			IdentificadorNaoDeclaradoException, EntradaVaziaException, ClasseNaoDeclaradaException {
 		boolean resposta;
 
 		ambiente.map(id, defProcedimento.getTipo());
