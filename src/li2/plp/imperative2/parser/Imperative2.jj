@@ -451,6 +451,7 @@ LeftExpression PLeftExpression() :
 }
 
 /** add PLP
+A classe se encontra no pacote i2.leftExpression
  * ... LeftExpression.Id | Id.Id
  **/
 AcessoAtributoId PAcessoAtributoId() :
@@ -781,6 +782,7 @@ Declaracao PDeclaracao():
 	{return retorno;}
 }
 /** Add PLP
+A classe se encontra no pacote i2.declaration
 **/
 DefStruct PDefStruct():
 {
@@ -797,6 +799,7 @@ DefStruct PDefStruct():
   }
 }
 /** Add PLP
+A classe se encontra no pacote i2.declaration
 **/
 DeclaracaoChave PDeclaracaochave():
 {
@@ -814,9 +817,8 @@ DeclaracaoChave PDeclaracaochave():
 * Producao da Lista de declaracao de atributos do struct
 **/
 /** Add PLP
+A classe se encontra no pacote i2.declaration
 **/
-
-
 ListaDecAtributoStruct PListaDecAtributoStruct():
 {
 	Id id;
@@ -856,6 +858,7 @@ InstanciaStruct PInstanciaStruct():
   }
 }
 /** Add PLP
+A classe se encontra no pacote i2.declaration
 **/
 InstanciaValoresStruct PInstanciaValoresStruct():
 {
@@ -872,6 +875,7 @@ InstanciaValoresStruct PInstanciaValoresStruct():
   }
 }
 /** Add PLP
+A classe se encontra no pacote i2.declaration
 **/
 InstanciaLeituraStruct PInstanciaLeituraStruct():
 {
@@ -888,7 +892,7 @@ InstanciaLeituraStruct PInstanciaLeituraStruct():
   <COMMA>
   file = ValorString() <RPAREN>
   {
-    return new InstanciaLeituraStruc(tipo, id, key, file);
+    return new InstanciaLeituraStruct(tipo, id, key, file);
   } 
 }
 
@@ -945,28 +949,6 @@ DefProcedimento PDefProcedimento():
 }
 
 /**
-Dividimos Tipo em 2 categorias: TipoPrimitivo e TipoStruct.
-Qualquer coisa apagar produção de PTipo, PTipoPrimitivo e PTipoStruct e descomentar essa parte.
-**
-Tipo PTipo():
-{
-	Tipo tipo;
-}
-{
-	(
-	<INT> {tipo = TipoPrimitivo.INTEIRO;} |
-	<BOOLEAN> {tipo = TipoPrimitivo.BOOLEANO;} |
-	<STRING> {tipo = TipoPrimitivo.STRING;}
-	)
-	{
-		return tipo;
-	}
-}
-**/
-
-/** Add PLP**/
-
-/**
  * Tipo ::= TipoStruct | TipoPrimitivo
  **/
 Tipo PTipo() :
@@ -1019,7 +1001,7 @@ Tipo PTipoPrimitivo() :
 
 /** Add PLP
 **/
-/**
+/**A classe se encontra no pacote i2.util
  * TipoStruct ::= Id
  **/
 Tipo PTipoStruct() :
