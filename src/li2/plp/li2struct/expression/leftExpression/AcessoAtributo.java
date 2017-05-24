@@ -11,5 +11,6 @@ public class AcessoAtributo implements LeftExpression{
 	public Id getId(){
 		return id;
 	}
+	
 
 }

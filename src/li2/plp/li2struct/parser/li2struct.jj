@@ -390,18 +390,17 @@ Atribuicao PAtribuicao() :
 
 /**
  * LeftExpression ::= Id | AcessoAtributo
+ tirei lookhead
  **/
 LeftExpression PLeftExpression() :
 {
   LeftExpression retorno;
 }
 {
-  (
-    LOOKAHEAD(PAcessoAtributoId())
+    
     retorno = PAcessoAtributoId()
-  | LOOKAHEAD(< IDENTIFIER >)
     retorno = PId()
-  )
+  
   {
     return retorno;
   }
@@ -416,11 +415,10 @@ AcessoAtributoId PAcessoAtributoId() :
   Id id;
 }
 {
-  (
-    LOOKAHEAD(< LPAREN >)
+  <LPAREN>
     av = PLeftExpression()
   | av = PId()
-  )
+  <RPAREN>
   < DOT > id = PId()
   {
     return new AcessoAtributoId(av, id);
