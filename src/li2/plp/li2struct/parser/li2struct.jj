@@ -5,7 +5,7 @@ options {
 
 PARSER_BEGIN(Imp2Parser)
 
-package li2.plp.imperative2.parser;
+package li2.plp.li2struct.parser;
 
 import li2.plp.expressions1.util.*;
 import li2.plp.expressions2.expression.*;
@@ -17,6 +17,9 @@ import li2.plp.imperative2.command.*;
 import li2.plp.imperative2.declaration.*;
 import li2.plp.imperative2.memory.*;
 import java.util.*;
+
+import li2.plp.li2struct.expression.*;
+import li2.plp.li2struct.expression.leftExpression.*;
 
 public class Imp2Parser {
 
@@ -418,7 +421,7 @@ AcessoAtributoId PAcessoAtributoId() :
 {
   (
     LOOKAHEAD(< LPAREN >)
-    av = PLeftExpression()
+     < LPAREN > av = PLeftExpression() < RPAREN >
   | av = PId()
   )
   < DOT > id = PId()
