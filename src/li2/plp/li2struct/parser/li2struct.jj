@@ -5,7 +5,7 @@ options {
 
 PARSER_BEGIN(Imp2Parser)
 
-package li2.plp.imperative2.parser;
+package li2.plp.li2struct.parser;
 
 import li2.plp.expressions1.util.*;
 import li2.plp.expressions2.expression.*;
@@ -17,6 +17,7 @@ import li2.plp.imperative2.command.*;
 import li2.plp.imperative2.declaration.*;
 import li2.plp.imperative2.memory.*;
 import java.util.*;
+
 
 public class Imp2Parser {
 
@@ -132,6 +133,7 @@ TOKEN : /* TOKENS DE IMPERATIVA 2 */
 {
   < PROC: "proc" >
 | < CALL: "call" >
+| < STRUCT: "struct" >
 }
 
 TOKEN : /* TOKENS DOS POSS�VEIS TIPOS */
@@ -373,41 +375,43 @@ Skip PSkip() :
 	{return new Skip();}
 }
 
-/**
+/** add PLP
  * Atribuicao ::= LeftExpression ":=" Expressao
  **/
+
 Atribuicao PAtribuicao() :
 {
-  LeftExpression av;
-  Expressao exp;
+	LeftExpression av;
+	Expressao exp;
 }
 {
-  av = PLeftExpression() < ATTRIB > exp = PExpressao()
-  {
-    return new Atribuicao(av, exp);
-  }
+	av  = PLeftExpression() <ATTRIB> exp = PExpressao()
+	{
+		return new Atribuicao(av, exp);
+	}
 }
 
-/**
+/** add PLP
  * LeftExpression ::= Id | AcessoAtributo
- tirei lookhead
  **/
 LeftExpression PLeftExpression() :
 {
   LeftExpression retorno;
 }
 {
-    
-    retorno = PAcessoAtributoId()
+  (
+    LOOKAHEAD(PAcessoAtributoId())
+  retorno = PAcessoAtributoId()
+  | LOOKAHEAD(< IDENTIFIER >)
     retorno = PId()
-  
+  )
   {
     return retorno;
   }
 }
 
-/**
- * ... LeftExpression.Id
+/** add PLP
+ * ... LeftExpression.Id | Id.Id
  **/
 AcessoAtributoId PAcessoAtributoId() :
 {
@@ -415,10 +419,11 @@ AcessoAtributoId PAcessoAtributoId() :
   Id id;
 }
 {
-  <LPAREN>
-    av = PLeftExpression()
+  (
+    LOOKAHEAD(< LPAREN >)
+    < LPAREN > av = PLeftExpression() < RPAREN >
   | av = PId()
-  <RPAREN>
+  )
   < DOT > id = PId()
   {
     return new AcessoAtributoId(av, id);
@@ -853,3 +858,65 @@ DeclaracaoVariavel PDeclaracaoVariavel() :
 		return retorno;
 	}
 }
+
+/**
+Adicionando producao de li2struct
+**/
+
+/** Add PLP
+**/
+
+DefStruct PDefStruct():
+{
+
+ Id id;
+ DeclaracaoChave chave; 
+ ListaDecAtributoStruct listadecattstruct;
+}
+{
+  <STRUCT> id = PId() <LBRACE> chave = PDeclaracaochave() <SEMICOLON>
+  listadecattstruct = PListaDecAtributoStruct() <RBRACE>
+  {
+    return new DefStruct(id, chave, listadecattstruct);
+  }
+}
+
+/** Add PLP
+**/
+DeclaracaoChave PDeclaracaochave():
+{
+  Id id;
+}
+  {
+   <INT>
+   id = PId()
+  { 
+    return new DeclaracaoChave(id);
+  }
+}
+/** Add PLP
+**/
+ListaDecAtributoStruct PListaDecAtributoStruct():
+{
+	Id id;
+	Tipo tipo;
+	ListaDecAtributoStruct lista = null;
+}
+{
+	[ tipo = PTipo() 
+	  id = PId() 
+	  { lista = new ListaDecAtributoStruct(new DeclaracaoAtributoStruct(id, tipo));}
+	] 
+	( <SEMICOLON> 
+	  tipo = PTipo() id = PId() 
+	  {lista = new ListaDecAtributoStruct(new DeclaracaoAtributoStruct(id, tipo), lista);} 
+	)+
+	
+	{
+		if (lista == null) {
+			lista = new ListaDecAtributoStruct();
+		}	
+		return lista;
+	}
+}
+
