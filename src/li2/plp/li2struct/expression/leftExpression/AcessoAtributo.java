@@ -1,15 +1,14 @@
 package li2.plp.li2struct.expression.leftExpression;
 
+import li2.plp.expressions1.util.Tipo;
 import li2.plp.expressions2.expression.Valor;
+import li2.plp.expressions2.memory.AmbienteCompilacao;
+import li2.plp.expressions2.memory.AmbienteExecucao;
 import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
-import li2.plp.li2struct.exception.InstanciaStructNaoDeclaradaException;
-import li2.plp.li2struct.exception.StructNaoDeclaradaException;
-import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
-import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
-import li2.plp.li2struct.util.Tipo;
+import li2.plp.li2struct.expression.Expressao;
 
-public class AcessoAtributo implements LeftExpression{
+public abstract class AcessoAtributo implements LeftExpression{
 
 	private Id id;
 	
@@ -21,22 +20,33 @@ public class AcessoAtributo implements LeftExpression{
 		return id;
 	}
 
-	public Valor avaliar(AmbienteExecucaoli2Struct ambiente) throws VariavelNaoDeclaradaException,
-			VariavelJaDeclaradaException, InstanciaStructNaoDeclaradaException, StructNaoDeclaradaException {
+	public Valor avaliar(AmbienteExecucao amb) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public boolean checaTipo(AmbienteCompilacaoli2Struct ambiente)
-			throws VariavelNaoDeclaradaException, StructNaoDeclaradaException {
+	public boolean checaTipo(AmbienteCompilacao amb)
+			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public Tipo getTipo(AmbienteCompilacaoli2Struct ambiente)
-			throws VariavelNaoDeclaradaException, StructNaoDeclaradaException {
+	public Tipo getTipo(AmbienteCompilacao amb)
+			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Expressao reduzir(AmbienteExecucao ambiente) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Expressao clone() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public abstract Expressao getExpressaoObjeto();
 
 }
