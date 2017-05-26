@@ -50,6 +50,8 @@ public class TipoStruct implements Tipo{
      * @return <code>true</code> se esta classe for um tipo v�lido (j� declarada);
      *          <code>false</code> caso contrario.
      */
+	
+	
 	public boolean eValido(AmbienteCompilacaoImperativa ambiente)
 			throws StructNaoDeclaradoException {
 		boolean resposta = false;
@@ -62,5 +64,16 @@ public class TipoStruct implements Tipo{
 		}
 		return resposta;
 	}
+	
+	/**
+     * Compara este tipo com o tipo dado.
+     *
+     * @return <code>true</code> se se tratarem do mesmo tipo;
+     *          <code>false</code> caso contrario.
+     */
+    public boolean equals(Object obj) {
+        return (obj instanceof TipoStruct) &&
+               ((TipoStruct)obj).tipoStruct.equals(this.tipoStruct);
+    }
 
 }
