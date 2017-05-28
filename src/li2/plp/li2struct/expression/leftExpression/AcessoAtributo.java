@@ -19,6 +19,7 @@ public abstract class AcessoAtributo implements LeftExpression{
 	public Id getId(){
 		return id;
 	}
+	
 
 	public Valor avaliar(AmbienteExecucao amb) throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
 		// TODO Auto-generated method stub

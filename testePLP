@@ -1,0 +1,12 @@
+{
+ struct aluno{
+  int id;
+  string nome;
+  string matricula;
+}
+aluno a1 = [1,"fulano","12"];
+  
+writeFile(a1,File);
+
+}
+

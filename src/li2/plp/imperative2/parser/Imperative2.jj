@@ -123,15 +123,19 @@ TOKEN : /* TOKENS DE IMPERATIVA 1 */
 | < DO: "do" >
 | < READ: "read" >
 | < WRITE: "write" >
+| < WRITE_FILE: "writeFile" >
+| < READ_FILE: "readFile" >
 | < IF: "if" >
 | < THEN: "then" >
 | < ELSE: "else" >
+
 }
 
 TOKEN : /* TOKENS DE IMPERATIVA 2 */
 {
   < PROC: "proc" >
 | < CALL: "call" >
+| < STRUCT: "struct" >
 }
 
 TOKEN : /* TOKENS DOS POSS�VEIS TIPOS */
@@ -310,6 +314,8 @@ IO PIO() :
 	(
 		  retorno = PRead()
 		| retorno = PWrite()
+		| retorno = PWriteFile()
+		| retorno = PReadFile()
 	)
 	{return retorno;}
 }
@@ -335,7 +341,42 @@ Write PWrite() :
 		   <RPAREN>
 	{return new Write(exp);}
 }
-
+/** add PLP
+**/
+WriteFile PWriteFile():
+{
+  Id id;
+  Valor file;
+}
+{
+  <WRITE_FILE> <LPAREN> id = PId()
+  <COMMA>
+  file = ValorString()
+  <RPAREN>
+  {
+    return new WriteFile(id, file);
+  }
+}
+/** add PLP
+**/
+ReadFile PReadFile():
+{
+  Id id;
+  Valor key;
+  Valor file;
+}
+{
+  id = PId() <ASSIGN>
+  <READ_FILE> <LPAREN>
+  key = ValorInteiro()
+  <COMMA>
+  file = ValorString()
+  <RPAREN>
+  {
+    return new ReadFile(id, key, file);
+  }
+}
+  
 IfThenElse PIfThenElse() :
 {
 	Expressao expressao;
@@ -373,16 +414,60 @@ Skip PSkip() :
 	{return new Skip();}
 }
 
+
+/** add PLP
+ * Atribuicao ::= LeftExpression ":=" Expressao
+ **/
+
 Atribuicao PAtribuicao() :
 {
-	Id id;
+	LeftExpression av;
 	Expressao exp;
 }
 {
-	id  = PId() <ATTRIB> exp = PExpressao()
+	av  = PLeftExpression() <ATTRIB> exp = PExpressao()
 	{
-		return new Atribuicao(id, exp);
+		return new Atribuicao(av, exp);
 	}
+}
+
+/** add PLP
+ * LeftExpression ::= Id | AcessoAtributo
+ **/
+LeftExpression PLeftExpression() :
+{
+  LeftExpression retorno;
+}
+{
+  (
+    LOOKAHEAD(PAcessoAtributoId())
+    retorno = PAcessoAtributoId()
+  | LOOKAHEAD(< IDENTIFIER >)
+    retorno = PId()
+  )
+  {
+    return retorno;
+  }
+}
+
+/** add PLP
+ * ... LeftExpression.Id | Id.Id
+ **/
+AcessoAtributoId PAcessoAtributoId() :
+{
+  LeftExpression av;
+  Id id;
+}
+{
+  (
+  
+    av = PLeftExpression()
+  | av = PId()
+  )
+  < DOT > id = PId()
+  {
+    return new AcessoAtributoId(av, id);
+  }
 }
 
 Id PId() :
@@ -688,10 +773,123 @@ Declaracao PDeclaracao():
            retorno = PDeclaracaoComposta() 
 		  | retorno = PDeclaracaoVariavel()
 		  | retorno = PDeclaracaoProcedimento()
-          | <LPAREN> retorno = PDeclaracao() <RPAREN>   		 
+          | <LPAREN> retorno = PDeclaracao() <RPAREN>
+          | retorno = PDefStruct()
+          | retorno = PInstanciaStruct()   		 
 		  
 	)
 	{return retorno;}
+}
+/** Add PLP
+**/
+DefStruct PDefStruct():
+{
+
+ Id id;
+ Declaracaochave chave; 
+ ListaDecAtributoStruct listadecattstruct;
+}
+{
+  <STRUCT> id = PId() <LBRACE> chave = PDeclaracaochave() <SEMICOLON>
+  listadecattstruct = PListaDecAtributoStruct() <RBRACE>
+  {
+    return new DefStruct(id, chave, listadecattstruct);
+  }
+}
+/** Add PLP
+**/
+DeclaracaoChave PDeclaracaochave():
+{
+  Id id;
+}
+  {
+    <INT>
+    id = PId()
+    { 
+      return new DecChave(id);
+  }
+  }
+
+/**
+* Producao da Lista de declaracao de atributos do struct
+**/
+/** Add PLP
+**/
+
+
+ListaDecAtributoStruct PListaDecAtributoStruct():
+{
+	Id id;
+	Tipo tipo;
+	ListaDecAtributoStruct lista = null;
+}
+{
+	[ tipo = PTipo() 
+	  id = PId() 
+	  { lista = new ListaDecAtributoStruct(new DeclaracaoAtributoStruct(id, tipo));}
+	] 
+	( <SEMICOLON> 
+	  tipo = PTipo() id = PId() 
+	  {lista = new ListaDecAtributoStruct(new DeclaracaoAtributoStruct(id, tipo), lista);} 
+	)+
+	
+	{
+		if (lista == null) {
+			lista = new DeclaracaoAtributoStruct();
+		}	
+		return lista;
+	}
+}
+
+
+/** Add PLP
+**/
+InstanciaStruct PInstanciaStruct():
+{
+  InstanciaStruct instanciaStruct;
+}
+{
+  instanciaStruct = PInstanciaValoresStruct();
+  |instanciaStruct = PInstanciaLeituraStruct();
+  {
+    return instanciaStruct;
+  }
+}
+/** Add PLP
+**/
+InstanciaValoresStruct PInstanciaValoresStruct():
+{
+  Tipo tipo;
+  Id id;
+  ListaExpressao listaexp;
+}
+{
+  tipo = PTipo()
+  id = PId()
+  <ASSIGN> <LBRACKET> listaexp = PListaExpressao() <RBRACKET>
+  {
+    return new InstanciaValoresStruct(tipo, id, listaexp);
+  }
+}
+/** Add PLP
+**/
+InstanciaLeituraStruct PInstanciaLeituraStruct():
+{
+  Tipo tipo;
+  Id id;
+  Valor key;
+  Valor file;
+}
+{
+  tipo = PTipo()
+  id = PId()
+  <ASSIGN> <READFILE> <LPAREN>
+  key = ValorInteiro()
+  <COMMA>
+  file = ValorString() <RPAREN>
+  {
+    return new InstanciaLeituraStruc(tipo, id, key, file);
+  } 
 }
 
 DeclaracaoComposta PDeclaracaoComposta():
@@ -746,6 +944,10 @@ DefProcedimento PDefProcedimento():
 	
 }
 
+/**
+Dividimos Tipo em 2 categorias: TipoPrimitivo e TipoStruct.
+Qualquer coisa apagar produção de PTipo, PTipoPrimitivo e PTipoStruct e descomentar essa parte.
+**
 Tipo PTipo():
 {
 	Tipo tipo;
@@ -760,6 +962,83 @@ Tipo PTipo():
 		return tipo;
 	}
 }
+**/
+
+/** Add PLP**/
+
+/**
+ * Tipo ::= TipoStruct | TipoPrimitivo
+ **/
+Tipo PTipo() :
+{
+  Tipo tipo;
+}
+{
+  (
+    LOOKAHEAD(< STRING >
+  | < INT >
+  | < BOOLEAN >)
+    tipo = PTipoPrimitivo()
+  | tipo = PTipoStruct()
+  )
+  {
+    return tipo;
+  }
+}
+
+/** Add PLP
+**/
+/**
+ * TipoPrimitivo ::= "string" | "int" | "boolean"
+ **/
+Tipo PTipoPrimitivo() :
+{
+  Tipo retorno;
+}
+{
+  (
+    LOOKAHEAD(< INT >)
+    < INT >
+    {
+      retorno = TipoPrimitivo.TIPO_INTEIRO;
+    }
+  | LOOKAHEAD(< BOOLEAN >)
+    < BOOLEAN >
+    {
+      retorno = TipoPrimitivo.TIPO_BOOLEANO;
+    }
+  | < STRING >
+    {
+      retorno = TipoPrimitivo.TIPO_STRING;
+    }
+  )
+  {
+    return retorno;
+  }
+}
+
+/** Add PLP
+**/
+/**
+ * TipoStruct ::= Id
+ **/
+Tipo PTipoStruct() :
+{
+  Tipo retorno;
+  Id id;
+}
+{
+  (
+    id = PId()
+    {
+      retorno = new TipoStruct(id);
+    }
+  )
+  {
+    return retorno;
+  }
+}
+
 
 ListaDeclaracaoParametro PListaDeclaracaoParametro():
 {
@@ -813,3 +1092,4 @@ DeclaracaoVariavel PDeclaracaoVariavel() :
 		return retorno;
 	}
 }
+
