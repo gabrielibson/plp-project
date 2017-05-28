@@ -68,7 +68,9 @@ DeclaracaoProcedimento ::= "proc" Id "(" [ ListaDeclaracaoParametro ] ")" "{" Co
 
 ListaDeclaracaoParametro ::= Tipo Id | Tipo Id "," ListaDeclaracaoParametro
 
-ListaDecAtributoStruct ::= Tipo Id | Tipo Id ";" ListaDecAtributoStruct
+ListaDecAtributoStruct ::= DecAtributosStruct | DecAtributosStruct ";" ListaDecAtributoStruct
+
+DecAtributosStruct ::= Tipo Id
 
 DefStruct ::= "struct" Id "{" DeclaracaoChave ";" ListaDecAtributoStruct "}"
 
