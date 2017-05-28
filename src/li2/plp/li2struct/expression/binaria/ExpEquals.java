@@ -82,8 +82,8 @@ public class ExpEquals extends ExpBinaria{
     private ValorBooleano verificarIgualdade(AmbienteExecucaoli2Struct ambiente)
             throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
                    InstanciaStructNaoDeclaradaException, StructNaoDeclaradaException{
-        Valor v1 = getEsq().avaliar(ambiente);
-        Valor v2 = getDir().avaliar(ambiente);
+        Valor v1 = (Valor) getEsq().avaliar(ambiente);
+        Valor v2 = (Valor) getDir().avaliar(ambiente);
         boolean compara;
         if (v1 instanceof ValorConcreto && v2 instanceof ValorConcreto){
             compara = ((ValorConcreto)v1).equals((ValorConcreto)(v2));

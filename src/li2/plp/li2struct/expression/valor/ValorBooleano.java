@@ -72,6 +72,4 @@ public class ValorBooleano implements ValorConcreto{
     public Tipo getTipo(AmbienteCompilacaoli2Struct amb) {
         return TipoPrimitivo.TIPO_BOOLEANO;
     }
-
-
 }

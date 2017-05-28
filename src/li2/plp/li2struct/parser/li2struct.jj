@@ -3,7 +3,7 @@ options {
   DEBUG_PARSER  = true;
 }
 
-PARSER_BEGIN(Imp2Parser)
+PARSER_BEGIN(Li2structParser)
 
 package li2.plp.li2struct.parser;
 
@@ -15,27 +15,41 @@ import li2.plp.imperative2.declaration.*;
 import li2.plp.imperative2.memory.*;
 import java.util.*;
 */
+//import li2.plp.expressions2.expression.Expressao;
+
+import li2.plp.imperative1.memory.EntradaVaziaException;
+import li2.plp.imperative1.memory.ErroTipoEntradaException;
+
+import li2.plp.imperative2.memory.*;
+import java.util.*;
+
+import li2.plp.li2struct.*;
 import li2.plp.li2struct.expression.*;
 import li2.plp.li2struct.command.*;
+import li2.plp.li2struct.expression.*;
 import li2.plp.li2struct.expression.leftExpression.*;
 import li2.plp.li2struct.expression.binaria.*;
 import li2.plp.li2struct.expression.unaria.*;
 import li2.plp.li2struct.expression.valor.*;
 import li2.plp.li2struct.memory.*;
+import li2.plp.li2struct.declaracao.procedimento.*;
+import li2.plp.li2struct.declaracao.*;
+import li2.plp.li2struct.declaracao.struct.*;
+
 import li2.plp.li2struct.util.*;
 
-public class Imp2Parser {
+public class Li2structParser {
 
     public static void main(String args[]) {
-	    Imp2Parser parser;
+	    Li2structParser parser;
 	    ListaValor entrada = new ListaValor();
 	    if (args.length == 0) {
 	    	System.out.println("Imperativa 2 PLP Parser Version 0.0.1:  Reading from standard input . . .");
-	    	parser = new Imp2Parser(System.in);
+	    	parser = new Li2structParser(System.in);
 	    } else{
 	    	System.out.println("Imperativa 2 PLP Parser Version 0.0.1:  Reading from file " + args[0] + " . . .");
 	    	try {
-	    		parser = new Imp2Parser(new java.io.FileInputStream(args[0]));
+	    		parser = new Li2structParser(new java.io.FileInputStream(args[0]));
 	    	} catch (java.io.FileNotFoundException e) {
 	        	System.out.println("Java Parser Version 1.0.2:  File " + args[0] + " not found.");
 	        	return;
@@ -69,13 +83,14 @@ public class Imp2Parser {
             Programa programa = parser.Input();
             System.out.println("Imperativa 2 PLP Parser Version 0.0.1:  Imperativa2 program parsed successfully.");
             
-            if(programa.checaTipo(new ContextoCompilacaoImperativa(entrada))) {
-                ListaValor saida = programa.executar(new ContextoExecucaoImperativa2(entrada));
-                System.out.println(saida);
-            }
-            else {
-                System.out.println("Erro de tipo");
-            }
+            if (programa.checaTipo(new ContextoCompilacaoli2struct(new ListaValor())))
+      {
+        programa.executar(new ContextoExecucaoli2struct());
+      }
+      else
+      {
+        System.out.println("Erro de tipo");
+      }
         } catch (Exception e) {
             System.out.println("Imperativa 2 PLP Parser Version 0.0.1:  Encountered errors during parse.");
             e.printStackTrace();
@@ -93,7 +108,7 @@ public class Imp2Parser {
     }
 }
 
-PARSER_END(Imp2Parser)
+PARSER_END(Li2structParser)
 
 SKIP : /* WHITE SPACE */
 {
@@ -138,7 +153,6 @@ TOKEN : /* TOKENS DE IMPERATIVA 2 */
 {
   < PROC: "proc" >
 | < CALL: "call" >
-| < STRUCT: "struct" >
 }
 
 TOKEN : /* TOKENS DE LI2STRUCT */
@@ -345,7 +359,7 @@ Write PWrite() :
 	<WRITE> <LPAREN>
 		exp = PExpressao()
 		   <RPAREN>
-	{return new Write(exp);}
+	{return new Write((li2.plp.expressions2.expression.Expressao)exp);}
 }
 
 IfThenElse PIfThenElse() :
@@ -361,7 +375,7 @@ IfThenElse PIfThenElse() :
 		comandoThen = PComando()
 	<ELSE>
 		comandoElse = PComando()
-	{return new IfThenElse (expressao, comandoThen, comandoElse);}
+	{return new IfThenElse ((li2.plp.li2struct.expression.Expressao)expressao, comandoThen, comandoElse);}
 }
 
 While PWhile() :
@@ -397,7 +411,7 @@ Atribuicao PAtribuicao() :
 {
 	av  = PLeftExpression() <ATTRIB> exp = PExpressao()
 	{
-		return new Atribuicao(av, exp);
+		return new Atribuicao(av, (li2.plp.li2struct.expression.Expressao)exp);
 	}
 }
 
@@ -451,7 +465,7 @@ Id PId() :
 	}
 }
 
-
+/*
 Valor PValorInteiro() :
 {
 	Token token;
@@ -498,6 +512,76 @@ Valor PValor() :
 	{
 		return retorno;
 	}
+}
+*/
+
+/**
+ * Valor ::= ValorInteiro | ValorNull  | ValorBooleano | ValorString
+ **/
+Valor PValor() :
+{
+  Valor retorno;
+}
+{
+  (
+    LOOKAHEAD(< INTEGER_LITERAL >)
+    retorno = PValorInteiro()
+  | LOOKAHEAD(< TRUE >
+  | < FALSE >)
+    retorno = PValorBooleano()
+  | retorno = PValorString()
+  )
+  {
+    return retorno;
+  }
+}
+
+/**
+ * ... ValorInteiro
+ **/
+Valor PValorInteiro() :
+{
+  Token token;
+}
+{
+  token = < INTEGER_LITERAL >
+  {
+    return new ValorInteiro(Integer.parseInt(token.toString()));
+  }
+}
+
+/**
+ * ... ValorBooleano
+ **/
+Valor PValorBooleano() :
+{}
+{
+  LOOKAHEAD(< FALSE >)
+  < FALSE >
+  {
+    return new ValorBooleano(false);
+  }
+| < TRUE >
+  {
+    return new ValorBooleano(true);
+  }
+}
+
+/**
+ * ... ValorString
+ **/
+Valor PValorString() :
+{
+  Token token;
+}
+{
+  token = < STRING_LITERAL >
+  {
+    String tokenStr = token.toString();
+    //a seguir, serao retiradas as aspas do literal string
+    tokenStr = tokenStr.substring(1, tokenStr.length() - 1);
+    return new ValorString(tokenStr);
+  }
 }
 
 Expressao PExpMenos() :
@@ -697,7 +781,7 @@ Comando PComandoSimples() :
       | retorno = PWhile()
       | retorno = PIfThenElse()
       | retorno = PIO()
-      | <LPAREN> retorno = PComando() <RPAREN>
+ //     | <LPAREN> retorno = PComando() <RPAREN>
       | retorno = PChamadaProcedimento()
    	)
     {
@@ -707,13 +791,13 @@ Comando PComandoSimples() :
 
 ChamadaProcedimento PChamadaProcedimento():
 {
-	Id nomeProcedimento;
+	Id procedimento;
 	ListaExpressao parametrosAtuais;
 }
 {
-	<CALL> nomeProcedimento = PId() <LPAREN> parametrosAtuais = PListaExpressao() <RPAREN>
+	<CALL> procedimento = PId() <LPAREN> parametrosAtuais = PListaExpressao() <RPAREN>
 	{
-		return new ChamadaProcedimento(nomeProcedimento, parametrosAtuais);
+		return new ChamadaProcedimento(procedimento, parametrosAtuais);
 	}
 }
 
@@ -830,9 +914,9 @@ Tipo PTipoPrimitivo() :
 }
 {
 	(
-	<INT> {retorno = TipoPrimitivo.INTEIRO;} |
-	<BOOLEAN> {retorno = TipoPrimitivo.BOOLEANO;} |
-	<STRING> {retorno = TipoPrimitivo.STRING;}
+	<INT> {retorno = TipoPrimitivo.TIPO_INTEIRO;} |
+	<BOOLEAN> {retorno = TipoPrimitivo.TIPO_BOOLEANO;} |
+	<STRING> {retorno = TipoPrimitivo.TIPO_STRING;}
 	)
 	{
 		return retorno;
@@ -868,11 +952,11 @@ ListaDeclaracaoParametro PListaDeclaracaoParametro():
 {
 	[ tipo = PTipo() 
 	  id = PId() 
-	  { lista = new ListaDeclaracaoParametro(new DeclaracaoParametro(id, tipo));}
+	  { lista = new ListaDeclaracaoParametro(new DeclaracaoParametro(id, (li2.plp.expressions1.util.Tipo)tipo));}
 	] 
 	( <COMMA> 
 	  tipo = PTipo() id = PId() 
-	  {lista = new ListaDeclaracaoParametro(new DeclaracaoParametro(id, tipo), lista);} 
+	  {lista = new ListaDeclaracaoParametro(new DeclaracaoParametro(id,(li2.plp.expressions1.util.Tipo) tipo), lista);} 
 	)*
 	
 	{

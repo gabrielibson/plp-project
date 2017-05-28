@@ -87,4 +87,5 @@ public class ExpMenos extends ExpUnaria {
                    InstanciaStructNaoDeclaradaException, StructNaoDeclaradaException{
         return new ValorInteiro(- ((ValorInteiro)getExp().avaliar(ambiente)).valor());
     }
+
 }

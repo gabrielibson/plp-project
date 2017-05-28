@@ -22,7 +22,7 @@ import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
 /**
  * Interface representando um comando na linguagem.
  */
-public interface Comando {
+public interface Comando{
 
     /**
      * Executa este comando.

@@ -174,9 +174,4 @@ public class TipoPrimitivo implements Tipo{
         }
         return resposta;
     }
-
-	public Tipo intersecao(Tipo outroTipo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

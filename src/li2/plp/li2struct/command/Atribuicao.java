@@ -1,7 +1,13 @@
 package li2.plp.li2struct.command;
 
+import li2.plp.expressions2.memory.IdentificadorJaDeclaradoException;
+import li2.plp.expressions2.memory.IdentificadorNaoDeclaradoException;
 import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
+import li2.plp.imperative1.memory.AmbienteCompilacaoImperativa;
+import li2.plp.imperative1.memory.AmbienteExecucaoImperativa;
+import li2.plp.imperative1.memory.EntradaVaziaException;
+import li2.plp.imperative1.memory.ErroTipoEntradaException;
 import li2.plp.li2struct.exception.InstanciaStructNaoDeclaradaException;
 import li2.plp.li2struct.exception.StructNaoDeclaradaException;
 import li2.plp.li2struct.expression.Expressao;
@@ -79,6 +85,19 @@ public class Atribuicao implements Comando {
 			StructNaoDeclaradaException {
 		return expressao.checaTipo(ambiente)
 				&& av.getTipo(ambiente).equals(expressao.getTipo(ambiente));
+	}
+
+	public AmbienteExecucaoImperativa executar(AmbienteExecucaoImperativa ambiente)
+			throws IdentificadorJaDeclaradoException, IdentificadorNaoDeclaradoException, EntradaVaziaException,
+			ErroTipoEntradaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean checaTipo(AmbienteCompilacaoImperativa ambiente)
+			throws IdentificadorJaDeclaradoException, IdentificadorNaoDeclaradoException, EntradaVaziaException {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

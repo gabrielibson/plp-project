@@ -1,4 +1,4 @@
-package li2.plp.imperative2.declaration;
+package li2.plp.li2struct.declaracao.struct;
 
 import li2.plp.expressions2.memory.IdentificadorJaDeclaradoException;
 import li2.plp.expressions2.memory.IdentificadorNaoDeclaradoException;
