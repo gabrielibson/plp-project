@@ -18,7 +18,7 @@ public class TipoStruct implements Tipo{
 
 
 	private Id tipoStruct;
-	@Override
+
 	public Id getTipo() {
 		// TODO Auto-generated method stub
 		return tipoStruct;
@@ -51,15 +51,18 @@ public class TipoStruct implements Tipo{
      */
 	
 	
-	public boolean eValido(AmbienteCompilacaoli2Struct ambiente) throws StructNaoDeclaradaException {
+
+	public boolean eValido(AmbienteCompilacaoli2Struct ambiente)
+			throws StructNaoDeclaradaException {
+
 		boolean resposta = false;
-		try{
+		/*try{
 			//ATENCAO: COLOCAR NO AMBIENTE DE COMPILACAO STRUCT-I2 getDEfStruct E MUDAR AQUIIII
 			resposta =  (tipoStruct == NULL) || (ambiente.getDefStruct(tipoStruct) != null);
 		}
 		catch(StructNaoDeclaradaException c){
 			resposta = false;
-		}
+		}*/
 		return resposta;
 	}
 	
@@ -69,40 +72,12 @@ public class TipoStruct implements Tipo{
      * @return <code>true</code> se se tratarem do mesmo tipo;
      *          <code>false</code> caso contrario.
      */
-    public boolean equals(Object obj) {
+/*    public boolean equals(Object obj) {
         return (obj instanceof TipoStruct) &&
                ((TipoStruct)obj).tipoStruct.equals(this.tipoStruct);
     }
-
-	@Override
-	public boolean eInteiro() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean eBooleano() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean eString() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+*/
 
 
-	@Override
-	public Tipo intersecao(Tipo outroTipo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean eValido() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }
 

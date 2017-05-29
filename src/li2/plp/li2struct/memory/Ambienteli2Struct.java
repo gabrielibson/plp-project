@@ -2,7 +2,7 @@ package li2.plp.li2struct.memory;
 
 
 import li2.plp.expressions2.memory.Ambiente;
-import li2.plp.imperative2.declaration.DefStruct;
+import li2.plp.li2struct.declaracao.struct.DefStruct;
 import li2.plp.li2struct.exception.StructJaDeclaradaException;
 import li2.plp.li2struct.exception.StructNaoDeclaradaException;
 import li2.plp.li2struct.expression.leftExpression.Id;

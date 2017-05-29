@@ -6,17 +6,17 @@ import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 public class TipoPrimitivo implements Tipo{
 
 	 /**
-     * Indica que a expressao associada é inteira.
+     * Indica que a expressao associada ï¿½ inteira.
      */
     public static final int INTEIRO = 1;
 
     /**
-     * Indica que a expressao associada é booleana.
+     * Indica que a expressao associada ï¿½ booleana.
      */
     public static final int BOOLEANO = 2;
 
     /**
-     * Indica que a expressao associada é string.
+     * Indica que a expressao associada ï¿½ string.
      */
     public static final int STRING = 4;
 
@@ -94,7 +94,7 @@ public class TipoPrimitivo implements Tipo{
     }
 
     /**
-     * Indica se esta expressao é inteira.
+     * Indica se esta expressao ï¿½ inteira.
      *
      * @return <code>true</code> se esta expressao for inteira;
      *          <code>false</code> caso contrario.
@@ -104,7 +104,7 @@ public class TipoPrimitivo implements Tipo{
     }
 
     /**
-     * Indica se esta expressao é booleana.
+     * Indica se esta expressao ï¿½ booleana.
      *
      * @return <code>true</code> se esta expressao for booleana;
      *          <code>false</code> caso contrario.
@@ -114,7 +114,7 @@ public class TipoPrimitivo implements Tipo{
     }
 
     /**
-     * Indica se esta expressao é string.
+     * Indica se esta expressao ï¿½ string.
      *
      * @return <code>true</code> se esta expressao for string;
      *          <code>false</code> caso contrario.
@@ -125,8 +125,8 @@ public class TipoPrimitivo implements Tipo{
 
     /**
     *
-    * Por questao de simplificacao, este método foi implementado para unificar TipoPrimitivo e
-    * TipoStruct em uma única interface: Tipo
+    * Por questao de simplificacao, este mï¿½todo foi implementado para unificar TipoPrimitivo e
+    * TipoStruct em uma ï¿½nica interface: Tipo
     *
     */
     public boolean eValido(AmbienteCompilacaoli2Struct ambiente){
@@ -134,9 +134,9 @@ public class TipoPrimitivo implements Tipo{
     }
 
     /**
-     * Indica se esta expressao é um tipo válido.
+     * Indica se esta expressao ï¿½ um tipo vï¿½lido.
      *
-     * @return <code>true</code> se esta expressao for um tipo válido;
+     * @return <code>true</code> se esta expressao for um tipo vï¿½lido;
      *          <code>false</code> caso contrario.
      */
     public boolean eValido() {
@@ -156,8 +156,8 @@ public class TipoPrimitivo implements Tipo{
         return false;
     }
     /**
-     * Retorna a descrição textual do tipo.
-     * @return  a descrição textual do tipo.
+     * Retorna a descriï¿½ï¿½o textual do tipo.
+     * @return  a descriï¿½ï¿½o textual do tipo.
      */
     public String toString() {
         String resposta = "undefined";

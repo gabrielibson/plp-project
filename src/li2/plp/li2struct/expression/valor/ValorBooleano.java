@@ -73,5 +73,4 @@ public class ValorBooleano implements ValorConcreto{
         return TipoPrimitivo.TIPO_BOOLEANO;
     }
 
-
 }

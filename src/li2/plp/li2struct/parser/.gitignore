@@ -1,7 +1,10 @@
-/JavaCharStream.java
-/ParseException.java
 /Imp2Parser.java
 /Imp2ParserConstants.java
 /Imp2ParserTokenManager.java
+/JavaCharStream.java
+/ParseException.java
 /Token.java
 /TokenMgrError.java
+/Li2structParser.java
+/Li2structParserConstants.java
+/Li2structParserTokenManager.java
