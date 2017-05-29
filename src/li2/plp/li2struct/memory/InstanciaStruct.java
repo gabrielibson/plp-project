@@ -13,11 +13,10 @@ import li2.plp.li2struct.exception.StructJaDeclaradaException;
 import li2.plp.li2struct.exception.StructNaoDeclaradaException;
 import li2.plp.li2struct.expression.leftExpression.Id;
 import li2.plp.li2struct.expression.valor.Valor;
-import li2.plp.li2struct.util.TipoStruct;
 
 public class InstanciaStruct implements Comando{
 	
-	private TipoStruct instanciaStruct;
+	private Id instanciaStruct;
 	
 	private ContextoInstancia estado;
 	
@@ -25,13 +24,13 @@ public class InstanciaStruct implements Comando{
 		
 	}
 
-	public InstanciaStruct(TipoStruct instanciaStruct, ContextoInstancia estado) {
+	public InstanciaStruct(Id instanciaStruct, ContextoInstancia estado) {
 		this.instanciaStruct = instanciaStruct;
 		this.estado = estado;
 	}
 	
 	public Id getIdInstancia(){
-		return instanciaStruct.getTipo();
+		return instanciaStruct;
 	}
 	
 	public ContextoInstancia getEstado(){
@@ -48,7 +47,7 @@ public class InstanciaStruct implements Comando{
 		 * @param valor
 		 * @throws VariavelNaoDeclaradaException
 		 */
-		public void changeAtributo(TipoStruct idVariavel, Valor valor) throws VariavelNaoDeclaradaException{
+		public void changeAtributo(Id idVariavel, Valor valor) throws VariavelNaoDeclaradaException{
 			
 			if (this.getEstado().containsKey(idVariavel)) {
 	        	this.getEstado().remove(idVariavel);
@@ -56,7 +55,7 @@ public class InstanciaStruct implements Comando{
 	        }
 	        else
 	        {
-	        	throw new VariavelNaoDeclaradaException(idVariavel.getTipo());
+	        	throw new VariavelNaoDeclaradaException(idVariavel);
 	        }
 		}
 
@@ -69,7 +68,7 @@ public class InstanciaStruct implements Comando{
 			ProcedimentoJaDeclaradoException, StructJaDeclaradaException,
 			StructNaoDeclaradaException, EntradaInvalidaException {
 		
-		DefStruct defStruct = ambiente.getDefStruct(instanciaStruct.getTipo());
+		DefStruct defStruct = ambiente.getDefStruct(instanciaStruct);
 		
 		
 		return null;

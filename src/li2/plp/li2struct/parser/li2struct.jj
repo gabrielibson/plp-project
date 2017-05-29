@@ -866,9 +866,12 @@ Declaracao PDeclaracao():
           |LOOKAHEAD(PDeclaracaoProcedimento() <COMMA>)
            retorno = PDeclaracaoComposta()
           |LOOKAHEAD(PDefStruct() <COMMA>)
+           retorno = PDeclaracaoComposta()
+          |LOOKAHEAD(PDecVariavelInstancia() <COMMA>)
            retorno = PDeclaracaoComposta() 
 		  | retorno = PDeclaracaoVariavel()
 		  | retorno = PDeclaracaoProcedimento()
+		  | retorno = PDecVariavelInstancia()
 		  | retorno = PDefStruct() 
           | <LPAREN> retorno = PDeclaracao() <RPAREN>   		 
 		  
@@ -929,6 +932,21 @@ DefProcedimento PDefProcedimento():
 	    return new DefProcedimento (listaPar, comando);
 	}
 	
+}
+
+/** Add PLP
+**/
+DecVariavelInstancia PDecVariavelInstancia():
+{
+  Id id;
+  Tipo tipo;
+  ListaExpressao listaExp;
+}
+{
+  tipo = PTipo() id = PId() < ASSIGN > <LBRACKET> listaExp = PListaExpressao() <RBRACKET>
+  {
+    return new DecVariavelInstancia(id, tipo, listaExp);
+  }
 }
 
 /** Add PLP

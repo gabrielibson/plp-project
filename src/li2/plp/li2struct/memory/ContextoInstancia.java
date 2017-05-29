@@ -2,32 +2,32 @@ package li2.plp.li2struct.memory;
 
 import java.util.HashMap;
 
+import li2.plp.expressions2.expression.Id;
 import li2.plp.li2struct.expression.valor.Valor;
-import li2.plp.li2struct.util.TipoStruct;
 
 public class ContextoInstancia {
 
 	
-	private HashMap<TipoStruct, Valor> estado;
+	private HashMap<Id, Valor> estado;
 	
 	@SuppressWarnings("unchecked")
-	public ContextoInstancia(HashMap<TipoStruct, Valor> hash) {
-		this.estado = (HashMap<TipoStruct, Valor>)hash.clone();
+	public ContextoInstancia(HashMap<Id, Valor> hash) {
+		this.estado = (HashMap<Id, Valor>)hash.clone();
 	}
 	
-	public void remove(TipoStruct id) {
+	public void remove(Id id) {
 		this.estado.remove(id);
 	}
 
-	public void put(TipoStruct id,Valor valor) {
+	public void put(Id id,Valor valor) {
 		this.estado.put(id, valor);
 	}
 
-	public boolean containsKey(TipoStruct idVariavel) {
+	public boolean containsKey(Id idVariavel) {
 		return this.estado.containsKey(idVariavel);
 	}
 
-	public Valor get(TipoStruct id) {
+	public Valor get(Id id) {
 		return this.estado.get(id);
 	}
 

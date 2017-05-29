@@ -1,10 +1,12 @@
 package li2.plp.li2struct.expression.valor;
 
-import li2.plp.expressions1.util.Tipo;
-import li2.plp.expressions2.expression.Expressao;
-import li2.plp.expressions2.expression.Valor;
-import li2.plp.expressions2.memory.AmbienteCompilacao;
-import li2.plp.expressions2.memory.AmbienteExecucao;
+import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
+import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
+import li2.plp.li2struct.exception.InstanciaStructNaoDeclaradaException;
+import li2.plp.li2struct.exception.StructNaoDeclaradaException;
+import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
+import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
+import li2.plp.li2struct.util.Tipo;
 import li2.plp.li2struct.util.TipoPrimitivo;
 
 /**
@@ -42,9 +44,12 @@ public class ValorRef implements Valor{
      * @param ambiente o ambiente de execu�ao
      * @return o valor associado a uma dada refer�ncia.
      */
-    public Valor avaliar(AmbienteExecucao ambiente){
-        return this;
-    }
+	@Override
+	public Valor avaliar(AmbienteExecucaoli2Struct ambiente)
+			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException,
+			InstanciaStructNaoDeclaradaException, StructNaoDeclaradaException {
+		return this;
+	}
 
     //Os m�todos getTipo e checaTipo de ValorRef
     //n�o foram utilizados nessa linguagem.
@@ -56,17 +61,21 @@ public class ValorRef implements Valor{
      * @param amb o ambiente de compila��o.
      * @return o tipo deste valor refer�ncia.
      */
-    public Tipo getTipo(AmbienteCompilacao amb) {
+    public Tipo getTipo(AmbienteCompilacaoli2Struct amb) {
         return (Tipo) TipoPrimitivo.TIPO_INTEIRO;
     }
+    
     /**
      * Checa o tipo deste valor referencia no ambiente de compila��o.
      * @param amb o ambiente de compila��o
      * @return true em todos os casos.
      */
-    public boolean checaTipo(AmbienteCompilacao amb) {
-        return true;
-    }
+    @Override
+	public boolean checaTipo(AmbienteCompilacaoli2Struct ambiente)
+			throws VariavelNaoDeclaradaException, StructNaoDeclaradaException {
+		return true;
+	}
+    
     /**
      * Compara dois valores
      * @param val o valor que vai ser comparado com este.
@@ -87,13 +96,6 @@ public class ValorRef implements Valor{
         return this;
     }
 
-	public Expressao reduzir(AmbienteExecucao ambiente) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
-	public Expressao clone() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
