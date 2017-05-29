@@ -4,7 +4,6 @@ import li2.plp.expressions2.memory.IdentificadorJaDeclaradoException;
 import li2.plp.expressions2.memory.IdentificadorNaoDeclaradoException;
 import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
-import li2.plp.imperative1.memory.ListaValor;
 import li2.plp.imperative2.memory.ProcedimentoJaDeclaradoException;
 import li2.plp.imperative2.memory.ProcedimentoNaoDeclaradoException;
 import li2.plp.li2struct.declaracao.procedimento.DefProcedimento;
@@ -18,6 +17,7 @@ import li2.plp.li2struct.expression.leftExpression.Id;
 import li2.plp.li2struct.expression.valor.Valor;
 import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
+import li2.plp.li2struct.memory.ListaValor;
 import li2.plp.li2struct.util.TipoProcedimento;
 
 public class ChamadaProcedimento implements Comando {
