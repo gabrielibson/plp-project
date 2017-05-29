@@ -172,6 +172,8 @@ TOKEN : /* TOKENS DE LI2STRUCT */
 {
 
 < STRUCT : "struct" >
+| < READ_FILE : "readFile" >
+| < WRITE_FILE : "writeFile" >
 }
 
 TOKEN : /* TOKENS DOS POSS�VEIS TIPOS */
@@ -350,6 +352,8 @@ IO PIO() :
 	(
 		  retorno = PRead()
 		| retorno = PWrite()
+		| retorno = PReadFile()
+		| retorno = PWriteFile()
 	)
 	{return retorno;}
 }
@@ -1076,5 +1080,44 @@ ListaDecAtributoStruct PListaDecAtributoStruct():
 		}	
 		return lista;
 	}
+}
+
+/** add PLP
+**/
+WriteFile PWriteFile():
+{
+  Id id;
+  Valor file;
+}
+{
+  <WRITE_FILE> <LPAREN> id = PId()
+  <COMMA>
+  file = PValorString()
+  <RPAREN>
+  {
+    return new WriteFile(id, file);
+  }
+}
+
+/** add PLP
+Id = ReadFile(key, file);
+**/
+
+ReadFile PReadFile():
+{
+  Id id;
+  Valor key;
+  Valor file;
+}
+{
+  id = PId() <ASSIGN>
+  <READ_FILE> <LPAREN>
+  key = PValorInteiro()
+  <COMMA>
+  file = PValorString()
+  <RPAREN>
+  {
+    return new ReadFile(id, key, file);
+  }
 }
 

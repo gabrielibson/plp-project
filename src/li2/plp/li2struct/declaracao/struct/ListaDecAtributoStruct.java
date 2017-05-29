@@ -14,6 +14,7 @@ import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
 
 public class ListaDecAtributoStruct implements Declaracao{
 
+	
 
 	public ListaDecAtributoStruct(DeclaracaoAtributoStruct declaracaoAtributoStruct, ListaDecAtributoStruct lista) {
 		// TODO Auto-generated constructor stub

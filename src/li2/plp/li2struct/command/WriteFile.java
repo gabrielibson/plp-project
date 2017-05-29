@@ -11,19 +11,17 @@ import li2.plp.li2struct.exception.StructJaDeclaradaException;
 import li2.plp.li2struct.exception.StructNaoDeclaradaException;
 import li2.plp.li2struct.expression.leftExpression.Id;
 import li2.plp.li2struct.expression.valor.Valor;
+import li2.plp.li2struct.expression.valor.ValorString;
 import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
 
-public class ReadFile implements IO{
+public class WriteFile implements IO{
 	
 	private Id id;
-	private Valor key;
 	private Valor file;
 	
-	public ReadFile(Id id, Valor key, Valor file) {
-		
+	public WriteFile(Id id, Valor file){
 		this.id = id;
-		this.key = key;
 		this.file = file;
 	}
 
@@ -33,6 +31,9 @@ public class ReadFile implements IO{
 			InstanciaStructNaoDeclaradaException, ProcedimentoNaoDeclaradoException, ProcedimentoJaDeclaradoException,
 			StructJaDeclaradaException, StructNaoDeclaradaException, EntradaInvalidaException {
 		// TODO Auto-generated method stub
+		if(file instanceof ValorString){
+			
+		}
 		return null;
 	}
 
@@ -43,5 +44,7 @@ public class ReadFile implements IO{
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	
 
 }
