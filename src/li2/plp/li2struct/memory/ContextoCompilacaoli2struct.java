@@ -3,6 +3,7 @@ package li2.plp.li2struct.memory;
 import java.util.HashMap;
 import java.util.Stack;
 
+import li2.plp.expressions2.expression.Id;
 import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
 import li2.plp.imperative2.memory.ProcedimentoJaDeclaradoException;
@@ -11,7 +12,6 @@ import li2.plp.li2struct.declaracao.procedimento.ListaDeclaracaoParametro;
 import li2.plp.li2struct.declaracao.struct.DefStruct;
 import li2.plp.li2struct.exception.StructJaDeclaradaException;
 import li2.plp.li2struct.exception.StructNaoDeclaradaException;
-import li2.plp.li2struct.expression.leftExpression.Id;
 import li2.plp.li2struct.util.Tipo;
 
 /**
@@ -169,7 +169,7 @@ public class ContextoCompilacaoli2struct implements AmbienteCompilacaoli2Struct 
      * @throws ClasseNaoDeclaradaException quando nao foi declarada nenhuma
      * classe com esse nome.
      */
-    public DefStruct getDefClasse(Id idArg)
+    public DefStruct getDefStruct(Id idArg)
         throws StructNaoDeclaradaException  {
         DefStruct result = null;
         result = this.mapDefStruct.get(idArg);
@@ -217,18 +217,5 @@ public class ContextoCompilacaoli2struct implements AmbienteCompilacaoli2Struct 
             return result;
         }
     }
-
-	public void map(li2.plp.expressions2.expression.Id idArg, li2.plp.expressions1.util.Tipo tipoId)
-			throws VariavelJaDeclaradaException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public li2.plp.expressions1.util.Tipo get(li2.plp.expressions2.expression.Id idArg)
-			throws VariavelNaoDeclaradaException {
-		// TODO Auto-generated method stub
-		return null;
-	}    
-
 }
 

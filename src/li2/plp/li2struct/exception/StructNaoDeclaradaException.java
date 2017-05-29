@@ -1,6 +1,6 @@
 package li2.plp.li2struct.exception;
 
-import li2.plp.li2struct.expression.leftExpression.Id;
+import li2.plp.expressions2.expression.Id;
 
 public class StructNaoDeclaradaException extends Exception{
 

@@ -1,19 +1,13 @@
 package li2.plp.li2struct.command;
 
-import li2.plp.expressions2.expression.Expressao;
-import li2.plp.imperative1.memory.AmbienteExecucaoImperativa;
-import li2.plp.imperative2.memory.ProcedimentoJaDeclaradoException;
-import li2.plp.imperative2.memory.ProcedimentoNaoDeclaradoException;
-import li2.plp.li2struct.exception.EntradaInvalidaException;
-import li2.plp.li2struct.exception.InstanciaStructJaDeclaradaException;
+import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
+import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
 import li2.plp.li2struct.exception.InstanciaStructNaoDeclaradaException;
-import li2.plp.li2struct.exception.StructJaDeclaradaException;
 import li2.plp.li2struct.exception.StructNaoDeclaradaException;
+import li2.plp.li2struct.expression.Expressao;
+import li2.plp.li2struct.expression.valor.Valor;
 import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
-import li2.plp.imperative1.memory.AmbienteCompilacaoImperativa;
-import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
-import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
 
 public class Write implements IO {
 
@@ -31,13 +25,19 @@ public class Write implements IO {
 	 * 
 	 * @return o ambiente depois de modificado pela execu��o do comando
 	 *         <code>write</code>.
+	 * @throws StructNaoDeclaradaException 
+	 * @throws InstanciaStructNaoDeclaradaException 
 	 * 
 	 */
-	public AmbienteExecucaoImperativa executar(
-			AmbienteExecucaoImperativa ambiente)
-			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException {
-		ambiente.write(expressao.avaliar(ambiente));
-		return ambiente;
+	public AmbienteExecucaoli2Struct executar(
+			AmbienteExecucaoli2Struct ambiente)
+			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException, 
+			InstanciaStructNaoDeclaradaException, StructNaoDeclaradaException {
+		Valor valor = expressao.avaliar(ambiente);
+        System.out.println(valor);
+        return ambiente.write( valor);
+		/*ambiente.write(expressao.avaliar(ambiente));
+		return ambiente;*/
 	}
 
 	/**
@@ -48,25 +48,11 @@ public class Write implements IO {
 	 *            o ambiente de compila��o.
 	 * @return <code>true</code> se a express�o a ser escrita est� bem tipada;
 	 *         <code>false</code> caso contrario.
+	 * @throws StructNaoDeclaradaException 
 	 */
-	public boolean checaTipo(AmbienteCompilacaoImperativa ambiente)
-			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException {
-		return expressao.checaTipo(ambiente);
-	}
-
-	public AmbienteExecucaoli2Struct executar(AmbienteExecucaoli2Struct ambiente)
-			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException, InstanciaStructJaDeclaradaException,
-			InstanciaStructNaoDeclaradaException, ProcedimentoNaoDeclaradoException, ProcedimentoJaDeclaradoException,
-			StructJaDeclaradaException, StructNaoDeclaradaException, EntradaInvalidaException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public boolean checaTipo(AmbienteCompilacaoli2Struct ambiente)
-			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException, ProcedimentoNaoDeclaradoException,
-			ProcedimentoJaDeclaradoException, StructJaDeclaradaException, StructNaoDeclaradaException {
-		// TODO Auto-generated method stub
-		return false;
+			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException, StructNaoDeclaradaException {
+		return expressao.checaTipo(ambiente);
 	}
 
 }

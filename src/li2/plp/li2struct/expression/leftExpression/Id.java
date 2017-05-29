@@ -17,20 +17,19 @@ public class Id extends li2.plp.expressions2.expression.Id implements LeftExpres
 
 	public Valor avaliar(AmbienteExecucaoli2Struct ambiente) throws VariavelNaoDeclaradaException,
 			VariavelJaDeclaradaException, InstanciaStructNaoDeclaradaException, StructNaoDeclaradaException {
-		// TODO Auto-generated method stub
-		return null;
+		return obterValorDeIdNoAmbiente(ambiente);
 	}
 
 	public boolean checaTipo(AmbienteCompilacaoli2Struct ambiente)
 			throws VariavelNaoDeclaradaException, StructNaoDeclaradaException {
-		// TODO Auto-generated method stub
-		return false;
+		boolean result = true;
+		ambiente.get(this); // verifica se est� no ambiente
+		return result;
 	}
 
 	public Tipo getTipo(AmbienteCompilacaoli2Struct ambiente)
 			throws VariavelNaoDeclaradaException, StructNaoDeclaradaException {
-		// TODO Auto-generated method stub
-		return null;
+		return ambiente.get(this);
 	}
 
 	public Id getId() {
@@ -76,5 +75,10 @@ public class Id extends li2.plp.expressions2.expression.Id implements LeftExpres
 		return ambiente.get(this);
 		
 >>>>>>> origin/arquivoJJ_karine_branch*/
+	}
+	
+	public Valor obterValorDeIdNoAmbiente(AmbienteExecucaoli2Struct ambiente) throws 
+		VariavelJaDeclaradaException, VariavelNaoDeclaradaException{	
+		return ambiente.get(this);
 	}
 }
