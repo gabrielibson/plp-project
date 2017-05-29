@@ -1,11 +1,10 @@
 package li2.plp.li2struct.util;
 
-import li2.plp.expressions2.expression.Id;
-import li2.plp.imperative1.memory.AmbienteCompilacaoImperativa;
-import li2.plp.li2struct.excecao.declaracao.StructNaoDeclaradoException;
+import li2.plp.li2struct.exception.StructNaoDeclaradaException;
+import li2.plp.li2struct.expression.leftExpression.Id;
+import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 
 public class TipoStruct implements Tipo{
-
 
 	/**
 	 * Indica que a expressao associada &eacute; nula.
@@ -52,14 +51,13 @@ public class TipoStruct implements Tipo{
      */
 	
 	
-	public boolean eValido(AmbienteCompilacaoImperativa ambiente)
-			throws StructNaoDeclaradoException {
+	public boolean eValido(AmbienteCompilacaoli2Struct ambiente) throws StructNaoDeclaradaException {
 		boolean resposta = false;
 		try{
 			//ATENCAO: COLOCAR NO AMBIENTE DE COMPILACAO STRUCT-I2 getDEfStruct E MUDAR AQUIIII
-			resposta =  (tipoStruct == NULL) || (ambiente.getDefClasse(tipoStruct) != null);
+			resposta =  (tipoStruct == NULL) || (ambiente.getDefStruct(tipoStruct) != null);
 		}
-		catch(StructNaoDeclaradoException c){
+		catch(StructNaoDeclaradaException c){
 			resposta = false;
 		}
 		return resposta;
@@ -76,4 +74,35 @@ public class TipoStruct implements Tipo{
                ((TipoStruct)obj).tipoStruct.equals(this.tipoStruct);
     }
 
+	@Override
+	public boolean eInteiro() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean eBooleano() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean eString() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public Tipo intersecao(Tipo outroTipo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean eValido() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
+

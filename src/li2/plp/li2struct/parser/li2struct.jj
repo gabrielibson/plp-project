@@ -7,9 +7,6 @@ PARSER_BEGIN(Imp2Parser)
 
 package li2.plp.li2struct.parser;
 
-import li2.plp.expressions1.util.*;
-import li2.plp.expressions2.expression.*;
-import li2.plp.imperative1.command.*;
 import li2.plp.imperative1.declaration.*;
 import li2.plp.imperative1.memory.*;
 import li2.plp.imperative2.*;
@@ -18,6 +15,14 @@ import li2.plp.imperative2.declaration.*;
 import li2.plp.imperative2.memory.*;
 import java.util.*;
 
+import li2.plp.li2struct.expression.*;
+import li2.plp.li2struct.command.*;
+import li2.plp.li2struct.expression.leftExpression.*;
+import li2.plp.li2struct.expression.binaria.*;
+import li2.plp.li2struct.expression.unaria.*;
+import li2.plp.li2struct.expression.valor.*;
+import li2.plp.li2struct.memory.*;
+import li2.plp.li2struct.util.*;
 
 public class Imp2Parser {
 
@@ -133,7 +138,11 @@ TOKEN : /* TOKENS DE IMPERATIVA 2 */
 {
   < PROC: "proc" >
 | < CALL: "call" >
-| < STRUCT: "struct" >
+}
+
+TOKEN : /* TOKENS DE LI2STRUCT */
+{
+  <STRUCT : "struct">
 }
 
 TOKEN : /* TOKENS DOS POSS�VEIS TIPOS */
@@ -421,7 +430,9 @@ AcessoAtributoId PAcessoAtributoId() :
 {
   (
     LOOKAHEAD(< LPAREN >)
+
     < LPAREN > av = PLeftExpression() < RPAREN >
+
   | av = PId()
   )
   < DOT > id = PId()
@@ -791,19 +802,62 @@ DefProcedimento PDefProcedimento():
 	
 }
 
-Tipo PTipo():
+/**
+ * Tipo ::= TipoStruct | TipoPrimitivo
+ **/
+Tipo PTipo() :
 {
-	Tipo tipo;
+  Tipo tipo;
+}
+{
+  (
+    LOOKAHEAD(< STRING >
+  | < INT >
+  | < BOOLEAN >)
+    tipo = PTipoPrimitivo()
+  | tipo = PTipoStruct()
+  )
+  {
+    return tipo;
+  }
+}
+
+/**
+ * TipoPrimitivo ::= "string" | "int" | "boolean"
+ **/
+Tipo PTipoPrimitivo() :
+{
+  Tipo retorno;
 }
 {
 	(
-	<INT> {tipo = TipoPrimitivo.INTEIRO;} |
-	<BOOLEAN> {tipo = TipoPrimitivo.BOOLEANO;} |
-	<STRING> {tipo = TipoPrimitivo.STRING;}
+	<INT> {retorno = TipoPrimitivo.INTEIRO;} |
+	<BOOLEAN> {retorno = TipoPrimitivo.BOOLEANO;} |
+	<STRING> {retorno = TipoPrimitivo.STRING;}
 	)
 	{
-		return tipo;
+		return retorno;
 	}
+}
+
+/**
+ * TipoStruct ::= Id
+ **/
+Tipo PTipoStruct() :
+{
+  Tipo retorno;
+  Id id;
+}
+{
+  (
+    id = PId()
+    {
+      retorno = new TipoStruct(id);
+    }
+  )
+  {
+    return retorno;
+  }
 }
 
 ListaDeclaracaoParametro PListaDeclaracaoParametro():
@@ -881,7 +935,7 @@ DefStruct PDefStruct():
   }
 }
 
-/** Add PLP
+/** Add PLP - Karine
 **/
 DeclaracaoChave PDeclaracaochave():
 {

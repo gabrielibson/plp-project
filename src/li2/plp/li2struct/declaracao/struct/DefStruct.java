@@ -1,26 +1,25 @@
 package li2.plp.li2struct.declaracao.struct;
 
-import li2.plp.expressions2.memory.IdentificadorJaDeclaradoException;
-import li2.plp.expressions2.memory.IdentificadorNaoDeclaradoException;
-import li2.plp.imperative1.declaration.Declaracao;
-import li2.plp.imperative1.memory.AmbienteCompilacaoImperativa;
-import li2.plp.imperative1.memory.AmbienteExecucaoImperativa;
-import li2.plp.imperative1.memory.EntradaVaziaException;
+import li2.plp.li2struct.exception.InstanciaStructNaoDeclaradaException;
+import li2.plp.li2struct.expression.leftExpression.Id;
+import li2.plp.li2struct.util.Tipo;
 
-public class DefStruct extends Declaracao{
+public class DefStruct{
 
-	@Override
-	public AmbienteExecucaoImperativa elabora(AmbienteExecucaoImperativa ambiente)
-			throws IdentificadorJaDeclaradoException, IdentificadorNaoDeclaradoException, EntradaVaziaException {
-		// TODO Auto-generated method stub
-		return null;
+	protected Id idStruct;
+	protected DeclaracaoChave declaracaoChave;
+	protected ListaDecAtributoStruct listaDecAtributoStruct;
+
+	public DefStruct(Id idStruct, DeclaracaoChave declaracaoChave, ListaDecAtributoStruct listaDecAtributoStruct) {
+
+		this.idStruct = idStruct;
+		this.declaracaoChave = declaracaoChave;
+		this.listaDecAtributoStruct = listaDecAtributoStruct;
+		// TODO Auto-generated constructor stub
 	}
-
-	@Override
-	public boolean checaTipo(AmbienteCompilacaoImperativa ambiente)
-			throws IdentificadorJaDeclaradoException, IdentificadorNaoDeclaradoException, EntradaVaziaException {
-		// TODO Auto-generated method stub
-		return false;
+	
+	public Tipo getTipoAtributo(Id idAtt) throws InstanciaStructNaoDeclaradaException{
+		return listaDecAtributoStruct.getTipo();
 	}
 
 }
