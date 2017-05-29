@@ -74,6 +74,7 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
         
         this.entrada = null;
         this.saida = new ListaValor();
+        this.contextoProcedimentos = new Contexto<DefProcedimento>();
     }
 
     /**

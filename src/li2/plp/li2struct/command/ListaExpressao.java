@@ -3,16 +3,15 @@ package li2.plp.li2struct.command;
 import java.util.LinkedList;
 import java.util.List;
 
-import li2.plp.expressions2.expression.Valor;
 import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
-import li2.plp.imperative1.memory.ListaValor;
 import li2.plp.imperative1.util.Lista;
 import li2.plp.li2struct.exception.InstanciaStructNaoDeclaradaException;
 import li2.plp.li2struct.exception.StructNaoDeclaradaException;
 import li2.plp.li2struct.expression.Expressao;
 import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
+import li2.plp.li2struct.memory.ListaValor;
 import li2.plp.li2struct.util.Tipo;
 
 public class ListaExpressao extends Lista<Expressao> {
@@ -33,10 +32,10 @@ public class ListaExpressao extends Lista<Expressao> {
 			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException, 
 			InstanciaStructNaoDeclaradaException, StructNaoDeclaradaException {
 		if (length() >= 2)
-			return new ListaValor((Valor) getHead().avaliar(ambiente),
+			return new ListaValor(getHead().avaliar(ambiente),
 					((ListaExpressao) getTail()).avaliar(ambiente));
 		else if (length() == 1)
-			return new ListaValor((Valor) getHead().avaliar(ambiente));
+			return new ListaValor(getHead().avaliar(ambiente));
 		else
 			return new ListaValor();
 	}
