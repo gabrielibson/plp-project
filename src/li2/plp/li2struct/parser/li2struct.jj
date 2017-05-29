@@ -57,10 +57,10 @@ public class Li2structParser {
 	    Li2structParser parser;
 	    ListaValor entrada = new ListaValor();
 	    if (args.length == 0) {
-	    	System.out.println("Imperativa 2 PLP Parser Version 0.0.1:  Reading from standard input . . .");
+	    	System.out.println("Linguagem I2 Struct PLP Parser Version 0.0.1:  Reading from standard input . . .");
 	    	parser = new Li2structParser(System.in);
 	    } else{
-	    	System.out.println("Imperativa 2 PLP Parser Version 0.0.1:  Reading from file " + args[0] + " . . .");
+	    	System.out.println("Linguagem I2 Struct PLP Parser Version 0.0.1:  Reading from file " + args[0] + " . . .");
 	    	try {
 	    		parser = new Li2structParser(new java.io.FileInputStream(args[0]));
 	    	} catch (java.io.FileNotFoundException e) {
@@ -94,7 +94,7 @@ public class Li2structParser {
 	    
 	    try {
             Programa programa = parser.Input();
-            System.out.println("Imperativa 2 PLP Parser Version 0.0.1:  Imperativa2 program parsed successfully.");
+            System.out.println("Linguagem I2 Struct PLP Parser Version 0.0.1:  Linguagem I2 Struct program parsed successfully.");
             
             if (programa.checaTipo(new ContextoCompilacaoli2struct(new ListaValor())))
       {
@@ -105,7 +105,7 @@ public class Li2structParser {
         System.out.println("Erro de tipo");
       }
         } catch (Exception e) {
-            System.out.println("Imperativa 2 PLP Parser Version 0.0.1:  Encountered errors during parse.");
+            System.out.println("Linguagem I2 Struct PLP Parser Version 0.0.1:  Encountered errors during parse.");
             e.printStackTrace();
         }
 	}
@@ -845,7 +845,8 @@ Declaracao PDeclaracao():
            retorno = PDeclaracaoComposta() 
 		  | retorno = PDeclaracaoVariavel()
 		  | retorno = PDeclaracaoProcedimento()
-          | <LPAREN> retorno = PDeclaracao() <RPAREN>   		 
+          | <LPAREN> retorno = PDeclaracao() <RPAREN>
+          | retorno = PDefStruct()  		 
 		  
 	)
 	{return retorno;}
