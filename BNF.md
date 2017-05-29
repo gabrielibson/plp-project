@@ -19,6 +19,8 @@ Comando ::= Atribuicao
 
 | ChamadaProcedimento
 
+| InstanciaStruct
+
 Skip ::=
 
 Atribuicao ::= LeftExpression ":=" Expressao
@@ -56,9 +58,6 @@ Declaracao ::= DeclaracaoVariavel
 | DeclaracaoComposta
 
 | DefStruct
-
-| InstanciaStruct
-
 
 DeclaracaoVariavel ::= "var" Id "=" Expressao
 
