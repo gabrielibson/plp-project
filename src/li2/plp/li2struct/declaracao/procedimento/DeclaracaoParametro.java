@@ -1,10 +1,11 @@
 package li2.plp.li2struct.declaracao.procedimento;
 
-import li2.plp.expressions1.util.Tipo;
 import li2.plp.expressions2.expression.Id;
 import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
-import li2.plp.imperative1.memory.AmbienteCompilacaoImperativa;
+import li2.plp.li2struct.exception.StructNaoDeclaradaException;
+import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
+import li2.plp.li2struct.util.Tipo;
 
 public class DeclaracaoParametro {
 
@@ -25,8 +26,9 @@ public class DeclaracaoParametro {
 		return tipo;
 	}
 
-	public boolean checaTipo(AmbienteCompilacaoImperativa ambiente) {
-		return tipo.eValido();
+	public boolean checaTipo(AmbienteCompilacaoli2Struct ambiente) 
+			throws StructNaoDeclaradaException {
+		return tipo.eValido(ambiente);
 	}
 
 	/**
@@ -39,8 +41,8 @@ public class DeclaracaoParametro {
 	 * 
 	 * @return o ambiente modificado pela declara��o do parametro.
 	 */
-	public AmbienteCompilacaoImperativa elabora(
-			AmbienteCompilacaoImperativa ambiente)
+	public AmbienteCompilacaoli2Struct elabora(
+			AmbienteCompilacaoli2Struct ambiente)
 			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
 		ambiente.map(id, tipo);
 		return ambiente;

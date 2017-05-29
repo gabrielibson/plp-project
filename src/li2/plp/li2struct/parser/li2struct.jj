@@ -373,7 +373,7 @@ Write PWrite() :
 	<WRITE> <LPAREN>
 		exp = PExpressao()
 		   <RPAREN>
-	{return new Write((li2.plp.expressions2.expression.Expressao)exp);}
+	{return new Write(exp);}
 }
 
 IfThenElse PIfThenElse() :
@@ -972,11 +972,11 @@ ListaDeclaracaoParametro PListaDeclaracaoParametro():
 {
 	[ tipo = PTipo() 
 	  id = PId() 
-	  { lista = new ListaDeclaracaoParametro(new DeclaracaoParametro(id, (li2.plp.expressions1.util.Tipo)tipo));}
+	  { lista = new ListaDeclaracaoParametro(new DeclaracaoParametro(id, tipo));}
 	] 
 	( <COMMA> 
 	  tipo = PTipo() id = PId() 
-	  {lista = new ListaDeclaracaoParametro(new DeclaracaoParametro(id,(li2.plp.expressions1.util.Tipo) tipo), lista);} 
+	  {lista = new ListaDeclaracaoParametro(new DeclaracaoParametro(id, tipo), lista);} 
 	)*
 	
 	{

@@ -10,6 +10,7 @@ import li2.plp.li2struct.expression.leftExpression.Id;
 
 public class DefStruct extends Declaracao{
 
+	
 	public DefStruct(Id id, DeclaracaoChave chave, ListaDecAtributoStruct listadecattstruct) {
 		// TODO Auto-generated constructor stub
 	}

@@ -8,7 +8,6 @@ import java.util.List;
 import li2.plp.li2struct.exception.StructNaoDeclaradaException;
 import li2.plp.li2struct.expression.leftExpression.Id;
 import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
-import li2.plp.li2struct.util.Tipo;
 
 public class TipoProcedimento implements Tipo {
 

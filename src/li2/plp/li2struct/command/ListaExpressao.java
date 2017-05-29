@@ -1,5 +1,8 @@
 package li2.plp.li2struct.command;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import li2.plp.expressions2.expression.Valor;
 import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
@@ -10,7 +13,7 @@ import li2.plp.li2struct.exception.StructNaoDeclaradaException;
 import li2.plp.li2struct.expression.Expressao;
 import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
-import li2.plp.li2struct.util.ListaTipo;
+import li2.plp.li2struct.util.Tipo;
 
 public class ListaExpressao extends Lista<Expressao> {
 
@@ -38,10 +41,19 @@ public class ListaExpressao extends Lista<Expressao> {
 			return new ListaValor();
 	}
 
-	public ListaTipo getTipos(AmbienteCompilacaoli2Struct ambiente)
+	public List<Tipo> getTipos(AmbienteCompilacaoli2Struct ambiente)
 			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException,
 			StructNaoDeclaradaException {
-		ListaTipo resposta;
+		List<Tipo> result = new LinkedList<Tipo>();
+
+		if (this.length() >= 2) {
+			result.add(getHead().getTipo(ambiente));
+			result.addAll(((ListaExpressao) getTail()).getTipos(ambiente));
+		} else if (length() == 1) {
+			result.add(getHead().getTipo(ambiente));
+		}
+		return result;
+/*		ListaTipo resposta;
 		if (length() >= 2) {
 			resposta = new ListaTipo(getHead().getTipo(ambiente),
 					((ListaExpressao) getTail()).getTipos(ambiente));
@@ -50,7 +62,7 @@ public class ListaExpressao extends Lista<Expressao> {
 		} else {
 			resposta = new ListaTipo();
 		}
-		return resposta;
+		return resposta;*/
 	}
 
 }

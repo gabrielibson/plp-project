@@ -1,11 +1,9 @@
 package li2.plp.li2struct.declaracao.procedimento;
 
-import li2.plp.expressions1.util.Tipo;
 import li2.plp.expressions2.memory.IdentificadorJaDeclaradoException;
 import li2.plp.expressions2.memory.IdentificadorNaoDeclaradoException;
 import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
-import li2.plp.imperative1.memory.AmbienteCompilacaoImperativa;
 import li2.plp.imperative2.memory.ProcedimentoJaDeclaradoException;
 import li2.plp.imperative2.memory.ProcedimentoNaoDeclaradoException;
 import li2.plp.li2struct.declaracao.Declaracao;
@@ -49,13 +47,13 @@ public class DeclaracaoProcedimento implements Declaracao {
 			ProcedimentoNaoDeclaradoException, StructJaDeclaradaException, StructNaoDeclaradaException {
 		boolean resposta = false;
 
-		ambiente.map(getId(), (Tipo) defProcedimento.getTipo());
+		ambiente.map(getId(), defProcedimento.getTipo());
 
 		ListaDeclaracaoParametro parametrosFormais = getDefProcedimento()
 				.getParametrosFormais();
-		if (parametrosFormais.checaTipo((AmbienteCompilacaoImperativa) ambiente)) {
+		if (parametrosFormais.checaTipo(ambiente)) {
 			ambiente.incrementa();
-			ambiente = (AmbienteCompilacaoli2Struct) parametrosFormais.elabora((AmbienteCompilacaoImperativa) ambiente);
+			ambiente = parametrosFormais.elabora(ambiente);
 			try {
 				resposta = getDefProcedimento().getComando().checaTipo(ambiente);
 			} catch (IdentificadorJaDeclaradoException e) {

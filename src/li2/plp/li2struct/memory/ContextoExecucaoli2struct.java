@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Stack;
 
+import li2.plp.expressions2.memory.Contexto;
 import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
 import li2.plp.imperative2.memory.ProcedimentoJaDeclaradoException;
@@ -58,6 +59,8 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
 	 * A refer�ncia do objeto a ser inserido na pilha de objetos
 	 */
     private ValorRef proxRef;
+    
+    private Contexto<DefProcedimento> contextoProcedimentos;
 
     /**
 	 * Construtor utilizado quando queremos ler do teclado.
@@ -99,6 +102,7 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
         
         this.entrada = entrada;
         this.saida = new ListaValor();
+        contextoProcedimentos = new Contexto<DefProcedimento>();
     }
 
     /**
@@ -250,6 +254,7 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
 	 */
     public void incrementa() {
         pilha.push(new HashMap<Id, Valor>());
+        this.contextoProcedimentos.incrementa();
         // pilhaDefClasse.push(new HashIdDefClasse()); // s� incrementa no
 		// construtor
         // pilhaObjeto.push(new HashValorObjeto()); // s� incrementa no
@@ -261,6 +266,7 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
 	 */
     public void restaura(){
         pilha.pop();
+        this.contextoProcedimentos.restaura();
         // pilhaDefClasse.pop(); // n�o restaura
         // pilhaObjeto.pop(); // n�o restaura
     }
@@ -512,13 +518,20 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
     }
 
 	public void mapProcedimento(Id idArg, DefProcedimento procedimentoId) throws ProcedimentoJaDeclaradoException {
-		// TODO Auto-generated method stub
-		
+		try {
+			this.contextoProcedimentos.map(idArg, procedimentoId);
+		} catch (VariavelJaDeclaradaException e) {
+			throw new ProcedimentoJaDeclaradoException(idArg);
+		}
 	}
 
 	public DefProcedimento getProcedimento(Id idArg) throws ProcedimentoNaoDeclaradoException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return this.contextoProcedimentos.get(idArg);
+		} catch (VariavelNaoDeclaradaException e) {
+			throw new ProcedimentoNaoDeclaradoException(idArg);
+		}
+
 	}
 
 	@Override
@@ -545,4 +558,7 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
 }

@@ -12,14 +12,11 @@ import li2.plp.li2struct.exception.StructNaoDeclaradaException;
 import li2.plp.li2struct.expression.Expressao;
 import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
-import li2.plp.li2struct.util.Tipo;
-import li2.plp.li2struct.util.TipoStruct;
 
 public class DeclaracaoVariavel implements Declaracao {
 
 	private Id id;
 	private Expressao expressao;
-	private Tipo tipo;
 
 	public DeclaracaoVariavel(Id id, Expressao expressao) {
 		super();
@@ -46,15 +43,26 @@ public class DeclaracaoVariavel implements Declaracao {
 	public boolean checaTipo(AmbienteCompilacaoli2Struct ambiente)
 			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException, ProcedimentoJaDeclaradoException,
 			ProcedimentoNaoDeclaradoException, StructJaDeclaradaException, StructNaoDeclaradaException {
-		 boolean resposta = false;
+		
+		boolean result = getExpressao().checaTipo(ambiente);
+		if (result) {
+			ambiente.map(getId(), getExpressao().getTipo(ambiente));
+		}
+		return result;
+		
+		/* boolean resposta = false;
 	        if ( expressao.checaTipo(ambiente) ) {
 	            if( tipo instanceof TipoStruct) {
 	                resposta = expressao.getTipo(ambiente).equals(tipo);
 	            }
-	        }
+	            else {
+	                resposta = expressao.getTipo(ambiente).equals(tipo);
+	            }
+	        } 
+	        
 	        if(resposta) {
 	            ambiente.map(id, (li2.plp.expressions1.util.Tipo) tipo);
 	        }
-	        return resposta;
+	        return resposta;*/
 	}
 }

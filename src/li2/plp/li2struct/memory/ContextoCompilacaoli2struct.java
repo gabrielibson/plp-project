@@ -169,7 +169,7 @@ public class ContextoCompilacaoli2struct implements AmbienteCompilacaoli2Struct 
      * @throws ClasseNaoDeclaradaException quando nao foi declarada nenhuma
      * classe com esse nome.
      */
-    public DefStruct getDefClasse(Id idArg)
+    public DefStruct getDefStruct(Id idArg)
         throws StructNaoDeclaradaException  {
         DefStruct result = null;
         result = this.mapDefStruct.get(idArg);
@@ -218,17 +218,29 @@ public class ContextoCompilacaoli2struct implements AmbienteCompilacaoli2Struct 
         }
     }
 
-	public void map(li2.plp.expressions2.expression.Id idArg, li2.plp.expressions1.util.Tipo tipoId)
-			throws VariavelJaDeclaradaException {
+	@Override
+	public void mapDefStruct(li2.plp.expressions2.expression.Id idArg, DefStruct defStruct)
+			throws StructJaDeclaradaException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public li2.plp.expressions1.util.Tipo get(li2.plp.expressions2.expression.Id idArg)
-			throws VariavelNaoDeclaradaException {
+	@Override
+	public DefStruct getDefStruct(li2.plp.expressions2.expression.Id idArg) throws StructNaoDeclaradaException {
 		// TODO Auto-generated method stub
 		return null;
-	}    
+	}
 
+	@Override
+	public void map(li2.plp.expressions2.expression.Id idArg, Tipo tipoId) throws VariavelJaDeclaradaException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Tipo get(li2.plp.expressions2.expression.Id idArg) throws VariavelNaoDeclaradaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 

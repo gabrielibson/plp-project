@@ -5,8 +5,9 @@ import java.util.List;
 
 import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
-import li2.plp.imperative1.memory.AmbienteCompilacaoImperativa;
 import li2.plp.imperative1.util.Lista;
+import li2.plp.li2struct.exception.StructNaoDeclaradaException;
+import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 import li2.plp.li2struct.util.Tipo;
 
 public class ListaDeclaracaoParametro extends Lista<DeclaracaoParametro> {
@@ -23,8 +24,8 @@ public class ListaDeclaracaoParametro extends Lista<DeclaracaoParametro> {
 		super(declaracao, listaDeclaracao);
 	}
 
-	public boolean checaTipo(AmbienteCompilacaoImperativa ambiente)
-			throws VariavelNaoDeclaradaException {
+	public boolean checaTipo(AmbienteCompilacaoli2Struct ambiente)
+			throws VariavelNaoDeclaradaException, StructNaoDeclaradaException {
 		boolean resposta;
 		if (getHead() != null) {
 			if (getTail() != null) {
@@ -49,10 +50,10 @@ public class ListaDeclaracaoParametro extends Lista<DeclaracaoParametro> {
 	 *            tipo.
 	 * @return o ambiente modificado pela declara��o do parametro.
 	 */
-	public AmbienteCompilacaoImperativa elabora(
-			AmbienteCompilacaoImperativa ambiente)
+	public AmbienteCompilacaoli2Struct elabora(
+			AmbienteCompilacaoli2Struct ambiente)
 			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
-		AmbienteCompilacaoImperativa resposta;
+		AmbienteCompilacaoli2Struct resposta;
 		if (getHead() != null) {
 			if (getTail() != null) {
 				resposta = ((ListaDeclaracaoParametro) getTail())
