@@ -42,7 +42,7 @@ public interface AmbienteExecucaoli2Struct extends AmbienteLi2Struct<Valor>{
      * Obt�m o mapeamento com os objetos e seus valores.
      * @return o mapeamento com os objetos e seus valores.
      */
-    public HashMap<ValorRef, Instancia> getMapInstancias();
+    public HashMap<ValorRef, InstanciaStruct> getMapInstancias();
 
     /**
      * Mapeia um valor refer�ncia a um objeto.
@@ -50,7 +50,7 @@ public interface AmbienteExecucaoli2Struct extends AmbienteLi2Struct<Valor>{
      * @param objeto Objeto.
      * @throws ObjetoJaDeclaradoException Quando esse objeto j� foi declarado.
      */
-    public void mapInstancia(ValorRef valorRef, Instancia instancia) throws InstanciaStructJaDeclaradaException;
+    public void mapInstancia(ValorRef valorRef, InstanciaStruct instancia) throws InstanciaStructJaDeclaradaException;
 
     /**
      * Altera o valor associado a um identificador.
@@ -67,7 +67,7 @@ public interface AmbienteExecucaoli2Struct extends AmbienteLi2Struct<Valor>{
      * @return o objeto associado a um dado valor referencia.
      * @throws ObjetoNaoDeclaradoException Quando o objeto n�o foi declarado.
      */
-    public Instancia getInstancia(ValorRef valorRef) throws InstanciaStructNaoDeclaradaException;
+    public InstanciaStruct getInstancia(ValorRef valorRef) throws InstanciaStructNaoDeclaradaException;
 
     /**
      * Obt�m a pr�xima refer�ncia de acordo com o contexto atual de execu��o.

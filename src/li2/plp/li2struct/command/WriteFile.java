@@ -14,9 +14,9 @@ import li2.plp.li2struct.expression.valor.Valor;
 import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
 
-public class ReadFile implements IO {
+public class WriteFile implements IO{
 
-	public ReadFile(Id id, Valor key, Valor file) {
+	public WriteFile(Id id, Valor file) {
 		// TODO Auto-generated constructor stub
 	}
 

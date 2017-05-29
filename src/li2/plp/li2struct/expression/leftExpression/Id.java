@@ -33,8 +33,14 @@ public class Id extends li2.plp.expressions2.expression.Id implements LeftExpres
 	}
 
 	public Id getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return this;
+	}
+	
+	public Valor obterValorDeIdNoAmbiente(AmbienteExecucaoli2Struct ambiente) throws 
+	VariavelJaDeclaradaException, VariavelNaoDeclaradaException{	
+		return ambiente.get(this);
+	}
+	
 /*import li2.plp.expressions2.expression.Valor;
 import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
@@ -75,10 +81,5 @@ public class Id extends li2.plp.expressions2.expression.Id implements LeftExpres
 		return ambiente.get(this);
 		
 >>>>>>> origin/arquivoJJ_karine_branch*/
-	}
 	
-	public Valor obterValorDeIdNoAmbiente(AmbienteExecucaoli2Struct ambiente) throws 
-		VariavelJaDeclaradaException, VariavelNaoDeclaradaException{	
-		return ambiente.get(this);
-	}
 }

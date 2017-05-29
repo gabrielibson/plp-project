@@ -6,18 +6,6 @@ import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 
 public class TipoStruct implements Tipo{
 
-
-	/**
-	 * Indica que a expressao associada &eacute; nula.
-	 */
-	public static final Id NULL = new Id("NULL");
-
-	/**
-	 * Constante de tipo nulo.
-	 */
-	public static final Tipo TIPO_NULL = new TipoStruct(NULL);
-
-
 	private Id tipoStruct;
 
 	public Id getTipo() {
