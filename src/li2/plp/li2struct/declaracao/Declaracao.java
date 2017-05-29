@@ -12,6 +12,8 @@ import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
 
 public interface Declaracao {
+
+
 	 /**
      * Cria um mapeamento do identificador para o valor da express�o
      * desta declara��o no AmbienteExecucao
@@ -37,4 +39,5 @@ public interface Declaracao {
         throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
                ProcedimentoJaDeclaradoException, ProcedimentoNaoDeclaradoException,
                StructJaDeclaradaException,StructNaoDeclaradaException;
+
 }

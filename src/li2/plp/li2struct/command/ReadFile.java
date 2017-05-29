@@ -14,11 +14,20 @@ import li2.plp.li2struct.expression.valor.Valor;
 import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
 
-public class ReadFile implements IO {
 
+public class ReadFile implements IO{
+	
+	private Id id;
+	private Valor key;
+	private Valor file;
+	
 	public ReadFile(Id id, Valor key, Valor file) {
-		// TODO Auto-generated constructor stub
+		
+		this.id = id;
+		this.key = key;
+		this.file = file;
 	}
+
 
 	@Override
 	public AmbienteExecucaoli2Struct executar(AmbienteExecucaoli2Struct ambiente)

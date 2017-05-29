@@ -1,5 +1,6 @@
 package li2.plp.li2struct.expression.unaria;
 
+
 import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
 import li2.plp.li2struct.exception.InstanciaStructNaoDeclaradaException;

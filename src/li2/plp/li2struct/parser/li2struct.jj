@@ -7,7 +7,9 @@ PARSER_BEGIN(Li2structParser)
 
 package li2.plp.li2struct.parser;
 
+
 /*import li2.plp.imperative1.declaration.*;
+>>>>>>> origin/li2struct_branch
 import li2.plp.imperative1.memory.*;
 import li2.plp.imperative2.*;
 import li2.plp.imperative2.command.*;
@@ -16,6 +18,17 @@ import li2.plp.imperative2.memory.*;
 import java.util.*;
 */
 //import li2.plp.expressions2.expression.Expressao;
+
+/*
+import li2.plp.li2struct.expression.*;
+import li2.plp.li2struct.command.*;
+import li2.plp.li2struct.expression.leftExpression.*;
+import li2.plp.li2struct.expression.binaria.*;
+import li2.plp.li2struct.expression.unaria.*;
+import li2.plp.li2struct.expression.valor.*;
+import li2.plp.li2struct.memory.*;
+import li2.plp.li2struct.util.*;
+*/
 
 import li2.plp.imperative1.memory.EntradaVaziaException;
 import li2.plp.imperative1.memory.ErroTipoEntradaException;
@@ -44,10 +57,10 @@ public class Li2structParser {
 	    Li2structParser parser;
 	    ListaValor entrada = new ListaValor();
 	    if (args.length == 0) {
-	    	System.out.println("Imperativa 2 PLP Parser Version 0.0.1:  Reading from standard input . . .");
+	    	System.out.println("Linguagem I2 Struct PLP Parser Version 0.0.1:  Reading from standard input . . .");
 	    	parser = new Li2structParser(System.in);
 	    } else{
-	    	System.out.println("Imperativa 2 PLP Parser Version 0.0.1:  Reading from file " + args[0] + " . . .");
+	    	System.out.println("Linguagem I2 Struct PLP Parser Version 0.0.1:  Reading from file " + args[0] + " . . .");
 	    	try {
 	    		parser = new Li2structParser(new java.io.FileInputStream(args[0]));
 	    	} catch (java.io.FileNotFoundException e) {
@@ -81,7 +94,7 @@ public class Li2structParser {
 	    
 	    try {
             Programa programa = parser.Input();
-            System.out.println("Imperativa 2 PLP Parser Version 0.0.1:  Imperativa2 program parsed successfully.");
+            System.out.println("Linguagem I2 Struct PLP Parser Version 0.0.1:  Linguagem I2 Struct program parsed successfully.");
             
             if (programa.checaTipo(new ContextoCompilacaoli2struct(new ListaValor())))
       {
@@ -92,7 +105,7 @@ public class Li2structParser {
         System.out.println("Erro de tipo");
       }
         } catch (Exception e) {
-            System.out.println("Imperativa 2 PLP Parser Version 0.0.1:  Encountered errors during parse.");
+            System.out.println("Linguagem I2 Struct PLP Parser Version 0.0.1:  Encountered errors during parse.");
             e.printStackTrace();
         }
 	}
@@ -157,9 +170,10 @@ TOKEN : /* TOKENS DE IMPERATIVA 2 */
 
 TOKEN : /* TOKENS DE LI2STRUCT */
 {
-  < STRUCT : "struct" >
-| < WRITE_FILE: "writeFile" >
-| < READ_FILE: "readFile" >
+< STRUCT : "struct" >
+| < READ_FILE : "readFile" >
+| < WRITE_FILE : "writeFile" >
+
 }
 
 TOKEN : /* TOKENS DOS POSS�VEIS TIPOS */
@@ -338,8 +352,9 @@ IO PIO() :
 	(
 		  retorno = PRead()
 		| retorno = PWrite()
-		| retorno = PWriteFile()
 		| retorno = PReadFile()
+		| retorno = PWriteFile()
+
 	)
 	{return retorno;}
 }
@@ -485,7 +500,11 @@ AcessoAtributoId PAcessoAtributoId() :
 {
   (
     LOOKAHEAD(< LPAREN >)
+
+
+  
      < LPAREN > av = PLeftExpression() < RPAREN >
+
   | av = PId()
   )
   < DOT > id = PId()
@@ -870,7 +889,7 @@ Declaracao PDeclaracao():
 		  | retorno = PDeclaracaoVariavel()
 		  | retorno = PDeclaracaoProcedimento()
 		  | retorno = PDefStruct() 
-          | <LPAREN> retorno = PDeclaracao() <RPAREN>   		 
+          | <LPAREN> retorno = PDeclaracao() <RPAREN>
 		  
 	)
 	{return retorno;}
@@ -1012,9 +1031,11 @@ Tipo PTipoPrimitivo() :
 }
 {
 	(
+
 	<INT> {retorno = TipoPrimitivo.TIPO_INTEIRO;} |
 	<BOOLEAN> {retorno = TipoPrimitivo.TIPO_BOOLEANO;} |
 	<STRING> {retorno = TipoPrimitivo.TIPO_STRING;}
+
 	)
 	{
 		return retorno;
@@ -1150,7 +1171,7 @@ DefStruct PDefStruct():
   }
 }
 
-/** Add PLP
+/** Add PLP - Karine
 **/
 DeclaracaoChave PDeclaracaochave():
 {
@@ -1189,3 +1210,41 @@ ListaDecAtributoStruct PListaDecAtributoStruct():
 	}
 }
 
+/**
+WriteFile PWriteFile():
+{
+  Id id;
+  Valor file;
+}
+{
+  <WRITE_FILE> <LPAREN> id = PId()
+  <COMMA>
+  file = PValorString()
+  <RPAREN>
+  {
+    return new WriteFile(id, file);
+  }
+}
+
+/** add PLP
+Id = ReadFile(key, file);
+
+
+ReadFile PReadFile():
+{
+  Id id;
+  Valor key;
+  Valor file;
+}
+{
+  id = PId() <ASSIGN>
+  <READ_FILE> <LPAREN>
+  key = PValorInteiro()
+  <COMMA>
+  file = PValorString()
+  <RPAREN>
+  {
+    return new ReadFile(id, key, file);
+  }
+}
+**/

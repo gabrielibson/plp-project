@@ -15,16 +15,22 @@ public abstract class ExpBinaria implements Expressao {
     /**
      * expressao da esquerda
      */
+
+
     protected Expressao esq;
 
     /**
      * expressao da direita
      */
+
+
     protected Expressao dir;
 
     /**
      * Operador desta expressao binaria
      */
+
+
     protected String operador;
 
     /**
@@ -90,6 +96,6 @@ public abstract class ExpBinaria implements Expressao {
         }
         return result;
     }
-    
  //   public abstract ExpBinaria clone();
+
 }

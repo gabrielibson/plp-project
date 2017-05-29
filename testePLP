@@ -10,3 +10,10 @@ writeFile(a1,File);
 
 }
 
+{struct teste{
+int chave;
+string nome;
+int idade},
+var a = 1;
+write(a)}
+

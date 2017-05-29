@@ -387,6 +387,48 @@ Atribuicao PAtribuicao() :
 	}
 }
 
+<<<<<<< HEAD
+=======
+/** add PLP
+ * LeftExpression ::= Id | AcessoAtributo
+ **/
+LeftExpression PLeftExpression() :
+{
+  LeftExpression retorno;
+}
+{
+  (
+    LOOKAHEAD(PAcessoAtributoId())
+    retorno = PAcessoAtributoId()
+  | LOOKAHEAD(< IDENTIFIER >)
+    retorno = PId()
+  )
+  {
+    return retorno;
+  }
+}
+
+/** add PLP
+A classe se encontra no pacote i2.leftExpression
+ * ... LeftExpression.Id | Id.Id
+ **/
+AcessoAtributoId PAcessoAtributoId() :
+{
+  LeftExpression av;
+  Id id;
+}
+{
+  (
+  
+    av = PLeftExpression()
+  | av = PId()
+  )
+  < DOT > id = PId()
+  {
+    return new AcessoAtributoId(av, id);
+  }
+}
+>>>>>>> karine_branch
 
 Id PId() :
 {
@@ -696,6 +738,123 @@ Declaracao PDeclaracao():
 	)
 	{return retorno;}
 }
+<<<<<<< HEAD
+=======
+/** Add PLP
+A classe se encontra no pacote i2.declaration
+**/
+DefStruct PDefStruct():
+{
+
+ Id id;
+ Declaracaochave chave; 
+ ListaDecAtributoStruct listadecattstruct;
+}
+{
+  <STRUCT> id = PId() <LBRACE> chave = PDeclaracaochave() <SEMICOLON>
+  listadecattstruct = PListaDecAtributoStruct() <RBRACE>
+  {
+    return new DefStruct(id, chave, listadecattstruct);
+  }
+}
+/** Add PLP
+A classe se encontra no pacote i2.declaration
+**/
+DeclaracaoChave PDeclaracaochave():
+{
+  Id id;
+}
+  {
+    <INT>
+    id = PId()
+    { 
+      return new DecChave(id);
+  }
+  }
+
+/**
+* Producao da Lista de declaracao de atributos do struct
+**/
+/** Add PLP
+A classe se encontra no pacote i2.declaration
+**/
+ListaDecAtributoStruct PListaDecAtributoStruct():
+{
+	Id id;
+	Tipo tipo;
+	ListaDecAtributoStruct lista = null;
+}
+{
+	[ tipo = PTipo() 
+	  id = PId() 
+	  { lista = new ListaDecAtributoStruct(new DeclaracaoAtributoStruct(id, tipo));}
+	] 
+	( <SEMICOLON> 
+	  tipo = PTipo() id = PId() 
+	  {lista = new ListaDecAtributoStruct(new DeclaracaoAtributoStruct(id, tipo), lista);} 
+	)+
+	
+	{
+		if (lista == null) {
+			lista = new DeclaracaoAtributoStruct();
+		}	
+		return lista;
+	}
+}
+
+
+/** Add PLP
+**/
+InstanciaStruct PInstanciaStruct():
+{
+  InstanciaStruct instanciaStruct;
+}
+{
+  instanciaStruct = PInstanciaValoresStruct();
+  |instanciaStruct = PInstanciaLeituraStruct();
+  {
+    return instanciaStruct;
+  }
+}
+/** Add PLP
+A classe se encontra no pacote i2.declaration
+**/
+InstanciaValoresStruct PInstanciaValoresStruct():
+{
+  Tipo tipo;
+  Id id;
+  ListaExpressao listaexp;
+}
+{
+  tipo = PTipo()
+  id = PId()
+  <ASSIGN> <LBRACKET> listaexp = PListaExpressao() <RBRACKET>
+  {
+    return new InstanciaValoresStruct(tipo, id, listaexp);
+  }
+}
+/** Add PLP
+A classe se encontra no pacote i2.declaration
+**/
+InstanciaLeituraStruct PInstanciaLeituraStruct():
+{
+  Tipo tipo;
+  Id id;
+  Valor key;
+  Valor file;
+}
+{
+  tipo = PTipo()
+  id = PId()
+  <ASSIGN> <READFILE> <LPAREN>
+  key = ValorInteiro()
+  <COMMA>
+  file = ValorString() <RPAREN>
+  {
+    return new InstanciaLeituraStruct(tipo, id, key, file);
+  } 
+}
+>>>>>>> karine_branch
 
 DeclaracaoComposta PDeclaracaoComposta():
 {
@@ -749,6 +908,7 @@ DefProcedimento PDefProcedimento():
 	
 }
 
+<<<<<<< HEAD
 
 Tipo PTipo():
 {
@@ -763,6 +923,79 @@ Tipo PTipo():
 	{
 		return tipo;
 	}
+=======
+/**
+ * Tipo ::= TipoStruct | TipoPrimitivo
+ **/
+Tipo PTipo() :
+{
+  Tipo tipo;
+}
+{
+  (
+    LOOKAHEAD(< STRING >
+  | < INT >
+  | < BOOLEAN >)
+    tipo = PTipoPrimitivo()
+  | tipo = PTipoStruct()
+  )
+  {
+    return tipo;
+  }
+}
+
+/** Add PLP
+**/
+/**
+ * TipoPrimitivo ::= "string" | "int" | "boolean"
+ **/
+Tipo PTipoPrimitivo() :
+{
+  Tipo retorno;
+}
+{
+  (
+    LOOKAHEAD(< INT >)
+    < INT >
+    {
+      retorno = TipoPrimitivo.TIPO_INTEIRO;
+    }
+  | LOOKAHEAD(< BOOLEAN >)
+    < BOOLEAN >
+    {
+      retorno = TipoPrimitivo.TIPO_BOOLEANO;
+    }
+  | < STRING >
+    {
+      retorno = TipoPrimitivo.TIPO_STRING;
+    }
+  )
+  {
+    return retorno;
+  }
+}
+
+/** Add PLP
+**/
+/**A classe se encontra no pacote i2.util
+ * TipoStruct ::= Id
+ **/
+Tipo PTipoStruct() :
+{
+  Tipo retorno;
+  Id id;
+}
+{
+  (
+    id = PId()
+    {
+      retorno = new TipoStruct(id);
+    }
+  )
+  {
+    return retorno;
+  }
+>>>>>>> karine_branch
 }
 
 

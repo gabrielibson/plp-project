@@ -8,6 +8,7 @@ public class InstanciaStructJaDeclaradaException extends Exception{
 		// TODO Auto-generated constructor stub
 	}
 
+
 	/**
 	 * 
 	 */

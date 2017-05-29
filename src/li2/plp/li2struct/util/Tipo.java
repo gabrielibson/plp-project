@@ -6,6 +6,8 @@ import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 
 public interface Tipo {
 
+
+	
     /**
      * Obt�m o tipo, representado por um identficador.
      * @return o tipo
@@ -25,4 +27,5 @@ public interface Tipo {
      * @throws ClasseNaoDeclaradaException
      */
     public boolean eValido(AmbienteCompilacaoli2Struct ambiente) throws StructNaoDeclaradaException;
+
 }

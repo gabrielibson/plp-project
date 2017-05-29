@@ -72,4 +72,5 @@ public class ValorInteiro implements ValorConcreto {
     public Tipo getTipo(AmbienteCompilacaoli2Struct amb) {
         return TipoPrimitivo.TIPO_INTEIRO;
     }
+
 }

@@ -12,13 +12,15 @@ import li2.plp.li2struct.exception.StructNaoDeclaradaException;
 import li2.plp.li2struct.expression.leftExpression.Id;
 import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
+import li2.plp.li2struct.util.TipoStruct;
+
 
 public class DefStruct implements Declaracao{
 
 	private Id nomeStruct;
 	private DeclaracaoChave chave;
 	private ListaDecAtributoStruct listaDecAtributoStruct;
-	
+
 	public DefStruct(Id id, DeclaracaoChave chave, ListaDecAtributoStruct listaDecAtributoStruct) {
 		this.nomeStruct = id;
 		this.chave = chave;
@@ -30,9 +32,10 @@ public class DefStruct implements Declaracao{
 			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException, ProcedimentoJaDeclaradoException,
 			ProcedimentoNaoDeclaradoException, StructJaDeclaradaException, StructNaoDeclaradaException,
 			InstanciaStructNaoDeclaradaException, InstanciaStructJaDeclaradaException {
-		
-		ambiente.mapDefStruct(nomeStruct, new DefStruct(nomeStruct, chave, listaDecAtributoStruct));
-		
+
+			ambiente.mapDefStruct(nomeStruct, new DefStruct(nomeStruct, chave, listaDecAtributoStruct));
+
+
 		return ambiente;
 	}
 
@@ -41,10 +44,21 @@ public class DefStruct implements Declaracao{
 			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException, ProcedimentoJaDeclaradoException,
 			ProcedimentoNaoDeclaradoException, StructJaDeclaradaException, StructNaoDeclaradaException {
 
+		// TODO Auto-generated method stub
 		ambiente.mapDefStruct(nomeStruct, new DefStruct(nomeStruct, chave, listaDecAtributoStruct));
-		
+		boolean resposta = false;
+		ambiente.incrementa();
+		if(listaDecAtributoStruct.checaTipo(ambiente)){
+			ambiente.map(new Id("this"), new TipoStruct(nomeStruct));
+			resposta = listaDecAtributoStruct.checaTipo(ambiente);
+		}
+		ambiente.restaura();
+		return resposta;
+
+	/*	ambiente.mapDefStruct(nomeStruct, new DefStruct(nomeStruct, chave, listaDecAtributoStruct));
+
 		return listaDecAtributoStruct.checaTipo(ambiente);
-		/*boolean resposta = false;
+		boolean resposta = false;
 		ambiente.incrementa();
 		if(resposta = listaDecAtributoStruct.checaTipo(ambiente)){
 			ambiente.map(new Id("this"), new TipoStruct(nomeStruct));

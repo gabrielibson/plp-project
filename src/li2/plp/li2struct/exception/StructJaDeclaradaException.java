@@ -7,6 +7,7 @@ public class StructJaDeclaradaException extends Exception{
 		// TODO Auto-generated constructor stub
 	}
 
+
 	/**
 	 * 
 	 */

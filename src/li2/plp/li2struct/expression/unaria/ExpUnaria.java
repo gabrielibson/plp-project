@@ -72,6 +72,7 @@ public abstract class ExpUnaria implements Expressao {
         }
         return result;
     }
-    
+
  //   public abstract ExpUnaria clone();
+
 }

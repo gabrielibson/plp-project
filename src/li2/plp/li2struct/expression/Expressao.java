@@ -9,6 +9,8 @@ import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
 import li2.plp.li2struct.util.Tipo;
 
+
+
 public interface Expressao{
 
 	Valor avaliar(AmbienteExecucaoli2Struct ambiente)

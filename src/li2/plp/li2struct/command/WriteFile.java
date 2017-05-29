@@ -11,14 +11,21 @@ import li2.plp.li2struct.exception.StructJaDeclaradaException;
 import li2.plp.li2struct.exception.StructNaoDeclaradaException;
 import li2.plp.li2struct.expression.leftExpression.Id;
 import li2.plp.li2struct.expression.valor.Valor;
+
+import li2.plp.li2struct.expression.valor.ValorString;
 import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
 
 public class WriteFile implements IO{
-
-	public WriteFile(Id id, Valor file) {
-		// TODO Auto-generated constructor stub
+	
+	private Id id;
+	private Valor file;
+	
+	public WriteFile(Id id, Valor file){
+		this.id = id;
+		this.file = file;
 	}
+
 
 	@Override
 	public AmbienteExecucaoli2Struct executar(AmbienteExecucaoli2Struct ambiente)

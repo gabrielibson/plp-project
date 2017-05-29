@@ -1,10 +1,14 @@
 package li2.plp.li2struct.memory;
 
+
+import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
+import li2.plp.li2struct.expression.leftExpression.Id;
+import li2.plp.li2struct.expression.valor.Valor;
+
+
+
 import java.util.HashMap;
 import java.util.Stack;
-
-import li2.plp.expressions2.expression.Id;
-import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
 import li2.plp.imperative2.memory.ProcedimentoJaDeclaradoException;
 import li2.plp.imperative2.memory.ProcedimentoNaoDeclaradoException;
 import li2.plp.li2struct.declaracao.procedimento.DefProcedimento;
@@ -12,7 +16,6 @@ import li2.plp.li2struct.declaracao.struct.DefStruct;
 import li2.plp.li2struct.exception.EntradaInvalidaException;
 import li2.plp.li2struct.exception.InstanciaStructJaDeclaradaException;
 import li2.plp.li2struct.exception.InstanciaStructNaoDeclaradaException;
-import li2.plp.li2struct.expression.valor.Valor;
 import li2.plp.li2struct.expression.valor.ValorRef;
 import li2.plp.li2struct.util.Tipo;
 
@@ -126,4 +129,5 @@ public interface AmbienteExecucaoli2Struct extends AmbienteLi2Struct<Valor>{
      * declarada.
      */
     public Valor getValor(Id idArg) throws VariavelNaoDeclaradaException;
+
 }

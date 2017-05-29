@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Stack;
 
-import li2.plp.expressions2.expression.Id;
 import li2.plp.expressions2.memory.Contexto;
 import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
@@ -19,6 +18,7 @@ import li2.plp.li2struct.exception.InstanciaStructJaDeclaradaException;
 import li2.plp.li2struct.exception.InstanciaStructNaoDeclaradaException;
 import li2.plp.li2struct.exception.StructJaDeclaradaException;
 import li2.plp.li2struct.exception.StructNaoDeclaradaException;
+import li2.plp.li2struct.expression.leftExpression.Id;
 import li2.plp.li2struct.expression.valor.Valor;
 import li2.plp.li2struct.expression.valor.ValorBooleano;
 import li2.plp.li2struct.expression.valor.ValorInteiro;
@@ -534,4 +534,32 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
 		}
 
 	}
+
+	@Override
+	public void mapDefStruct(li2.plp.expressions2.expression.Id idArg, DefStruct defStruct)
+			throws StructJaDeclaradaException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public DefStruct getDefStruct(li2.plp.expressions2.expression.Id idArg) throws StructNaoDeclaradaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void map(li2.plp.expressions2.expression.Id idArg, Valor tipoId) throws VariavelJaDeclaradaException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Valor get(li2.plp.expressions2.expression.Id idArg) throws VariavelNaoDeclaradaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 }
