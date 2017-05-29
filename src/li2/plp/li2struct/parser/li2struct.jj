@@ -170,10 +170,10 @@ TOKEN : /* TOKENS DE IMPERATIVA 2 */
 
 TOKEN : /* TOKENS DE LI2STRUCT */
 {
-
 < STRUCT : "struct" >
 | < READ_FILE : "readFile" >
 | < WRITE_FILE : "writeFile" >
+
 }
 
 TOKEN : /* TOKENS DOS POSS�VEIS TIPOS */
@@ -354,8 +354,45 @@ IO PIO() :
 		| retorno = PWrite()
 		| retorno = PReadFile()
 		| retorno = PWriteFile()
+
 	)
 	{return retorno;}
+}
+
+/** add PLP
+**/
+WriteFile PWriteFile():
+{
+  Id id;
+  Valor file;
+}
+{
+  <WRITE_FILE> <LPAREN> id = PId()
+  <COMMA>
+  file = PValor()
+  <RPAREN>
+  {
+    return new WriteFile(id, file);
+  }
+}
+/** add PLP
+**/
+ReadFile PReadFile():
+{
+  Id id;
+  Valor key;
+  Valor file;
+}
+{
+  id = PId() <ASSIGN>
+  <READ_FILE> <LPAREN>
+  key = PValor()
+  <COMMA>
+  file = PValor()
+  <RPAREN>
+  {
+    return new ReadFile(id, key, file);
+  }
 }
 
 Read PRead() :
@@ -393,7 +430,7 @@ IfThenElse PIfThenElse() :
 		comandoThen = PComando()
 	<ELSE>
 		comandoElse = PComando()
-	{return new IfThenElse ((li2.plp.li2struct.expression.Expressao)expressao, comandoThen, comandoElse);}
+	{return new IfThenElse (expressao, comandoThen, comandoElse);}
 }
 
 While PWhile() :
@@ -429,7 +466,7 @@ Atribuicao PAtribuicao() :
 {
 	av  = PLeftExpression() <ATTRIB> exp = PExpressao()
 	{
-		return new Atribuicao(av, (li2.plp.li2struct.expression.Expressao)exp);
+		return new Atribuicao(av, exp);
 	}
 }
 
@@ -538,7 +575,7 @@ Valor PValor() :
 */
 
 /**
- * Valor ::= ValorInteiro | ValorNull  | ValorBooleano | ValorString
+ * Valor ::= ValorInteiro | ValorBooleano | ValorString
  **/
 Valor PValor() :
 {
@@ -846,11 +883,13 @@ Declaracao PDeclaracao():
 		  LOOKAHEAD(PDeclaracaoVariavel() <COMMA>)
            retorno = PDeclaracaoComposta()
           |LOOKAHEAD(PDeclaracaoProcedimento() <COMMA>)
+           retorno = PDeclaracaoComposta()
+          |LOOKAHEAD(PDefStruct() <COMMA>)
            retorno = PDeclaracaoComposta() 
 		  | retorno = PDeclaracaoVariavel()
 		  | retorno = PDeclaracaoProcedimento()
+		  | retorno = PDefStruct() 
           | <LPAREN> retorno = PDeclaracao() <RPAREN>
-          | retorno = PDefStruct()  		 
 		  
 	)
 	{return retorno;}
@@ -867,6 +906,9 @@ DeclaracaoComposta PDeclaracaoComposta():
 	 
 	 |  LOOKAHEAD(PDeclaracaoProcedimento() <COMMA>)
 	 d1 = PDeclaracaoProcedimento() <COMMA> d2 = PDeclaracao()
+
+	 |  LOOKAHEAD(PDefStruct() <COMMA>)
+	 d1 = PDefStruct() <COMMA> d2 = PDeclaracao()
 	)
 	
 	{return new DeclaracaoComposta(d1, d2);}
@@ -908,6 +950,58 @@ DefProcedimento PDefProcedimento():
 	
 }
 
+/** Add PLP
+**/
+InstanciaStruct PInstanciaStruct():
+{
+  InstanciaStruct instanciaStruct;
+}
+{
+  LOOKAHEAD(< IDENTIFIER > ) 
+  instanciaStruct = PInstanciaValoresStruct()
+  |instanciaStruct = PInstanciaLeituraStruct()
+  {
+    return instanciaStruct;
+  }
+}
+/** Add PLP
+**/
+InstanciaValoresStruct PInstanciaValoresStruct():
+{
+  Tipo tipo;
+  Id id;
+  ListaExpressao listaexp;
+}
+{
+  tipo = PTipoStruct()
+  id = PId()
+  <ASSIGN> <LBRACKET> listaexp = PListaExpressao() <RBRACKET>
+  {
+    return new InstanciaValoresStruct(tipo, id, listaexp);
+  }
+}
+/** Add PLP
+**/
+InstanciaLeituraStruct PInstanciaLeituraStruct():
+{
+  Tipo tipo;
+  Id id;
+  Valor key;
+  Valor file;
+}
+{
+  tipo = PTipo()
+  id = PId()
+  <ASSIGN> <READ_FILE> <LPAREN>
+  key = PValor() 
+  <COMMA>
+  file = PValor() <RPAREN>
+  {
+    return new InstanciaLeituraStruct(tipo, id, key, file);
+  } 
+}
+
+
 /**
  * Tipo ::= TipoStruct | TipoPrimitivo
  **/
@@ -947,6 +1041,40 @@ Tipo PTipoPrimitivo() :
 		return retorno;
 	}
 }
+
+/** Add PLP
+**/
+/**
+ * TipoPrimitivo ::= "string" | "int" | "boolean"
+ **/
+/**
+Tipo PTipoPrimitivo() :
+{
+  Tipo retorno;
+}
+{
+  (
+    LOOKAHEAD(< INT >)
+    < INT >
+    {
+      retorno = TipoPrimitivo.TIPO_INTEIRO;
+    }
+  | LOOKAHEAD(< BOOLEAN >)
+    < BOOLEAN >
+    {
+      retorno = TipoPrimitivo.TIPO_BOOLEANO;
+    }
+  | < STRING >
+    {
+      retorno = TipoPrimitivo.TIPO_STRING;
+    }
+  )
+  {
+    return retorno;
+  }
+}
+**/
+
 
 /**
  * TipoStruct ::= Id
@@ -1082,8 +1210,7 @@ ListaDecAtributoStruct PListaDecAtributoStruct():
 	}
 }
 
-/** add PLP
-**/
+/**
 WriteFile PWriteFile():
 {
   Id id;
@@ -1101,7 +1228,7 @@ WriteFile PWriteFile():
 
 /** add PLP
 Id = ReadFile(key, file);
-**/
+
 
 ReadFile PReadFile():
 {
@@ -1120,4 +1247,4 @@ ReadFile PReadFile():
     return new ReadFile(id, key, file);
   }
 }
-
+**/

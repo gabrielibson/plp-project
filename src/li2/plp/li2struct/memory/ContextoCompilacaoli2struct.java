@@ -48,7 +48,7 @@ public class ContextoCompilacaoli2struct implements AmbienteCompilacaoli2Struct 
     public ContextoCompilacaoli2struct(ListaValor entrada){
         pilha = new Stack<HashMap<Id, Tipo>>();
         pilhaProcedimento = new Stack<HashMap<Id, ListaDeclaracaoParametro>>();
-        mapDefStruct = new HashMap<Id, DefStruct>();  //cria mapeamento ids def classes
+        mapDefStruct = new HashMap<Id, DefStruct>();  //cria mapeamento ids def structs
         this.entrada = entrada;
     }
 
@@ -97,14 +97,14 @@ public class ContextoCompilacaoli2struct implements AmbienteCompilacaoli2Struct 
     }
 
     /**
-     * Mapeia um identificador a um defini��o de classe.
+     * Mapeia um identificador a uma definição de struct.
      * @param idArg o nome da classe
-     * @param defClasse Defini��o da Classe.
+     * @param defStruct Definição de Struct.
      * @throws ClasseJaDeclaradaException quando a classe j� foi declarada.
      */
-    public void mapDefStruct(Id idArg, DefStruct defClasse)
+    public void mapDefStruct(Id idArg, DefStruct defStruct)
         throws StructJaDeclaradaException {
-        if (mapDefStruct.put(idArg, defClasse) != null) {
+        if (mapDefStruct.put(idArg, defStruct) != null) {
             throw new StructJaDeclaradaException(idArg);
         }
     }

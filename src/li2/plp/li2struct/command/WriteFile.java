@@ -11,6 +11,7 @@ import li2.plp.li2struct.exception.StructJaDeclaradaException;
 import li2.plp.li2struct.exception.StructNaoDeclaradaException;
 import li2.plp.li2struct.expression.leftExpression.Id;
 import li2.plp.li2struct.expression.valor.Valor;
+
 import li2.plp.li2struct.expression.valor.ValorString;
 import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
@@ -25,26 +26,27 @@ public class WriteFile implements IO{
 		this.file = file;
 	}
 
+
 	@Override
 	public AmbienteExecucaoli2Struct executar(AmbienteExecucaoli2Struct ambiente)
-			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException, InstanciaStructJaDeclaradaException,
-			InstanciaStructNaoDeclaradaException, ProcedimentoNaoDeclaradoException, ProcedimentoJaDeclaradoException,
-			StructJaDeclaradaException, StructNaoDeclaradaException, EntradaInvalidaException {
+			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
+			InstanciaStructJaDeclaradaException,
+			InstanciaStructNaoDeclaradaException,
+			ProcedimentoNaoDeclaradoException,
+			ProcedimentoJaDeclaradoException, StructJaDeclaradaException,
+			StructNaoDeclaradaException, EntradaInvalidaException {
 		// TODO Auto-generated method stub
-		if(file instanceof ValorString){
-			
-		}
 		return null;
 	}
 
 	@Override
 	public boolean checaTipo(AmbienteCompilacaoli2Struct ambiente)
-			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException, ProcedimentoNaoDeclaradoException,
-			ProcedimentoJaDeclaradoException, StructJaDeclaradaException, StructNaoDeclaradaException {
+			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException,
+			ProcedimentoNaoDeclaradoException,
+			ProcedimentoJaDeclaradoException, StructJaDeclaradaException,
+			StructNaoDeclaradaException {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	
 
 }

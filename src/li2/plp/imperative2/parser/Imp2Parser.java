@@ -1038,24 +1038,6 @@ public class Imp2Parser implements Imp2ParserConstants {
     finally { jj_save(13, xla); }
   }
 
-  static private boolean jj_3R_86() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_87()) {
-    jj_scanpos = xsp;
-    if (jj_3R_88()) {
-    jj_scanpos = xsp;
-    if (jj_3R_89()) return true;
-    }
-    }
-    return false;
-  }
-
-  static private boolean jj_3R_26() {
-    if (jj_scan_token(COMAND_SKIP)) return true;
-    return false;
-  }
-
   static private boolean jj_3R_52() {
     if (jj_3R_72()) return true;
     if (jj_scan_token(RPAREN)) return true;
@@ -1158,6 +1140,11 @@ public class Imp2Parser implements Imp2ParserConstants {
     return false;
   }
 
+  static private boolean jj_3R_69() {
+    if (jj_3R_79()) return true;
+    return false;
+  }
+
   static private boolean jj_3R_30() {
     if (jj_scan_token(IF)) return true;
     if (jj_3R_23()) return true;
@@ -1165,11 +1152,6 @@ public class Imp2Parser implements Imp2ParserConstants {
     if (jj_3R_32()) return true;
     if (jj_scan_token(ELSE)) return true;
     if (jj_3R_32()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_69() {
-    if (jj_3R_79()) return true;
     return false;
   }
 
@@ -1211,14 +1193,6 @@ public class Imp2Parser implements Imp2ParserConstants {
     return false;
   }
 
-  static private boolean jj_3R_59() {
-    if (jj_scan_token(WRITE)) return true;
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_23()) return true;
-    if (jj_scan_token(RPAREN)) return true;
-    return false;
-  }
-
   static private boolean jj_3R_7() {
     Token xsp;
     xsp = jj_scanpos;
@@ -1232,6 +1206,14 @@ public class Imp2Parser implements Imp2ParserConstants {
   static private boolean jj_3_12() {
     if (jj_3R_6()) return true;
     if (jj_scan_token(COMMA)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_59() {
+    if (jj_scan_token(WRITE)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_23()) return true;
+    if (jj_scan_token(RPAREN)) return true;
     return false;
   }
 
@@ -1277,6 +1259,16 @@ public class Imp2Parser implements Imp2ParserConstants {
     return false;
   }
 
+  static private boolean jj_3R_73() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_84()) {
+    jj_scanpos = xsp;
+    if (jj_3R_85()) return true;
+    }
+    return false;
+  }
+
   static private boolean jj_3R_43() {
     if (jj_3R_59()) return true;
     return false;
@@ -1290,23 +1282,13 @@ public class Imp2Parser implements Imp2ParserConstants {
     return false;
   }
 
-  static private boolean jj_3R_73() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_84()) {
-    jj_scanpos = xsp;
-    if (jj_3R_85()) return true;
-    }
+  static private boolean jj_3R_56() {
+    if (jj_3R_7()) return true;
     return false;
   }
 
   static private boolean jj_3R_42() {
     if (jj_3R_58()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_56() {
-    if (jj_3R_7()) return true;
     return false;
   }
 
@@ -1419,12 +1401,6 @@ public class Imp2Parser implements Imp2ParserConstants {
     return false;
   }
 
-  static private boolean jj_3_1() {
-    if (jj_3R_3()) return true;
-    if (jj_scan_token(SEMICOLON)) return true;
-    return false;
-  }
-
   static private boolean jj_3R_4() {
     Token xsp;
     xsp = jj_scanpos;
@@ -1438,6 +1414,12 @@ public class Imp2Parser implements Imp2ParserConstants {
     return false;
   }
 
+  static private boolean jj_3_1() {
+    if (jj_3R_3()) return true;
+    if (jj_scan_token(SEMICOLON)) return true;
+    return false;
+  }
+
   static private boolean jj_3R_28() {
     if (jj_scan_token(LBRACE)) return true;
     if (jj_3R_41()) return true;
@@ -1447,13 +1429,14 @@ public class Imp2Parser implements Imp2ParserConstants {
     return false;
   }
 
-  static private boolean jj_3R_45() {
-    if (jj_3R_3()) return true;
+  static private boolean jj_3R_62() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_23()) return true;
     return false;
   }
 
-  static private boolean jj_3R_44() {
-    if (jj_3R_60()) return true;
+  static private boolean jj_3R_45() {
+    if (jj_3R_3()) return true;
     return false;
   }
 
@@ -1463,9 +1446,8 @@ public class Imp2Parser implements Imp2ParserConstants {
     return false;
   }
 
-  static private boolean jj_3R_62() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_23()) return true;
+  static private boolean jj_3R_44() {
+    if (jj_3R_60()) return true;
     return false;
   }
 
@@ -1724,14 +1706,14 @@ public class Imp2Parser implements Imp2ParserConstants {
     return false;
   }
 
-  static private boolean jj_3R_8() {
-    if (jj_scan_token(IDENTIFIER)) return true;
-    return false;
-  }
-
   static private boolean jj_3R_82() {
     if (jj_3R_86()) return true;
     if (jj_3R_8()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_8() {
+    if (jj_scan_token(IDENTIFIER)) return true;
     return false;
   }
 
@@ -1779,6 +1761,24 @@ public class Imp2Parser implements Imp2ParserConstants {
 
   static private boolean jj_3R_87() {
     if (jj_scan_token(INT)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_86() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_87()) {
+    jj_scanpos = xsp;
+    if (jj_3R_88()) {
+    jj_scanpos = xsp;
+    if (jj_3R_89()) return true;
+    }
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_26() {
+    if (jj_scan_token(COMAND_SKIP)) return true;
     return false;
   }
 
