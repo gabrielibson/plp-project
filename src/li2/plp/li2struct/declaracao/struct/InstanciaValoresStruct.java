@@ -4,6 +4,7 @@ import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
 import li2.plp.imperative2.memory.ProcedimentoJaDeclaradoException;
 import li2.plp.imperative2.memory.ProcedimentoNaoDeclaradoException;
+import li2.plp.li2struct.command.Atribuicao;
 import li2.plp.li2struct.command.InstanciaStruct;
 import li2.plp.li2struct.command.ListaExpressao;
 import li2.plp.li2struct.exception.EntradaInvalidaException;
@@ -18,6 +19,7 @@ import li2.plp.li2struct.expression.valor.ValorRef;
 import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
 import li2.plp.li2struct.memory.ContextoInstancia;
+import li2.plp.li2struct.memory.DefStruct;
 import li2.plp.li2struct.memory.Instancia;
 import li2.plp.li2struct.memory.ListaValor;
 import li2.plp.li2struct.util.TipoPrimitivo;
@@ -41,7 +43,7 @@ public class InstanciaValoresStruct implements InstanciaStruct{
 			InstanciaStructNaoDeclaradaException, ProcedimentoNaoDeclaradoException, ProcedimentoJaDeclaradoException,
 			StructJaDeclaradaException, StructNaoDeclaradaException, EntradaInvalidaException {
 		
-		DecStruct struct = ambiente.getDefStruct(nomeStruct);
+		DefStruct struct = ambiente.getDefStruct(nomeStruct);
 		
 		ambiente.incrementa();
 		ListaDecAtributoStruct parametrosFormais = struct.getListaDecAtributoStruct();
@@ -50,8 +52,10 @@ public class InstanciaValoresStruct implements InstanciaStruct{
 		ContextoInstancia estadoInstancia = new ContextoInstancia(aux.getPilha().pop());
 		Instancia instancia = new Instancia(nomeStruct, estadoInstancia);
 		
-		ValorRef vr = aux.getProxRef();
+		aux.map(av.getId(), estadoInstancia);
+		ValorRef vr = aux.getRef();
 		aux.mapInstancia(vr, instancia);
+		ambiente = new Atribuicao(av,vr).executar(ambiente);
 
 		return aux;
 	}

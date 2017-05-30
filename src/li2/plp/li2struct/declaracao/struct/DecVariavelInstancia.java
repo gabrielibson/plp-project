@@ -4,7 +4,6 @@ import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
 import li2.plp.imperative2.memory.ProcedimentoJaDeclaradoException;
 import li2.plp.imperative2.memory.ProcedimentoNaoDeclaradoException;
-import li2.plp.li2struct.command.ListaExpressao;
 import li2.plp.li2struct.declaracao.Declaracao;
 import li2.plp.li2struct.exception.InstanciaStructJaDeclaradaException;
 import li2.plp.li2struct.exception.InstanciaStructNaoDeclaradaException;
@@ -19,12 +18,12 @@ public class DecVariavelInstancia implements Declaracao {
 	
 	private Id id; // identificador da variavel struct
 	private Tipo tipo; //struct
-	private ListaExpressao listaExp; //valores passados na instancia
+	private Id struct; //nome struct
 
-	public DecVariavelInstancia(Id id, Tipo tipo, ListaExpressao listaExp) {
+	public DecVariavelInstancia(Id id, Tipo tipo, Id struct) {
 		this.id = id;
 		this.tipo = tipo;
-		this.listaExp = listaExp;
+		this.struct = struct;
 	}
 	
 	
@@ -83,15 +82,12 @@ public class DecVariavelInstancia implements Declaracao {
 	}
 
 
-	public ListaExpressao getListaExp() {
-		return listaExp;
+	public Id getStruct() {
+		return struct;
 	}
 
 
-	public void setListaExp(ListaExpressao listaExp) {
-		this.listaExp = listaExp;
+	public void setStruct(Id struct) {
+		this.struct = struct;
 	}
-
-
-
 }

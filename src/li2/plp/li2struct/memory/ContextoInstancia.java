@@ -3,9 +3,14 @@ package li2.plp.li2struct.memory;
 import java.util.HashMap;
 
 import li2.plp.expressions2.expression.Id;
+import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
+import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
+import li2.plp.li2struct.exception.InstanciaStructNaoDeclaradaException;
+import li2.plp.li2struct.exception.StructNaoDeclaradaException;
 import li2.plp.li2struct.expression.valor.Valor;
+import li2.plp.li2struct.util.Tipo;
 
-public class ContextoInstancia {
+public class ContextoInstancia implements Valor{
 
 	
 	private HashMap<Id, Valor> estado;
@@ -29,6 +34,23 @@ public class ContextoInstancia {
 
 	public Valor get(Id id) {
 		return this.estado.get(id);
+	}
+
+	public Valor avaliar(AmbienteExecucaoli2Struct ambiente) throws VariavelNaoDeclaradaException,
+			VariavelJaDeclaradaException, InstanciaStructNaoDeclaradaException, StructNaoDeclaradaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean checaTipo(AmbienteCompilacaoli2Struct ambiente)
+			throws VariavelNaoDeclaradaException, StructNaoDeclaradaException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public Tipo getTipo(AmbienteCompilacaoli2Struct ambiente) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

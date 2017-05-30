@@ -13,7 +13,6 @@ import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
 import li2.plp.imperative2.memory.ProcedimentoJaDeclaradoException;
 import li2.plp.imperative2.memory.ProcedimentoNaoDeclaradoException;
 import li2.plp.li2struct.declaracao.procedimento.DefProcedimento;
-import li2.plp.li2struct.declaracao.struct.DecStruct;
 import li2.plp.li2struct.exception.EntradaInvalidaException;
 import li2.plp.li2struct.exception.InstanciaStructJaDeclaradaException;
 import li2.plp.li2struct.exception.InstanciaStructNaoDeclaradaException;
@@ -37,7 +36,7 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
     /**
 	 * o Mapeamento de classes do contexto.
 	 */
-    private HashMap<Id, DecStruct> mapDefStruct;
+    private HashMap<Id, DefStruct> mapDefStruct;
 
     /**
 	 * o mapeamento de objetos do contexto.
@@ -70,7 +69,7 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
 
         mapInstancias = new HashMap<ValorRef, Instancia>();              	
 
-        mapDefStruct = new HashMap<Id, DecStruct>();    // criacao do mapeamento de classes
+        mapDefStruct = new HashMap<Id, DefStruct>();    // criacao do mapeamento de classes
         
         this.entrada = null;
         this.saida = new ListaValor();
@@ -99,7 +98,7 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
 
         mapInstancias = new HashMap<ValorRef, Instancia>();       
 
-        mapDefStruct = new HashMap<Id, DecStruct>();    // inicializacao do map
+        mapDefStruct = new HashMap<Id, DefStruct>();    // inicializacao do map
         
         this.entrada = entrada;
         this.saida = new ListaValor();
@@ -128,7 +127,7 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
 	 * 
 	 * @return a pilha com as defini�oes das classes.
 	 */
-    public HashMap<Id, DecStruct> getMapDefStruct(){
+    public HashMap<Id, DefStruct> getMapDefStruct(){
        return this.mapDefStruct;
     }
 
@@ -301,7 +300,7 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
 	 * @throws ClasseJaDeclaradaException
 	 *             quando a classe j� foi declarada.
 	 */
-    public void mapDefStruct(Id idArg, DecStruct defStruct)
+    public void mapDefStruct(Id idArg, DefStruct defStruct)
         throws StructJaDeclaradaException {
 		if (this.mapDefStruct.put(idArg, defStruct) != null) {
             throw new StructJaDeclaradaException(idArg);
@@ -396,9 +395,9 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
 	 * @throws ClasseNaoDeclaradaException
 	 *             quando nao foi declarada nenhuma classe com esse nome.
 	 */
-    public DecStruct getDefStruct(Id idArg)
+    public DefStruct getDefStruct(Id idArg)
         throws StructNaoDeclaradaException  {
-        DecStruct result = null;
+        DefStruct result = null;
         result = this.mapDefStruct.get(idArg);
         return result;
     }

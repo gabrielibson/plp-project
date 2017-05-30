@@ -12,6 +12,7 @@ import li2.plp.li2struct.exception.StructNaoDeclaradaException;
 import li2.plp.li2struct.expression.leftExpression.Id;
 import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
+import li2.plp.li2struct.memory.DefStruct;
 import li2.plp.li2struct.util.TipoStruct;
 
 public class DecStruct implements Declaracao{
@@ -29,7 +30,7 @@ public class DecStruct implements Declaracao{
 			ProcedimentoNaoDeclaradoException, StructJaDeclaradaException, StructNaoDeclaradaException,
 			InstanciaStructNaoDeclaradaException, InstanciaStructJaDeclaradaException {
 		
-		ambiente.mapDefStruct(nomeStruct, new DecStruct(nomeStruct, listaDecAtributoStruct));
+		ambiente.mapDefStruct(nomeStruct, new DefStruct(nomeStruct, listaDecAtributoStruct));
 		
 		return ambiente;
 	}
@@ -37,8 +38,7 @@ public class DecStruct implements Declaracao{
 	public boolean checaTipo(AmbienteCompilacaoli2Struct ambiente)
 			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException, ProcedimentoJaDeclaradoException,
 			ProcedimentoNaoDeclaradoException, StructJaDeclaradaException, StructNaoDeclaradaException {
-
-		ambiente.mapDefStruct(nomeStruct, new DecStruct(nomeStruct, listaDecAtributoStruct));
+		
 		ambiente.map(nomeStruct, new TipoStruct(nomeStruct, listaDecAtributoStruct.getTipos()));
 		
 		return listaDecAtributoStruct.checaTipo(ambiente);

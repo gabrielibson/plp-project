@@ -8,7 +8,6 @@ import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
 import li2.plp.imperative2.memory.ProcedimentoJaDeclaradoException;
 import li2.plp.imperative2.memory.ProcedimentoNaoDeclaradoException;
 import li2.plp.li2struct.declaracao.procedimento.DefProcedimento;
-import li2.plp.li2struct.declaracao.struct.DecStruct;
 import li2.plp.li2struct.exception.EntradaInvalidaException;
 import li2.plp.li2struct.exception.InstanciaStructJaDeclaradaException;
 import li2.plp.li2struct.exception.InstanciaStructNaoDeclaradaException;
@@ -36,7 +35,7 @@ public interface AmbienteExecucaoli2Struct extends AmbienteLi2Struct<Valor>{
      * Retorna a pilha com as defini�oes das classes.
      * @return a pilha com as defini�oes das classes.
      */
-    public HashMap<Id, DecStruct> getMapDefStruct();
+    public HashMap<Id, DefStruct> getMapDefStruct();
 
     /**
      * Obt�m o mapeamento com os objetos e seus valores.

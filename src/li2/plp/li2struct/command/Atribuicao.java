@@ -1,13 +1,7 @@
 package li2.plp.li2struct.command;
 
-import li2.plp.expressions2.memory.IdentificadorJaDeclaradoException;
-import li2.plp.expressions2.memory.IdentificadorNaoDeclaradoException;
 import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
-import li2.plp.imperative1.memory.AmbienteCompilacaoImperativa;
-import li2.plp.imperative1.memory.AmbienteExecucaoImperativa;
-import li2.plp.imperative1.memory.EntradaVaziaException;
-import li2.plp.imperative1.memory.ErroTipoEntradaException;
 import li2.plp.li2struct.exception.InstanciaStructNaoDeclaradaException;
 import li2.plp.li2struct.exception.StructNaoDeclaradaException;
 import li2.plp.li2struct.expression.Expressao;
@@ -17,6 +11,7 @@ import li2.plp.li2struct.expression.leftExpression.LeftExpression;
 import li2.plp.li2struct.expression.valor.ValorRef;
 import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
+import li2.plp.li2struct.memory.Instancia;
 
 
 public class Atribuicao implements Comando {
@@ -59,10 +54,13 @@ public class Atribuicao implements Comando {
 			InstanciaStructNaoDeclaradaException, StructNaoDeclaradaException {
 		Id idVariavel = this.av.getId();
 		if(this.av instanceof AcessoAtributo){
-			Expressao expAV = ((AcessoAtributo)av).getExpressaoObjeto();
+			Expressao expAV = ((AcessoAtributo)av).getExpressaoInstancia();
 			ValorRef referencia = (ValorRef)expAV.avaliar(ambiente);
+			Instancia instancia = ambiente.getInstancia(referencia);
+            instancia.changeAtributo(idVariavel, expressao.avaliar(ambiente));
 		}
-		ambiente.changeValor(idVariavel, expressao.avaliar(ambiente));
+		else
+            ambiente.changeValor(idVariavel, expressao.avaliar(ambiente));
 		return ambiente;
 	}
 
@@ -86,18 +84,4 @@ public class Atribuicao implements Comando {
 		return expressao.checaTipo(ambiente)
 				&& av.getTipo(ambiente).equals(expressao.getTipo(ambiente));
 	}
-
-	public AmbienteExecucaoImperativa executar(AmbienteExecucaoImperativa ambiente)
-			throws IdentificadorJaDeclaradoException, IdentificadorNaoDeclaradoException, EntradaVaziaException,
-			ErroTipoEntradaException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public boolean checaTipo(AmbienteCompilacaoImperativa ambiente)
-			throws IdentificadorJaDeclaradoException, IdentificadorNaoDeclaradoException, EntradaVaziaException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }
