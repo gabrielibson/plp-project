@@ -1,5 +1,8 @@
 package li2.plp.li2struct.command;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
 import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
 import li2.plp.imperative2.memory.ProcedimentoJaDeclaradoException;
@@ -16,7 +19,15 @@ import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
 
 public class ReadFile implements IO {
 
-	public ReadFile(Id id, Valor key, Valor file) {
+	private Id idRetorno;
+	private Valor key;
+	private Valor fileName;
+
+	public ReadFile(Id idRetorno, Valor key, Valor fileName) {
+		this.idRetorno = idRetorno;
+		this.key = key;
+		this.fileName = fileName;
+
 		// TODO Auto-generated constructor stub
 	}
 
@@ -29,7 +40,8 @@ public class ReadFile implements IO {
 			ProcedimentoJaDeclaradoException, StructJaDeclaradaException,
 			StructNaoDeclaradaException, EntradaInvalidaException {
 		// TODO Auto-generated method stub
-		return null;
+
+		return ambiente;
 	}
 
 	@Override
@@ -39,7 +51,43 @@ public class ReadFile implements IO {
 			ProcedimentoJaDeclaradoException, StructJaDeclaradaException,
 			StructNaoDeclaradaException {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
+
+	public String readingFile() throws IOException{
+		String retorno = "";
+		BufferedReader read;
+		FileReader file = new FileReader(""+fileName.toString());
+		read = new BufferedReader(file);
+		String fileLine;
+		String id;
+		boolean isEndOfArq = false;
+
+		while(!isEndOfArq){
+			fileLine = read.readLine();
+
+			if(fileLine != null){
+				boolean pegaId = false;
+				while(!pegaId){
+					int fimid = fileLine.indexOf(" ");
+					id = fileLine.substring(0, fimid).toString();
+
+					if(id.equals(key)){
+						fileLine = read.readLine();
+						pegaId = true;
+						retorno = fileLine;
+					}
+					fileLine = read.readLine();
+				}
+
+			}else{
+				retorno = "Nao achamos a chave!!";
+				isEndOfArq = true;
+			}
+		}
+		read.close();
+		return retorno;
+	}
+
 
 }
