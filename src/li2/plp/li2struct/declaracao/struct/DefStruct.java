@@ -25,7 +25,6 @@ public class DefStruct implements Declaracao{
 		this.listaDecAtributoStruct = listaDecAtributoStruct;
 	}
 
-	@Override
 	public AmbienteExecucaoli2Struct elabora(AmbienteExecucaoli2Struct ambiente)
 			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException, ProcedimentoJaDeclaradoException,
 			ProcedimentoNaoDeclaradoException, StructJaDeclaradaException, StructNaoDeclaradaException,
@@ -36,7 +35,6 @@ public class DefStruct implements Declaracao{
 		return ambiente;
 	}
 
-	@Override
 	public boolean checaTipo(AmbienteCompilacaoli2Struct ambiente)
 			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException, ProcedimentoJaDeclaradoException,
 			ProcedimentoNaoDeclaradoException, StructJaDeclaradaException, StructNaoDeclaradaException {

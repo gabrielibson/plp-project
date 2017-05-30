@@ -44,7 +44,6 @@ public class ValorRef implements Valor{
      * @param ambiente o ambiente de execu�ao
      * @return o valor associado a uma dada refer�ncia.
      */
-	@Override
 	public Valor avaliar(AmbienteExecucaoli2Struct ambiente)
 			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException,
 			InstanciaStructNaoDeclaradaException, StructNaoDeclaradaException {
@@ -70,8 +69,7 @@ public class ValorRef implements Valor{
      * @param amb o ambiente de compila��o
      * @return true em todos os casos.
      */
-    @Override
-	public boolean checaTipo(AmbienteCompilacaoli2Struct ambiente)
+    public boolean checaTipo(AmbienteCompilacaoli2Struct ambiente)
 			throws VariavelNaoDeclaradaException, StructNaoDeclaradaException {
 		return true;
 	}

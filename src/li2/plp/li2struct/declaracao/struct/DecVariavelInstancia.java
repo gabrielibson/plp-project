@@ -43,7 +43,6 @@ public class DecVariavelInstancia implements Declaracao {
 		}
 	}
 
-	@Override
 	public AmbienteExecucaoli2Struct elabora(AmbienteExecucaoli2Struct ambiente)
 			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
 			ProcedimentoJaDeclaradoException,
@@ -54,7 +53,6 @@ public class DecVariavelInstancia implements Declaracao {
 		return null;
 	}
 
-	@Override
 	public boolean checaTipo(AmbienteCompilacaoli2Struct ambiente)
 			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
 			ProcedimentoJaDeclaradoException,

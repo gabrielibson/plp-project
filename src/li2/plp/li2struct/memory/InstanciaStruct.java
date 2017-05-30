@@ -59,7 +59,6 @@ public class InstanciaStruct implements Comando{
 	        }
 		}
 
-	@Override
 	public AmbienteExecucaoli2Struct executar(AmbienteExecucaoli2Struct ambiente)
 			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
 			InstanciaStructJaDeclaradaException,
@@ -74,7 +73,6 @@ public class InstanciaStruct implements Comando{
 		return null;
 	}
 
-	@Override
 	public boolean checaTipo(AmbienteCompilacaoli2Struct ambiente)
 			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException,
 			ProcedimentoNaoDeclaradoException,

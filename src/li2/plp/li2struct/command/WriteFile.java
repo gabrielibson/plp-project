@@ -20,7 +20,6 @@ public class WriteFile implements IO{
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
 	public AmbienteExecucaoli2Struct executar(AmbienteExecucaoli2Struct ambiente)
 			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
 			InstanciaStructJaDeclaradaException,
@@ -32,7 +31,6 @@ public class WriteFile implements IO{
 		return null;
 	}
 
-	@Override
 	public boolean checaTipo(AmbienteCompilacaoli2Struct ambiente)
 			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException,
 			ProcedimentoNaoDeclaradoException,
