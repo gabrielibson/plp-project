@@ -16,8 +16,14 @@ import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
 
 public class WriteFile implements IO{
 
+	private Id id;
+	private Valor file;
+
 	public WriteFile(Id id, Valor file) {
+
+
 		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
@@ -40,6 +46,11 @@ public class WriteFile implements IO{
 			StructNaoDeclaradaException {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public void escrevendoArquivo(Id id, Valor file){
+
+		String content = 
 	}
 
 }
