@@ -1,6 +1,6 @@
 package li2.plp.li2struct.declaracao.struct;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import li2.plp.expressions2.memory.VariavelJaDeclaradaException;
@@ -61,7 +61,18 @@ public class ListaDecAtributoStruct extends Lista<DeclaracaoAtributoStruct>{
 	}
 
 	public List<Tipo> getTipos() {
-		ArrayList<Tipo> retorno = new ArrayList<Tipo>();
+		List<Tipo> result = new LinkedList<Tipo>();
+
+		if (this.length() >= 2) {
+			result.add(getHead().getTipo());
+			result.addAll(((ListaDecAtributoStruct) getTail()).getTipos());
+		} else if (length() == 1) {
+			result.add(getHead().getTipo());
+		}
+		return result;
+		
+		
+		/*ArrayList<Tipo> retorno = new ArrayList<Tipo>();
 
 		DeclaracaoAtributoStruct headTemp = this.head;
 		Lista<DeclaracaoAtributoStruct> tailTemp = this.tail;
@@ -79,6 +90,6 @@ public class ListaDecAtributoStruct extends Lista<DeclaracaoAtributoStruct>{
 		}
 
 		return retorno;
-	}
+*/	}
 
 }

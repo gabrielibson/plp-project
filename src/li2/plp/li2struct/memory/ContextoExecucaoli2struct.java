@@ -13,7 +13,7 @@ import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
 import li2.plp.imperative2.memory.ProcedimentoJaDeclaradoException;
 import li2.plp.imperative2.memory.ProcedimentoNaoDeclaradoException;
 import li2.plp.li2struct.declaracao.procedimento.DefProcedimento;
-import li2.plp.li2struct.declaracao.struct.DefStruct;
+import li2.plp.li2struct.declaracao.struct.DecStruct;
 import li2.plp.li2struct.exception.EntradaInvalidaException;
 import li2.plp.li2struct.exception.InstanciaStructJaDeclaradaException;
 import li2.plp.li2struct.exception.InstanciaStructNaoDeclaradaException;
@@ -37,13 +37,13 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
     /**
 	 * o Mapeamento de classes do contexto.
 	 */
-    private HashMap<Id, DefStruct> mapDefStruct;
+    private HashMap<Id, DecStruct> mapDefStruct;
 
     /**
 	 * o mapeamento de objetos do contexto.
 	 */
 
-    private HashMap<ValorRef, InstanciaStruct> mapInstancias;
+    private HashMap<ValorRef, Instancia> mapInstancias;
 
     /**
 	 * A pilha de blocos de contexto.
@@ -68,9 +68,9 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
     public ContextoExecucaoli2struct(){
         pilha = new Stack<HashMap<Id, Valor>>();
 
-        mapInstancias = new HashMap<ValorRef, InstanciaStruct>();              	
+        mapInstancias = new HashMap<ValorRef, Instancia>();              	
 
-        mapDefStruct = new HashMap<Id, DefStruct>();    // criacao do mapeamento de classes
+        mapDefStruct = new HashMap<Id, DecStruct>();    // criacao do mapeamento de classes
         
         this.entrada = null;
         this.saida = new ListaValor();
@@ -97,9 +97,9 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
     public ContextoExecucaoli2struct(ListaValor entrada){
         pilha = new Stack<HashMap<Id, Valor>>();
 
-        mapInstancias = new HashMap<ValorRef, InstanciaStruct>();       
+        mapInstancias = new HashMap<ValorRef, Instancia>();       
 
-        mapDefStruct = new HashMap<Id, DefStruct>();    // inicializacao do map
+        mapDefStruct = new HashMap<Id, DecStruct>();    // inicializacao do map
         
         this.entrada = entrada;
         this.saida = new ListaValor();
@@ -128,7 +128,7 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
 	 * 
 	 * @return a pilha com as defini�oes das classes.
 	 */
-    public HashMap<Id, DefStruct> getMapDefStruct(){
+    public HashMap<Id, DecStruct> getMapDefStruct(){
        return this.mapDefStruct;
     }
 
@@ -137,7 +137,7 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
 	 * 
 	 * @return o mapeamento com os objetos e seus valores.
 	 */
-    public HashMap<ValorRef, InstanciaStruct> getMapInstancias(){
+    public HashMap<ValorRef, Instancia> getMapInstancias(){
        return this.mapInstancias;
     }
 
@@ -301,7 +301,7 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
 	 * @throws ClasseJaDeclaradaException
 	 *             quando a classe j� foi declarada.
 	 */
-    public void mapDefStruct(Id idArg, DefStruct defStruct)
+    public void mapDefStruct(Id idArg, DecStruct defStruct)
         throws StructJaDeclaradaException {
 		if (this.mapDefStruct.put(idArg, defStruct) != null) {
             throw new StructJaDeclaradaException(idArg);
@@ -318,10 +318,10 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
 	 * @throws ObjetoJaDeclaradoException
 	 *             Quando esse objeto j� foi declarado.
 	 */
-     public void mapInstancia(ValorRef valorRef, InstanciaStruct instancia)
+     public void mapInstancia(ValorRef valorRef, Instancia instancia)
         throws InstanciaStructJaDeclaradaException{
         if (this.mapInstancias.put(valorRef, instancia) != null) {
-            throw new InstanciaStructJaDeclaradaException(instancia.getIdInstancia());
+            throw new InstanciaStructJaDeclaradaException(instancia.getInstanciaStruct());
         }
     }
 
@@ -396,9 +396,9 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
 	 * @throws ClasseNaoDeclaradaException
 	 *             quando nao foi declarada nenhuma classe com esse nome.
 	 */
-    public DefStruct getDefStruct(Id idArg)
+    public DecStruct getDefStruct(Id idArg)
         throws StructNaoDeclaradaException  {
-        DefStruct result = null;
+        DecStruct result = null;
         result = this.mapDefStruct.get(idArg);
         return result;
     }
@@ -412,9 +412,9 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
 	 * @throws ObjetoNaoDeclaradoException
 	 *             Quando o objeto n�o foi declarado.
 	 */
-    public InstanciaStruct getInstancia(ValorRef valorRef)
+    public Instancia getInstancia(ValorRef valorRef)
         throws InstanciaStructNaoDeclaradaException{
-        InstanciaStruct result = null;
+        Instancia result = null;
         result = mapInstancias.get(valorRef);
         if (result == null) {
             throw new InstanciaStructNaoDeclaradaException(new Id(valorRef.toString()));
@@ -453,7 +453,7 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
     public String toString() {
         String resposta = null;
         Valor valor = null;
-        InstanciaStruct instancia = null;
+        Instancia instancia = null;
         Stack<HashMap<Id, Valor>> auxStack = new Stack<HashMap<Id, Valor>>();
 
         while (!pilha.empty()) {

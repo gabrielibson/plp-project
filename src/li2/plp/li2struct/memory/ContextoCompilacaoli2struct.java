@@ -9,7 +9,7 @@ import li2.plp.expressions2.memory.VariavelNaoDeclaradaException;
 import li2.plp.imperative2.memory.ProcedimentoJaDeclaradoException;
 import li2.plp.imperative2.memory.ProcedimentoNaoDeclaradoException;
 import li2.plp.li2struct.declaracao.procedimento.ListaDeclaracaoParametro;
-import li2.plp.li2struct.declaracao.struct.DefStruct;
+import li2.plp.li2struct.declaracao.struct.DecStruct;
 import li2.plp.li2struct.exception.StructJaDeclaradaException;
 import li2.plp.li2struct.exception.StructNaoDeclaradaException;
 import li2.plp.li2struct.util.Tipo;
@@ -35,7 +35,7 @@ public class ContextoCompilacaoli2struct implements AmbienteCompilacaoli2Struct 
      * mapeamento de classes do contexto.
      * nao � necessaria uma pilha, pois ha apenas um nivel de mapeamentos
      */
-    private HashMap<Id, DefStruct> mapDefStruct;  
+    private HashMap<Id, DecStruct> mapDefStruct;  
 
      /**
      * A tail de valores inicias do contexto.
@@ -48,7 +48,7 @@ public class ContextoCompilacaoli2struct implements AmbienteCompilacaoli2Struct 
     public ContextoCompilacaoli2struct(ListaValor entrada){
         pilha = new Stack<HashMap<Id, Tipo>>();
         pilhaProcedimento = new Stack<HashMap<Id, ListaDeclaracaoParametro>>();
-        mapDefStruct = new HashMap<Id, DefStruct>();  //cria mapeamento ids def structs
+        mapDefStruct = new HashMap<Id, DecStruct>();  //cria mapeamento ids def structs
         this.entrada = entrada;
     }
 
@@ -102,7 +102,7 @@ public class ContextoCompilacaoli2struct implements AmbienteCompilacaoli2Struct 
      * @param defStruct Definição de Struct.
      * @throws ClasseJaDeclaradaException quando a classe j� foi declarada.
      */
-    public void mapDefStruct(Id idArg, DefStruct defStruct)
+    public void mapDefStruct(Id idArg, DecStruct defStruct)
         throws StructJaDeclaradaException {
         if (mapDefStruct.put(idArg, defStruct) != null) {
             throw new StructJaDeclaradaException(idArg);
@@ -169,9 +169,9 @@ public class ContextoCompilacaoli2struct implements AmbienteCompilacaoli2Struct 
      * @throws ClasseNaoDeclaradaException quando nao foi declarada nenhuma
      * classe com esse nome.
      */
-    public DefStruct getDefStruct(Id idArg)
+    public DecStruct getDefStruct(Id idArg)
         throws StructNaoDeclaradaException  {
-        DefStruct result = null;
+        DecStruct result = null;
         result = this.mapDefStruct.get(idArg);
         if (result == null) {
             throw new StructNaoDeclaradaException(idArg);

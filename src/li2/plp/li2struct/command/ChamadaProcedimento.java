@@ -50,8 +50,7 @@ public class ChamadaProcedimento implements Comando {
 				.getParametrosFormais();
 		AmbienteExecucaoli2Struct aux = bindParameters(ambiente,
 				parametrosFormais);
-		aux = (AmbienteExecucaoli2Struct) procedimento.getComando().executar(
-				aux);
+		aux = procedimento.getComando().executar(aux);
 		aux.restaura();
 		return aux;
 

@@ -815,14 +815,21 @@ Comando PComandoSimples() :
 }
 {
     (
+      LOOKAHEAD(< COMAND_SKIP >)
     	retorno = PSkip()
-      | retorno = PAtribuicao()
+      | LOOKAHEAD(PLeftExpression() < ATTRIB >)
+      	retorno = PAtribuicao()
       | retorno = PComandoDeclaracao()
-      | retorno = PWhile()
-      | retorno = PIfThenElse()
-      | retorno = PIO()
+      | LOOKAHEAD(< WHILE >)
+        retorno = PWhile()
+      | LOOKAHEAD(< IF >)
+        retorno = PIfThenElse()
+      | LOOKAHEAD(< READ > | < WRITE >)
+        retorno = PIO()
  //     | <LPAREN> retorno = PComando() <RPAREN>
       | retorno = PChamadaProcedimento()
+      | LOOKAHEAD(< IDENTIFIER > PLeftExpression() < ASSIGN > < LBRACKET > )
+      	retorno = PInstanciaValoresStruct() 
    	)
     {
         return retorno;
@@ -865,14 +872,14 @@ Declaracao PDeclaracao():
            retorno = PDeclaracaoComposta()
           |LOOKAHEAD(PDeclaracaoProcedimento() <COMMA>)
            retorno = PDeclaracaoComposta()
-          |LOOKAHEAD(PDefStruct() <COMMA>)
+          |LOOKAHEAD(PDecStruct() <COMMA>)
            retorno = PDeclaracaoComposta()
           |LOOKAHEAD(PDecVariavelInstancia() <COMMA>)
            retorno = PDeclaracaoComposta() 
 		  | retorno = PDeclaracaoVariavel()
 		  | retorno = PDeclaracaoProcedimento()
 		  | retorno = PDecVariavelInstancia()
-		  | retorno = PDefStruct() 
+		  | retorno = PDecStruct() 
           | <LPAREN> retorno = PDeclaracao() <RPAREN>   		 
 		  
 	)
@@ -891,8 +898,8 @@ DeclaracaoComposta PDeclaracaoComposta():
 	 |  LOOKAHEAD(PDeclaracaoProcedimento() <COMMA>)
 	 d1 = PDeclaracaoProcedimento() <COMMA> d2 = PDeclaracao()
 
-	 |  LOOKAHEAD(PDefStruct() <COMMA>)
-	 d1 = PDefStruct() <COMMA> d2 = PDeclaracao()
+	 |  LOOKAHEAD(PDecStruct() <COMMA>)
+	 d1 = PDecStruct() <COMMA> d2 = PDeclaracao()
 	)
 	
 	{return new DeclaracaoComposta(d1, d2);}
@@ -967,36 +974,36 @@ InstanciaStruct PInstanciaStruct():
 **/
 InstanciaValoresStruct PInstanciaValoresStruct():
 {
-  Tipo tipo;
-  Id id;
+  LeftExpression av;
+  Id nomeStruct;
   ListaExpressao listaexp;
 }
 {
-  tipo = PTipoStruct()
-  id = PId()
+  nomeStruct = PId()
+  av = PLeftExpression()
   <ASSIGN> <LBRACKET> listaexp = PListaExpressao() <RBRACKET>
   {
-    return new InstanciaValoresStruct(tipo, id, listaexp);
+    return new InstanciaValoresStruct(av, nomeStruct, listaexp);
   }
 }
 /** Add PLP
 **/
 InstanciaLeituraStruct PInstanciaLeituraStruct():
 {
-  Tipo tipo;
-  Id id;
+  LeftExpression av;
+  Id nomeStruct;
   Valor key;
   Valor file;
 }
 {
-  tipo = PTipo()
-  id = PId()
+  av = PLeftExpression() 
+  nomeStruct = PId()
   <ASSIGN> <READ_FILE> <LPAREN>
   key = PValor() 
   <COMMA>
   file = PValor() <RPAREN>
   {
-    return new InstanciaLeituraStruct(tipo, id, key, file);
+    return new InstanciaLeituraStruct(av, nomeStruct, key, file);
   } 
 }
 
@@ -1153,34 +1160,19 @@ Adicionando producao de li2struct
 /** Add PLP
 **/
 
-DefStruct PDefStruct():
+DecStruct PDecStruct():
 {
 
  Id id;
- DeclaracaoChave chave; 
  ListaDecAtributoStruct listadecattstruct;
 }
 {
-  <STRUCT> id = PId() <LBRACE> chave = PDeclaracaochave() <SEMICOLON>
-  listadecattstruct = PListaDecAtributoStruct() <RBRACE>
+  <STRUCT> id = PId() <LBRACE> listadecattstruct = PListaDecAtributoStruct() <RBRACE>
   {
-    return new DefStruct(id, chave, listadecattstruct);
+    return new DecStruct(id, listadecattstruct);
   }
 }
 
-/** Add PLP
-**/
-DeclaracaoChave PDeclaracaochave():
-{
-  Id id;
-}
-  {
-   <INT>
-   id = PId()
-  { 
-    return new DeclaracaoChave(id);
-  }
-}
 /** Add PLP
 **/
 ListaDecAtributoStruct PListaDecAtributoStruct():

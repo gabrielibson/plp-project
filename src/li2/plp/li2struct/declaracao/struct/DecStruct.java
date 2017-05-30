@@ -12,16 +12,15 @@ import li2.plp.li2struct.exception.StructNaoDeclaradaException;
 import li2.plp.li2struct.expression.leftExpression.Id;
 import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
+import li2.plp.li2struct.util.TipoStruct;
 
-public class DefStruct implements Declaracao{
+public class DecStruct implements Declaracao{
 
 	private Id nomeStruct;
-	private DeclaracaoChave chave;
 	private ListaDecAtributoStruct listaDecAtributoStruct;
 	
-	public DefStruct(Id id, DeclaracaoChave chave, ListaDecAtributoStruct listaDecAtributoStruct) {
+	public DecStruct(Id id, ListaDecAtributoStruct listaDecAtributoStruct) {
 		this.nomeStruct = id;
-		this.chave = chave;
 		this.listaDecAtributoStruct = listaDecAtributoStruct;
 	}
 
@@ -30,7 +29,7 @@ public class DefStruct implements Declaracao{
 			ProcedimentoNaoDeclaradoException, StructJaDeclaradaException, StructNaoDeclaradaException,
 			InstanciaStructNaoDeclaradaException, InstanciaStructJaDeclaradaException {
 		
-		ambiente.mapDefStruct(nomeStruct, new DefStruct(nomeStruct, chave, listaDecAtributoStruct));
+		ambiente.mapDefStruct(nomeStruct, new DecStruct(nomeStruct, listaDecAtributoStruct));
 		
 		return ambiente;
 	}
@@ -39,16 +38,10 @@ public class DefStruct implements Declaracao{
 			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException, ProcedimentoJaDeclaradoException,
 			ProcedimentoNaoDeclaradoException, StructJaDeclaradaException, StructNaoDeclaradaException {
 
-		ambiente.mapDefStruct(nomeStruct, new DefStruct(nomeStruct, chave, listaDecAtributoStruct));
+		ambiente.mapDefStruct(nomeStruct, new DecStruct(nomeStruct, listaDecAtributoStruct));
+		ambiente.map(nomeStruct, new TipoStruct(nomeStruct, listaDecAtributoStruct.getTipos()));
 		
 		return listaDecAtributoStruct.checaTipo(ambiente);
-		/*boolean resposta = false;
-		ambiente.incrementa();
-		if(resposta = listaDecAtributoStruct.checaTipo(ambiente)){
-			ambiente.map(new Id("this"), new TipoStruct(nomeStruct));
-		}
-		ambiente.restaura();
-		return resposta;*/
 	}
 
 	public Id getId() {
@@ -57,14 +50,6 @@ public class DefStruct implements Declaracao{
 
 	public void setId(Id id) {
 		this.nomeStruct = id;
-	}
-
-	public DeclaracaoChave getChave() {
-		return chave;
-	}
-
-	public void setChave(DeclaracaoChave chave) {
-		this.chave = chave;
 	}
 
 	public ListaDecAtributoStruct getListaDecAtributoStruct() {
