@@ -57,7 +57,7 @@ Declaracao ::= DeclaracaoVariavel
 
 | DeclaracaoComposta
 
-| DefStruct
+| DeCStruct
 
 DeclaracaoVariavel ::= "var" Id "=" Expressao
 
@@ -71,7 +71,7 @@ ListaDecAtributoStruct ::= DecAtributosStruct | DecAtributosStruct ";" ListaDecA
 
 DecAtributosStruct ::= Tipo Id
 
-DefStruct ::= "struct" Id "{" DeclaracaoChave ";" ListaDecAtributoStruct "}"
+DeCStruct ::= "struct" Id "{" ListaDecAtributoStruct "}"
 
 InstanciaStruct ::= InstanciaValoresStruct | InstanciaLeituraStruct
 
@@ -80,8 +80,6 @@ InstanciaValoresStruct ::= Tipo Id "=" "[" ListaExpressao "]"
 InstanciaLeituraStruct ::= Tipo Id "=" "readFile" "(" Key "," File ")"
 
 Key ::= ValorInteiro
-
-DeclaracaoChave ::= "int" Id
 
 Tipo ::= TipoStruct | TipoPrimitivo
 
