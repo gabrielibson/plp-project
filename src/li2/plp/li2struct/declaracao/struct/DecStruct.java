@@ -38,10 +38,15 @@ public class DecStruct implements Declaracao{
 	public boolean checaTipo(AmbienteCompilacaoli2Struct ambiente)
 			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException, ProcedimentoJaDeclaradoException,
 			ProcedimentoNaoDeclaradoException, StructJaDeclaradaException, StructNaoDeclaradaException {
-		
+		boolean resposta = false;
 		ambiente.map(nomeStruct, new TipoStruct(nomeStruct, listaDecAtributoStruct.getTipos()));
-		
-		return listaDecAtributoStruct.checaTipo(ambiente);
+		ambiente.mapDefStruct(nomeStruct, new DefStruct(nomeStruct, listaDecAtributoStruct));
+		if(resposta = listaDecAtributoStruct.checaTipo(ambiente)){
+			ambiente.incrementa();
+			listaDecAtributoStruct.elabora(ambiente);
+			ambiente.restaura();
+		}
+		return resposta;
 	}
 
 	public Id getId() {

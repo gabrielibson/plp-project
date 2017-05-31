@@ -57,9 +57,9 @@ public class AcessoAtributoId extends AcessoAtributo{
 	public Tipo getTipo(AmbienteCompilacaoli2Struct ambiente)
 			throws VariavelNaoDeclaradaException, StructNaoDeclaradaException {
 		Id nomeStruct = ((TipoStruct)av.getTipo(ambiente)).getTipo();
-        DefStruct decStruct = ambiente.getDefStruct(nomeStruct);
-        Tipo tipoAtr = decStruct.getTipoAtributo(nomeStruct);
-		return tipoAtr;
+		DefStruct defStruct = ambiente.getDefStruct(nomeStruct);
+		Tipo tipoAtt = defStruct.getTipoAtributo(super.getId());
+        return tipoAtt;
 	}
 	
 	 /**

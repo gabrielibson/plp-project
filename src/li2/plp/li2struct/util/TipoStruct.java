@@ -57,13 +57,13 @@ public class TipoStruct implements Tipo{
      * @return <code>true</code> se se tratarem do mesmo tipo;
      *          <code>false</code> caso contrario.
      */
-	public boolean eIgual(Tipo tipo) {
+	public boolean equals(Tipo tipo) {
 		if (tipo instanceof TipoStruct) {
 			TipoStruct tipoStruct = (TipoStruct) tipo;
 			return tipoStruct.tiposListaAtributosFormais.
 						equals(this.tiposListaAtributosFormais);
 		}
-		return ((TipoStruct) tipo).eIgual(this);
+		return ((TipoStruct) tipo).equals(this);
 	}
 
 

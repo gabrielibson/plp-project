@@ -465,7 +465,7 @@ LeftExpression PLeftExpression() :
 {
   (
     LOOKAHEAD(PAcessoAtributoId())
-  retorno = PAcessoAtributoId()
+    retorno = PAcessoAtributoId()
   | LOOKAHEAD(< IDENTIFIER >)
     retorno = PId()
   )
@@ -504,56 +504,6 @@ Id PId() :
 		return new Id(token.toString());
 	}
 }
-
-/*
-Valor PValorInteiro() :
-{
-	Token token;
-}
-{
-	token = <INTEGER_LITERAL>
-	{
-		return new ValorInteiro(Integer.parseInt(token.toString()));
-	}
-}
-
-Valor PValorBooleano() :
-{
-}
-{
-	  <FALSE> { return new ValorBooleano(false); } 
-	| <TRUE>  { return new ValorBooleano(true); }
-}
-
-Valor PValorString() :
-{
-	Token token;
-}
-{
-	token = <STRING_LITERAL>
-	{
-		String tokenStr = token.toString();
-		tokenStr = tokenStr.substring(1,tokenStr.length()-1);
-		return new ValorString(tokenStr);
-	}
-}
-
-Valor PValor() :
-{
-	Valor retorno;
-}
-{
-	(
-      	  retorno = PValorInteiro() 
-		| retorno = PValorBooleano()
-		| retorno = PValorString()
-    )
-	
-	{
-		return retorno;
-	}
-}
-*/
 
 /**
  * Valor ::= ValorInteiro | ValorBooleano | ValorString
@@ -662,8 +612,9 @@ Expressao PExpPrimaria() :
     Expressao retorno;
 }
 {
-	(  
-	    retorno = PId()
+	(
+	  LOOKAHEAD(< IDENTIFIER >  ) 
+	    retorno = PLeftExpression()
 	  | retorno = PValor() 
 	  | <LPAREN> retorno = PExpressao() <RPAREN>
 	)
@@ -876,7 +827,7 @@ Declaracao PDeclaracao():
            retorno = PDeclaracaoComposta()
 		  | retorno = PDeclaracaoVariavel()
 		  | retorno = PDeclaracaoProcedimento()
-		  | retorno = PDecStruct() 
+		  | retorno = PDecStruct()	  
           | <LPAREN> retorno = PDeclaracao() <RPAREN>   		 
 		  
 	)
@@ -1027,40 +978,6 @@ Tipo PTipoPrimitivo() :
 		return retorno;
 	}
 }
-
-/** Add PLP
-**/
-/**
- * TipoPrimitivo ::= "string" | "int" | "boolean"
- **/
-/**
-Tipo PTipoPrimitivo() :
-{
-  Tipo retorno;
-}
-{
-  (
-    LOOKAHEAD(< INT >)
-    < INT >
-    {
-      retorno = TipoPrimitivo.TIPO_INTEIRO;
-    }
-  | LOOKAHEAD(< BOOLEAN >)
-    < BOOLEAN >
-    {
-      retorno = TipoPrimitivo.TIPO_BOOLEANO;
-    }
-  | < STRING >
-    {
-      retorno = TipoPrimitivo.TIPO_STRING;
-    }
-  )
-  {
-    return retorno;
-  }
-}
-**/
-
 
 /**
  * TipoStruct ::= Id

@@ -11,4 +11,5 @@ public interface AmbienteLi2Struct<T> extends Ambiente<T>{
 			throws StructJaDeclaradaException;
 	
 	public DefStruct getDefStruct(Id idArg) throws StructNaoDeclaradaException;
+	
 }

@@ -65,9 +65,11 @@ public class InstanciaValoresStruct implements InstanciaStruct{
 			ProcedimentoJaDeclaradoException, StructJaDeclaradaException, StructNaoDeclaradaException {
 		TipoStruct tipoStruct = (TipoStruct) ambiente.get(nomeStruct);
 		TipoStruct tipoParametrosReais = null;
-		if(TipoPrimitivo.TIPO_INTEIRO == this.listaExp.getTipos(ambiente).get(0)){
+		int indiceChave = this.listaExp.getTipos(ambiente).size()-1;
+		if(TipoPrimitivo.TIPO_INTEIRO == this.listaExp.getTipos(ambiente).get(indiceChave)){
+			ambiente.map(av.getId(), tipoStruct);
 			tipoParametrosReais = new TipoStruct(this.listaExp.getTipos(ambiente));
-			return tipoStruct.eIgual(tipoParametrosReais);
+			return tipoStruct.equals(tipoParametrosReais);
 		}else{
 			try {
 				throw new EntradaInvalidaException("Tipo da chave da struct precisa ser INT");
