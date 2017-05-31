@@ -775,7 +775,7 @@ Comando PComandoSimples() :
         retorno = PWhile()
       | LOOKAHEAD(< IF >)
         retorno = PIfThenElse()
-      | LOOKAHEAD(< READ > | < WRITE >)
+      | LOOKAHEAD(< READ > | < WRITE > | < WRITE_FILE > | < READ_FILE > )
         retorno = PIO()
  //     | <LPAREN> retorno = PComando() <RPAREN>
       | retorno = PChamadaProcedimento()

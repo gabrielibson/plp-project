@@ -53,4 +53,12 @@ public class ContextoInstancia implements Valor{
 		return null;
 	}
 
+	public HashMap<Id, Valor> getEstado() {
+		return estado;
+	}
+
+	public void setEstado(HashMap<Id, Valor> estado) {
+		this.estado = estado;
+	}
+
 }
