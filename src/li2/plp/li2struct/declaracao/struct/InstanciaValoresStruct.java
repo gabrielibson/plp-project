@@ -50,14 +50,14 @@ public class InstanciaValoresStruct implements InstanciaStruct{
 		AmbienteExecucaoli2Struct aux = this.bindParameters(ambiente, parametrosFormais);
 		
 		ContextoInstancia estadoInstancia = new ContextoInstancia(aux.getPilha().pop());
-		Instancia instancia = new Instancia(nomeStruct, estadoInstancia);
+		Instancia instancia = new Instancia(av.getId(), estadoInstancia);
 		
 		aux.map(av.getId(), estadoInstancia);
-		ValorRef vr = aux.getRef();
+		ValorRef vr = aux.getProxRef();
 		aux.mapInstancia(vr, instancia);
-		ambiente = new Atribuicao(av,vr).executar(ambiente);
+		ambiente = new Atribuicao(av,vr).executar(aux);
 
-		return aux;
+		return ambiente;
 	}
 
 	public boolean checaTipo(AmbienteCompilacaoli2Struct ambiente)

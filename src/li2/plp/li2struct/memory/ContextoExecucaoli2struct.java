@@ -65,6 +65,7 @@ public class ContextoExecucaoli2struct implements AmbienteExecucaoli2Struct {
 	 * Construtor utilizado quando queremos ler do teclado.
 	 */
     public ContextoExecucaoli2struct(){
+    	proxRef = getRef();
         pilha = new Stack<HashMap<Id, Valor>>();
 
         mapInstancias = new HashMap<ValorRef, Instancia>();              	
