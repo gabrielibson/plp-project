@@ -55,7 +55,7 @@ public class ReadFile implements IO {
 		
 		//ValorRef vr = (ValorRef) ambiente.get(id);
 		this.lerRegistro(ambiente);
-		return null;
+		return ambiente;
 	}
 
 	public boolean checaTipo(AmbienteCompilacaoli2Struct ambiente)
