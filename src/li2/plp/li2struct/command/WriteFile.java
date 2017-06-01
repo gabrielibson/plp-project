@@ -24,6 +24,7 @@ import li2.plp.li2struct.memory.AmbienteCompilacaoli2Struct;
 import li2.plp.li2struct.memory.AmbienteExecucaoli2Struct;
 import li2.plp.li2struct.memory.ContextoInstancia;
 import li2.plp.li2struct.memory.Instancia;
+import li2.plp.li2struct.util.Tipo;
 import li2.plp.li2struct.util.TipoStruct;
 
 public class WriteFile implements IO{
@@ -33,6 +34,7 @@ public class WriteFile implements IO{
 	private static final String PATHNAME = "D:/workspace/";
 	private static final String EXTENSAO = ".txt";
 	private FileWriter fw = null;
+	Tipo tipo;
 	
 	public WriteFile(Id id, Valor file) {
 		this.idRegistro = id;
@@ -50,7 +52,7 @@ public class WriteFile implements IO{
 		ValorRef vr = (ValorRef) ambiente.get(idRegistro);
 		Instancia instancia = ambiente.getMapInstancias().get(vr);
 		ContextoInstancia valoresInstancia = instancia.getEstado();
-		if(this.verificaIntegridadeChave(valoresInstancia)){
+		if(this.verificaIntegridadeChave(valoresInstancia, vr)){
 			this.escreverRegistro(valoresInstancia);
 		}else{
 			throw new EntradaInvalidaException("Violação de Chave Primária");
@@ -64,7 +66,8 @@ public class WriteFile implements IO{
 			ProcedimentoNaoDeclaradoException,
 			ProcedimentoJaDeclaradoException, StructJaDeclaradaException,
 			StructNaoDeclaradaException {
-		if(ambiente.get(idRegistro) instanceof TipoStruct){
+		this.tipo = ambiente.get(idRegistro);
+		if(tipo instanceof TipoStruct){
 			return true;
 		}
 		else{
@@ -72,13 +75,23 @@ public class WriteFile implements IO{
 		}
 	}
 
-	private void escreverRegistro(ContextoInstancia hashValores){
+	private void escreverRegistro(ContextoInstancia hashValores) throws EntradaInvalidaException{
 		 try {
 			File file = new File(PATHNAME+fileName.toString()+EXTENSAO);
+			if(!file.exists()){
+				fw = new FileWriter(file, true);
+				BufferedWriter buffWrite = new BufferedWriter(fw);
+				buffWrite.append(tipo.getTipo().getIdName());
+				buffWrite.newLine();
+				buffWrite.close();
+			}
 			fw = new FileWriter(file, true);
 			BufferedWriter buffWrite = new BufferedWriter(fw);
 			Id chave = new Id("chave");
 			Valor valor = hashValores.getEstado().get(chave);
+			if(valor == null){
+				throw new EntradaInvalidaException("Atributo chave não declarado!");
+			}
 			String indice = valor.toString();
 			buffWrite.append(indice);
 			hashValores.getEstado().remove(chave, valor);
@@ -91,28 +104,32 @@ public class WriteFile implements IO{
 		}
 	}
 	
-	private boolean verificaIntegridadeChave(ContextoInstancia hashValores){
+	private boolean verificaIntegridadeChave(ContextoInstancia hashValores, ValorRef valorRef)
+			throws EntradaInvalidaException{
 		boolean retorno = true;
 		File file = new File(PATHNAME+fileName.toString()+EXTENSAO);
 		if(file.exists()){
 			BufferedReader br;
 			try {
 				br = new BufferedReader(new FileReader(file));
-				Id chave = new Id("chave");
-				Valor valor = hashValores.getEstado().get(chave);
-				String indice = valor.toString();
-				String [] strAux;
-				String pk;
-				while(br.ready()){
-					String linha = br.readLine();
-					strAux = linha.split("\\{");
-					pk = strAux[0];
-					if(pk.equals(indice)){
-						retorno = false;
-						break;
+				if(verificarTipoStructNoArquivo(br, valorRef)){
+					Id chave = new Id("chave");
+					Valor valor = hashValores.getEstado().get(chave);
+					String indice = valor.toString();
+					String [] strAux;
+					String pk;
+					while(br.ready()){
+						String linha = br.readLine();
+						strAux = linha.split("\\{");
+						pk = strAux[0];
+						if(pk.equals(indice)){
+							retorno = false;
+							break;
+						}
 					}
+					br.close();
 				}
-				br.close();
+				
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -123,6 +140,25 @@ public class WriteFile implements IO{
 			
 		}else{
 			retorno = true;
+		}
+		return retorno;
+	}
+	
+	private boolean verificarTipoStructNoArquivo(BufferedReader br, ValorRef valorRef) 
+			throws EntradaInvalidaException{
+		boolean retorno = false;
+		try {
+			if(br.ready()){
+				String linha = br.readLine();
+				if(linha.equals(this.tipo.getTipo().getIdName())){
+					retorno = true;
+				}else{
+					throw new EntradaInvalidaException("Tipo da struct não se aplica ao tipo do arquivo");
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return retorno;
 	}

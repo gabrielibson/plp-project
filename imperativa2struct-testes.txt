@@ -1,0 +1,48 @@
+{proc soma(int a, int b){write(a+b)}; call soma(1,3)}
+
+{
+struct Aluno{int chave; int idade; string nome},
+var a = 3; 
+Aluno a1 = [1, 23, "fulano"];
+Aluno a2 = [2, 30, "fulaninha"];
+a1.nome := "outro nome";
+a1.idade := 25;
+write(a1.nome);
+write(a1.idade);
+write(a2.nome);
+write(a2.idade)
+}
+
+{
+struct Aluno{int chave; int idade; string nome},
+struct Turma{int chave; string nome};
+Aluno a1 = [1, 23, "fulano"];
+Aluno a2 = [2, 30, "fulaninha"];
+Turma t1 = [1, "PLP"];
+writeFile(a1, "alunos");
+writeFile(a2, "alunos");
+writeFile(t1, "turmas")
+}
+
+Aluno a1 = [1, "fulano", 23];
+Aluno a13 = [1, "beltrano", 23];
+
+writeFile(a1, fileName);
+
+Aluno a2 = readFile(1, fileName);
+
+write(a2)
+
+
+Aluno a1 = new Aluno();
+
+Aluno a1 = [...]
+
+
+InstanciaStruct -> New
+
+Instancia -> Objeto
+
+DecVariavelInstancia -> DecVariavelObjeto
+
+DefStruct -> DecClasseSimples
